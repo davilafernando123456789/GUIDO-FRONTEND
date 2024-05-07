@@ -1,0 +1,178 @@
+<app-navbar></app-navbar>
+<div class="main">
+    <app-topbar></app-topbar>
+    <div class="details">
+        <div class="recentOrders">
+            <div class="content-wrapper">
+                <div class="container">
+                    <br>
+                    <div class="container">
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Listado de tutores</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                                            [(ngModel)]="searchTerm" (input)="search()">
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nombre</th>
+                                                    <th>Apellido</th>
+                                                    <th>Correo</th>
+                                                    <th>Telefono</th>
+                                                    <th>Especialidad</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Itera sobre los profesores correspondientes a la página actual -->
+                                                <tr *ngFor="let profesor of currentPageData">
+                                                    <td>{{ profesor.id }}</td>
+                                                    <td>{{ profesor.nombre }}</td>
+                                                    <td>{{ profesor.apellido }}</td>
+                                                    <td>{{ profesor.email }}</td>
+                                                    <td>{{ profesor.telefono }}</td>
+                                                    <td>{{ profesor.especialidad }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group"
+                                                            aria-label="Botones de Acción">
+                                                            <button class="btn btn-success "
+                                                                (click)="editProfesor(profesor)"><i
+                                                                    class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-danger "
+                                                                (click)="eliminarProfesor(profesor.id)"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="pagination-container">
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToFirstPage()">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </button>
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToPreviousPage()">
+                                        <i class="fas fa-angle-left"></i>
+                                    </button>
+                                    <span class="pagination-info">Página {{ currentPage }} de {{ totalPages }}</span>
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToNextPage()">
+                                        <i class="fas fa-angle-right"></i>
+                                    </button>
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToLastPage()">
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Editar profesor</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div *ngIf="editingProfesor">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>ID:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.id" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Nombre:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.nombre">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Apellido:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.apellido">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Email:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.email">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Teléfono:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.telefono">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Especialidad:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.especialidad">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Descripción:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.descripcion">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Sala:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.sala">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Usuario:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.usuario">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Contraseña:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingProfesor.password">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 d-flex justify-content-center">
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-sm"
+                                                        (click)="guardarEdicion()">Guardar</button>
+                                                    <button class="btn btn-secondary btn-sm ml-2"
+                                                        (click)="cancelarEdicion()">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

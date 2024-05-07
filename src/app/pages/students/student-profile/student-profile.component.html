@@ -1,0 +1,74 @@
+<app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="container">
+    <div class="details">
+      <div class="recentOrders">
+        <div class="card-header bg-info">
+          <h2 class="mb-4">Mi Perfil</h2>
+          <button (click)="editMode = true" class="btn btn-primary">
+            <i class="fas fa-edit"></i> Editar Perfil
+          </button>
+        </div>
+        <div *ngIf="alumno">
+          <div class="profile-info">
+            <div class="edit-profile" *ngIf="editMode">
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input [(ngModel)]="alumno.nombre" type="text" class="form-control profile-input" id="nombre"
+                  placeholder="Nombre">
+              </div>
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input [(ngModel)]="alumno.apellido" type="text" class="form-control profile-input" id="apellido"
+                  placeholder="Apellido">
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input [(ngModel)]="alumno.email" type="email" class="form-control profile-input" id="email"
+                  placeholder="Email">
+              </div>
+              <div class="mb-3">
+                <label for="usuario" class="form-label">Usuario</label>
+                <input [(ngModel)]="alumno.usuario" type="text" class="form-control profile-input" id="usuario"
+                  placeholder="Usuario">
+              </div>
+              <div class="mb-3">
+                <label for="genero" class="form-label">Género</label>
+                <input [(ngModel)]="alumno.genero" type="text" class="form-control profile-input" id="genero"
+                  placeholder="Género">
+              </div>
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input [(ngModel)]="alumno.telefono" type="text" class="form-control profile-input" id="telefono"
+                  placeholder="Teléfono">
+              </div>
+              <div class="mb-3">
+                <label for="fechaNac" class="form-label">Fecha de Nacimiento</label>
+                <input [(ngModel)]="alumno.fecha_nac" type="date" class="form-control profile-input" id="fechaNac"
+                  placeholder="Fecha de Nacimiento">
+              </div>
+              <div class="profile-actions">
+                <button (click)="guardarCambios()" class="btn btn-success me-2">
+                  <i class="fas fa-save"></i> Guardar Cambios
+                </button>
+                <button (click)="editMode = false" class="btn btn-secondary">
+                  Cancelar
+                </button>
+              </div>
+            </div>
+            <div *ngIf="!editMode">
+              <p class="mb-2"><strong>Nombre:</strong> {{ alumno.nombre }}</p>
+              <p class="mb-2"><strong>Apellido:</strong> {{ alumno.apellido }}</p>
+              <p class="mb-2"><strong>Email:</strong> {{ alumno.email }}</p>
+              <p class="mb-2"><strong>Usuario:</strong> {{ alumno.usuario }}</p>
+              <p class="mb-2"><strong>Género:</strong> {{ alumno.genero }}</p>
+              <p class="mb-2"><strong>Teléfono:</strong> {{ alumno.telefono }}</p>
+              <p class="mb-2"><strong>Fecha de Nacimiento:</strong> {{ alumno.fecha_nac }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

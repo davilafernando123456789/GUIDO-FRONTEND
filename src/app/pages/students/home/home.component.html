@@ -1,0 +1,59 @@
+<app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentOrders">
+      <div class="cardHeader">
+        <div class="col-md-12 offset-md-3">
+          <ng-container *ngIf="usuarioLogueado?.rol === 1">
+            <div class="info">
+              <h2>Bienvenido, {{ usuarioLogueado?.nombre }}</h2>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="usuarioLogueado?.rol === 2">
+            <div class="info">
+              <h2>Bienvenido, {{ usuarioLogueado?.nombre }}</h2>
+              <p>¡Te damos la bienvenida como profesor! Explora tus horarios y gestiona tu perfil.</p>
+              <div class="image-container">
+                <img
+                  src="https://www.telemundo.com/sites/nbcutelemundo/files/images/promo/article/2019/01/16/estudiantes-universitarios.jpg"
+                  alt="Imagen Amigable" class="img-fluid">
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="usuarioLogueado?.rol === 1">
+            <h2>Explora a tus Tutores</h2>
+            <div class="buscar">
+              <input type="text" placeholder="Buscar por especialidad" required [(ngModel)]="filtroEspecialidad" />
+              <button class="btn btn-primary" (click)="buscarPorEspecialidad()">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            <div *ngIf="profesores.length === 0" class="alert alert-warning" role="alert" style="padding: 5px;">
+              No se encontraron tutores.
+            </div>
+            <div class="cardBox">
+              <div class="card col-md-3" *ngFor="let profesor of profesores">
+                <div class="card-content" (click)="irAPerfil(profesor.id)">
+                  <div class="card-img-container">
+                    <img [src]="profesor.foto" class="card-img-top">
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title cardName">{{ profesor.nombre }}</h5>
+                    <p class="cardName cardSpecialty">{{ profesor.especialidad }}</p>
+                    <p class="cardName cardDescription">{{ profesor.descripcion }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <button class="btn btn-primary mt-3" (click)="cargarMasProfesores()"
+          *ngIf="profesores.length >= mostrarCantidad && !cargandoMas">Más</button>
+        <div *ngIf="cargandoMas" class="text-center mt-3">
+          <i class="fas fa-spinner fa-spin"></i> Cargando más profesores...
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

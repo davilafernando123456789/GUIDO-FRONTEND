@@ -1,0 +1,128 @@
+<app-navbar></app-navbar>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="container">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Dashboard</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+          <li class="breadcrumb-item active">Tutores</li>
+          <li class="breadcrumb-item active">Estudiantes</li>
+          <li class="breadcrumb-item active">Inscripciones</li>
+          <li class="breadcrumb-item active">Mensajes</li>
+          <li class="breadcrumb-item active">Horarios</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <section class="content">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-6">
+          <div class="card bg-info">
+            <div class="card-body">
+              <h3>{{ totalProfesores }}</h3>
+              <p>Total Profesores</p>
+            </div>
+            <a href="#" class="card-footer text-white d-flex justify-content-between align-items-center">Más información
+              <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="card bg-success">
+            <div class="card-body">
+              <h3>{{ totalAlumnos }}</h3>
+              <p>Total Alumnos</p>
+            </div>
+            <a href="#" class="card-footer text-white d-flex justify-content-between align-items-center">Más información
+              <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="card bg-warning">
+            <div class="card-body">
+              <h3>{{ totalInscripciones }}</h3>
+              <p>Total Inscripciones</p>
+            </div>
+            <a href="#" class="card-footer text-white d-flex justify-content-between align-items-center">Más información
+              <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="card bg-danger">
+            <div class="card-body">
+              <h3>{{ ultimosProfesoresInscritos }}</h3>
+              <p>Últimos Profesores Inscritos</p>
+            </div>
+            <a href="#" class="card-footer text-white d-flex justify-content-between align-items-center">Más información
+              <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-3 col-6">
+          <div class="card bg-primary">
+            <div class="card-body">
+              <h3>{{ ultimosAlumnosInscritos }}</h3>
+              <p>Últimos Alumnos Inscritos</p>
+            </div>
+            <a href="#" class="card-footer text-white d-flex justify-content-between align-items-center">Más información
+              <i class="fas fa-arrow-circle-right"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="card bg-success">
+          <div class="card-header">
+            <h3 class="card-title">Profesores Inscritos por Mes</h3>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="bg-success">Mes</th>
+                  <th class="bg-success">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of profesoresPorMes">
+                  <td class="bg-success">{{ item.mes }}</td>
+                  <td class="bg-success">{{ item.total }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="card bg-info">
+          <div class="card-header">
+            <h3 class="card-title">Alumnos Inscritos por Mes</h3>
+          </div>
+          <div class="card-body">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="bg-info">Mes</th>
+                  <th class="bg-info">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let alum of alumnosPorMes">
+                  <td class="bg-info">{{ alum.mes }}</td>
+                  <td class="bg-info">{{ alum.total }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><br><br><br><br>
+</div>

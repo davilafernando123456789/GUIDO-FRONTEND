@@ -1,0 +1,40 @@
+<app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentCustomers">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="card mt-5">
+            <div class="card-header">
+              Detalles del Horario
+            </div>
+            <div class="card-body">
+              <p class="card-text">Título: {{ horario.titulo }}</p>
+              <p class="card-text">Fecha: {{ horario.fecha }}</p>
+              <p class="card-text">Hora de inicio: {{ horario.hora_inicio }}</p>
+              <p class="card-text">Hora de fin: {{ horario.hora_fin }}</p>
+            </div>
+          </div>
+
+          <div class="card mt-3">
+            <div class="card-header">
+              Detalles del Profesor
+            </div>
+            <div class="card-body">
+              <p class="card-text">Nombre: {{ profesor.nombre }}</p>
+              <p class="card-text">Especialidad: {{ profesor.especialidad }}</p>
+              <p class="card-text">Descripción: {{ profesor.descripcion }}</p>
+            </div>
+          </div>
+          <!-- <div *ngIf="showPayPalButtons">
+        <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+      </div> -->
+          <button class="btn btn-primary mt-3" (click)="registrarInscripcion()">Registrar Inscripción</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

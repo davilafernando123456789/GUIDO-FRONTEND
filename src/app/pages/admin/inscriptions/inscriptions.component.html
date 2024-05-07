@@ -1,0 +1,129 @@
+<app-navbar></app-navbar>
+<div class="main">
+    <app-topbar></app-topbar>
+    <div class="details">
+        <div class="recentOrders">
+            <div class="content-wrapper">
+                <div class="container">
+                    <br>
+                    <div class="container">
+                        <div class="row">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Listado de inscripciones</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" placeholder="Buscar por nombre..."
+                                            [(ngModel)]="searchTerm" (input)="search()">
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>ID del Alumno:</th>
+                                                    <th>ID del Profesor:</th>
+                                                    <th>ID del Horario:</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let inscripcion of inscripciones"
+                                                    (click)="selectInscripcion(inscripcion)">
+                                                    <!-- <tr *ngFor="let mensaje of currentPageData" (click)="selectInscripcion(inscripcion)"> -->
+                                                    <td>{{ inscripcion.id }}</td>
+                                                    <td>{{ inscripcion.Alumnos_id }}</td>
+                                                    <td>{{ inscripcion.Profesores_id }}</td>
+                                                    <td>{{ inscripcion.Horario_id }}</td>
+                                                    <td>
+                                                        <div class="btn-group btn-group-sm" role="group"
+                                                            aria-label="Botones de Acción">
+                                                            <button class="btn btn-success "
+                                                                (click)="selectInscripcion(inscripcion)"><i
+                                                                    class="fas fa-edit"></i></button>
+                                                            <button class="btn btn-danger "
+                                                                (click)="eliminarInscripcion(inscripcion.id)"><i
+                                                                    class="fas fa-trash"></i></button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="pagination-container">
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToFirstPage()">
+                                        <i class="fas fa-angle-double-left"></i>
+                                    </button>
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToPreviousPage()">
+                                        <i class="fas fa-angle-left"></i>
+                                    </button>
+                                    <span class="pagination-info">Página {{ currentPage }} de {{ totalPages }}</span>
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToNextPage()">
+                                        <i class="fas fa-angle-right"></i>
+                                    </button>
+                                    <button class="btn btn-transparent pagination-btn" (click)="goToLastPage()">
+                                        <i class="fas fa-angle-double-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">Editar</h3>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <div *ngIf="editingInscripcion">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>ID:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingInscripcion.id" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Alumno:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingInscripcion.Alumnos_id">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Profesor:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingInscripcion.Profesores_id">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Horario:</label>
+                                                    <input type="text" class="form-control"
+                                                        [(ngModel)]="editingInscripcion.Horario_id">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 d-flex justify-content-center">
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary btn-sm"
+                                                        (click)="guardarEdicion()">Guardar</button>
+                                                    <button class="btn btn-secondary btn-sm ml-2"
+                                                        (click)="cancelarEdicion()">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

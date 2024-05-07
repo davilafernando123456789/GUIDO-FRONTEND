@@ -1,0 +1,135 @@
+<app-navbar></app-navbar>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentOrders">
+      <div class="content-wrapper">
+        <div class="container">
+          <br>
+          <div class="container">
+            <div class="row">
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Mensajes</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Buscar por contenido..."
+                      [(ngModel)]="searchTerm" (input)="search()">
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>ID</th>
+                          <th>Contenido</th>
+                          <th>Remitente ID</th>
+                          <th>Destinatario ID</th>
+                          <th>Archivo URL</th>
+                          <th>Audio URL</th>
+                          <th>Enviado</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let mensaje of currentPageData" (click)="selectMensaje(mensaje)">
+                          <td>{{ mensaje.id }}</td>
+                          <td>{{ mensaje.contenido }}</td>
+                          <td>{{ mensaje.remite_id }}</td>
+                          <td>{{ mensaje.destinatario_id }}</td>
+                          <td>{{ mensaje.archivo_url }}</td>
+                          <td>{{ mensaje.audio_url }}</td>
+                          <td>{{ mensaje.sent }}</td>
+                          <td>
+                            <div class="btn-group btn-group-sm" role="group" aria-label="Botones de Acción">
+                              <button class="btn btn-success " (click)="editMensaje(mensaje)"><i
+                                  class="fas fa-edit"></i></button>
+                              <button class="btn btn-danger " (click)="eliminarMensaje(mensaje.id)"><i
+                                  class="fas fa-trash"></i></button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div class="pagination-container">
+                  <button class="btn btn-transparent pagination-btn" (click)="goToFirstPage()">
+                    <i class="fas fa-angle-double-left"></i>
+                  </button>
+                  <button class="btn btn-transparent pagination-btn" (click)="goToPreviousPage()">
+                    <i class="fas fa-angle-left"></i>
+                  </button>
+                  <span class="pagination-info">Página {{ currentPage }} de {{ totalPages }}</span>
+                  <button class="btn btn-transparent pagination-btn" (click)="goToNextPage()">
+                    <i class="fas fa-angle-right"></i>
+                  </button>
+                  <button class="btn btn-transparent pagination-btn" (click)="goToLastPage()">
+                    <i class="fas fa-angle-double-right"></i>
+                  </button>
+                </div>
+              </div>  <br><br>
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Editar</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <div *ngIf="editingMensaje">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>ID:</label>
+                          <input type="text" class="form-control" [(ngModel)]="editingMensaje.id" disabled>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Contenido:</label>
+                          <input type="text" class="form-control" [(ngModel)]="editingMensaje.contenido">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Remitente:</label>
+                          <input type="text" class="form-control" [(ngModel)]="editingMensaje.remite_id">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Destinatario:</label>
+                          <input type="text" class="form-control" [(ngModel)]="editingMensaje.destinatario_id">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Archivo:</label>
+                          <input type="text" class="form-control" [(ngModel)]="editingMensaje.archivo_url">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label>Audio:</label>
+                          <input type="text" class="form-control" [(ngModel)]="editingMensaje.audio_url">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 d-flex justify-content-center">
+                        <div class="form-group">
+                          <button class="btn btn-primary btn-sm" (click)="guardarEdicion()">Guardar</button>
+                          <button class="btn btn-secondary btn-sm ml-2" (click)="cancelarEdicion()">Cancelar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
