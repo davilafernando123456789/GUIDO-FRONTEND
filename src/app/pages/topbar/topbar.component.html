@@ -3,14 +3,49 @@
         <i class="nav-icon fas fa-bars"></i>
     </div>
 
-    <div class="search">
-        <label>
-            <input type="text" placeholder="Ingrese su busqueda...">
+    <div class="search search-container">
+        <label class="search-label">
+            <input type="text" class="search-input" placeholder="     Ingrese su búsqueda...">
             <i class="nav-icon1 fas fa-search"></i>
         </label>
     </div>
 
-    <div class="user">
-        <!-- <img src="assets/imgs/customer01.jpg" alt=""> -->
+    <div class="topbar-personalizado profile-navbar">
+        <ng-container *ngIf="usuarioLogueado">
+            <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+
+                <ng-container *ngIf="usuarioLogueado?.rol === 1">
+                <div class="image mr-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/535/535521.png" class="img-circle elevation-2 profile-image" alt="User Image">
+                </div>
+                </ng-container>
+                <ng-container *ngIf="usuarioLogueado?.rol === 2">
+                    <div class="image mr-3">
+                        <img [src]="usuarioLogueado?.foto" class="img-circle elevation-2 profile-image" alt="User Image">
+                    </div>
+                    </ng-container>
+                    <ng-container *ngIf="usuarioLogueado?.rol === 3">
+                        <div class="image mr-3">
+                            <img src="https://www.pngkey.com/png/full/202-2022334_usuario-png.png" class="img-circle elevation-2 profile-image" alt="User Image">
+                        </div>
+                        </ng-container>
+
+                <div class="name mr-auto">
+                    <span class="title profile-name">{{ usuarioLogueado?.nombre }}</span>
+                </div>
+
+
+                <div class="dropdown profile-dropdown">
+                    <div class="dropdown">
+                        <button class="dropbtn profile-button">
+                            <i class="fas fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#" (click)="cerrarSesion()">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
     </div>
 </div>

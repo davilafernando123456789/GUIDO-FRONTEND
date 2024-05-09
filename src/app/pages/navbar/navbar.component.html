@@ -17,7 +17,7 @@
                       <a href="#" class="d-block"><span class="title">{{ usuarioLogueado?.nombre }}</span></a>
                   </div>
               </ng-container> -->
-        <li>
+        <!-- <li>
           <ng-container *ngIf="usuarioLogueado?.rol === 3">
             <div class="icon">
               <span class="title text-center"
@@ -26,7 +26,9 @@
               </span>
             </div>
           </ng-container>
-        </li>
+        </li> -->
+        <hr>
+        <br>
         <ng-container *ngIf="usuarioLogueado?.rol === 3">
           <li>
             <a routerLink="/dashboard">
