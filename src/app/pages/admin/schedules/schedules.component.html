@@ -78,42 +78,42 @@
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body">
-                  <div *ngIf="selectedHorario">
+                  <div *ngIf="editingHorario">
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>ID:</label>
-                          <input type="text" class="form-control" [(ngModel)]="selectedHorario.id" disabled>
+                          <input type="text" class="form-control" [(ngModel)]="editingHorario.id" disabled>
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Titulo:</label>
-                          <input type="text" class="form-control" [(ngModel)]="selectedHorario.titulo">
+                          <input type="text" class="form-control" [(ngModel)]="editingHorario.titulo">
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Dia de semana:</label>
-                          <input type="text" class="form-control" [(ngModel)]="selectedHorario.dia_semana">
+                          <input type="text" class="form-control" [(ngModel)]="editingHorario.dia_semana">
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Hora de inicio:</label>
-                          <input type="text" class="form-control" [(ngModel)]="selectedHorario.hora_inicio">
+                          <input type="text" class="form-control" [(ngModel)]="editingHorario.hora_inicio">
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Hora de fin:</label>
-                          <input type="text" class="form-control" [(ngModel)]="selectedHorario.hora_fin">
+                          <input type="text" class="form-control" [(ngModel)]="editingHorario.hora_fin">
                         </div>
                       </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label>Fecha:</label>
-                          <input type="text" class="form-control" [(ngModel)]="selectedHorario.fecha">
+                          <input type="text" class="form-control" [(ngModel)]="editingHorario.fecha">
                         </div>
                       </div>
                     </div>

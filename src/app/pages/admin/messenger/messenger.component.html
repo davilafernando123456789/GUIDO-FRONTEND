@@ -15,7 +15,9 @@
                 <!-- /.card-header -->
                 <div class="card-body">
                   <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Buscar por contenido..."
+                    <input type="text" class="form-control" placeholder="Buscar por id de profesor..."
+                      [(ngModel)]="searchTerm2" (input)="search2()">
+                      <input type="text" class="form-control" placeholder="Buscar por id de alumno..."
                       [(ngModel)]="searchTerm" (input)="search()">
                   </div>
                   <div class="table-responsive">
@@ -24,8 +26,8 @@
                         <tr>
                           <th>ID</th>
                           <th>Contenido</th>
-                          <th>Remitente ID</th>
-                          <th>Destinatario ID</th>
+                          <th>Alumno ID</th>
+                          <th>Profesor ID</th>
                           <th>Archivo URL</th>
                           <th>Audio URL</th>
                           <th>Enviado</th>

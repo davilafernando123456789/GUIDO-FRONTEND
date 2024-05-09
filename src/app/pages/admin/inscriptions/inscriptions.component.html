@@ -30,9 +30,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr *ngFor="let inscripcion of inscripciones"
-                                                    (click)="selectInscripcion(inscripcion)">
-                                                    <!-- <tr *ngFor="let mensaje of currentPageData" (click)="selectInscripcion(inscripcion)"> -->
+                                                <tr *ngFor="let inscripcion of currentPageData">
+                                                    <!-- <tr *ngFor="let mensaje of currentPageData" (click)="selectInscripcion(inscripcion)"> -->                                                 
                                                     <td>{{ inscripcion.id }}</td>
                                                     <td>{{ inscripcion.Alumnos_id }}</td>
                                                     <td>{{ inscripcion.Profesores_id }}</td>

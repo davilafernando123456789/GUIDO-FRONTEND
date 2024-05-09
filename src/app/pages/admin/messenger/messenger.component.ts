@@ -14,6 +14,7 @@ export class MessengerComponent implements OnInit {
   itemsPerPage = 5;
   key: string = '';
   searchTerm: string = '';
+  searchTerm2: string = '';
   reverse: boolean = false;
 
   constructor(private adminService: AdminService) { }
@@ -91,7 +92,7 @@ export class MessengerComponent implements OnInit {
 
   search(): void {
     console.log('search');
-    this.adminService.buscarMensajesPorContenido(this.searchTerm).subscribe(
+    this.adminService.obtenerMensajePorAlumnoId(this.searchTerm).subscribe(
       (response) => {
         console.log('Response de búsqueda:', response);
         this.mensajes = response;
@@ -101,6 +102,19 @@ export class MessengerComponent implements OnInit {
       }
     );
   }
+  search2(): void {
+    console.log('search');
+    this.adminService.obtenerMensajePorProfesorId(this.searchTerm2).subscribe(
+      (response) => {
+        console.log('Response de búsqueda:', response);
+        this.mensajes = response;
+      },
+      (error) => {
+        console.error('Error al buscar los mensajes:', error);
+      }
+    );
+  }
+
 
   onPageChange(pageNumber: number): void {
     console.log('Número de página:', pageNumber); 

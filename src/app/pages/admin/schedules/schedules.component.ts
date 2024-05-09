@@ -4,18 +4,19 @@ import { AdminService } from '../admin.service';
 @Component({
   selector: 'app-schedules',
   templateUrl: './schedules.component.html',
-  styleUrls: ['./schedules.component.css']
+  styleUrls: ['./schedules.component.css'],
 })
 export class SchedulesComponent implements OnInit {
   horarios: any[] = [];
   selectedHorario: any | null = null;
+  editingHorario: any | null = null;
   currentPage = 1;
   itemsPerPage = 5;
   key: string = '';
   searchTerm: string = '';
   reverse: boolean = false;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
     this.getHorarios();
@@ -41,17 +42,17 @@ export class SchedulesComponent implements OnInit {
   }
 
   editHorario(horario: any): void {
-    this.selectedHorario = { ...horario }; // Clonar el horario para evitar cambios directos
+    this.editingHorario = { ...horario }; // Clonar el horario para evitar cambios directos
   }
-  
+
   guardarEdicion(): void {
     // Lógica para guardar la edición
-    if (this.selectedHorario) {
-      this.adminService.guardarHorarioEditado(this.selectedHorario).subscribe(
+    if (this.editingHorario) {
+      this.adminService.guardarHorarioEditado(this.editingHorario).subscribe(
         () => {
           // Actualizar la lista de horarios después de guardar la edición
           this.getHorarios();
-          this.selectedHorario = null;
+          this.editingHorario = null;
           alert('El horario ha sido actualizado exitosamente.');
         },
         (error) => {
@@ -61,19 +62,17 @@ export class SchedulesComponent implements OnInit {
       );
     }
   }
-  
+
   cancelarEdicion(): void {
-    this.selectedHorario = null; // Limpiar el horario en edición
+    this.editingHorario = null; // Limpiar el horario en edición
   }
-  
+
   eliminarHorario(id: number): void {
     // Lógica para eliminar el horario
     this.adminService.eliminarHorario(id.toString()).subscribe(
       () => {
         // Actualizar la lista de horarios después de la eliminación
-        this.horarios = this.horarios.filter(
-          (horario) => horario.id !== id
-        );
+        this.horarios = this.horarios.filter((horario) => horario.id !== id);
         alert('El horario ha sido eliminado exitosamente.');
       },
       (error) => {
@@ -82,7 +81,7 @@ export class SchedulesComponent implements OnInit {
       }
     );
   }
-  
+
   search(): void {
     console.log('search');
     // Filtrar los horarios según el término de búsqueda en el campo de fecha
@@ -96,11 +95,9 @@ export class SchedulesComponent implements OnInit {
       }
     );
   }
-  
-  
 
   onPageChange(pageNumber: number): void {
-    console.log('Número de página:', pageNumber); 
+    console.log('Número de página:', pageNumber);
     this.currentPage = pageNumber;
   }
 

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -63,6 +62,16 @@ export class AdminService {
     const params = new HttpParams().set('contenido', contenido);
     return this.http.get<any[]>(`${this.apiUrlMensajes}/search`, { params });
   }
+  // Método para obtener alumnos por ID de usuario (filtrando por inscripciones)
+  obtenerMensajePorAlumnoId(usuarioId: string): Observable<any[]> {
+    const url = `${this.apiUrlMensajes}/remitente/${usuarioId}`;
+    return this.http.get<any[]>(url);
+  }
+  // Método para obtener profesores por ID de usuario (filtrando por inscripciones)
+  obtenerMensajePorProfesorId(usuarioId: string): Observable<any[]> {
+    const url = `${this.apiUrlMensajes}/destinatario/${usuarioId}`;
+    return this.http.get<any[]>(url);
+  }
 
   // Método para eliminar un mensaje por su ID
   eliminarMensaje(id: string): Observable<any> {
@@ -82,7 +91,9 @@ export class AdminService {
   }
   buscarHorariosPorFecha(fecha: string): Observable<any[]> {
     const params = new HttpParams().set('fecha', fecha);
-    return this.http.get<any[]>(`${this.apiUrlHorarios}/buscar?fecha=`, { params });
+    return this.http.get<any[]>(`${this.apiUrlHorarios}/buscar?fecha=`, {
+      params,
+    });
   }
 
   // Método para eliminar un horario por su ID
@@ -92,7 +103,7 @@ export class AdminService {
   }
   // Método para guardar la edición de un horario
   guardarHorarioEditado(horario: any): Observable<any> {
-    const url = `${this.apiUrlHorarios}/editar/${horario.id}`;
+    const url = `${this.apiUrlHorarios}/${horario.id}`;
     return this.http.put<any>(url, horario);
   }
 
@@ -103,8 +114,7 @@ export class AdminService {
   }
 
   buscarAlumnosPorNombre(nombre: string): Observable<any[]> {
-    const params = new HttpParams().set('nombre', nombre);
-    return this.http.get<any[]>(`${this.apiUrlAlumnos}/nombre/`, { params });
+    return this.http.get<any[]>(`${this.apiUrlAlumnos}/nombre/${nombre}`);
   }
 
   // Método para eliminar un alumno por su ID

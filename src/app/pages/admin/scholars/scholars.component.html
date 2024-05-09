@@ -33,7 +33,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let alumno of alumnos" (click)="selectAlumno(alumno)">
+                        <tr *ngFor="let alumno of currentPageData" (click)="selectAlumno(alumno)">
                           <td>{{ alumno.id }}</td>
                           <td>{{ alumno.nombre }}</td>
                           <td>{{ alumno.apellido }}</td>
