@@ -78,7 +78,7 @@ const routesInicio: Routes = [
   { path: 'editar-producto/:id', component: EditarProductosComponent, data: { message: 'Edit Product route' } },
   { path: 'teacherProfile/:id', component: TeacherProfileComponent, data: { message: 'Edit Product route' } },
   { path: 'confirmation/:horarioId/:profesorId', component: ConfirmationComponent, data: { message: 'Edit Product route' } },
-  { path: 'calendarRegister/:profesorId', component: CalendarComponent, data: { message: 'Edit Product route' } },
+  { path: 'calendarRegister', component: CalendarComponent, data: { message: 'Edit Product route' } },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 

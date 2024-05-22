@@ -6,6 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventClickArg } from '@fullcalendar/core';
 import { Router, NavigationExtras } from '@angular/router';
+import Swal from 'sweetalert2';
 
 interface ExtendedProps {
   horarioId: string;
@@ -22,16 +23,16 @@ export class TeacherProfileComponent implements OnInit {
   profesor: any;
   horarios: any[] = [];
   calendarOptions: CalendarOptions = {
-    initialView: 'timeGridWeek', // Cambiar a la vista semanal de timeGrid
+    initialView: 'timeGridWeek', 
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'timeGridWeek,timeGridDay', // Agregar botones para cambiar entre vista semanal y diaria
+      right: 'timeGridWeek,timeGridDay',
     },
-    slotMinTime: '08:00:00', // Hora de inicio personalizada
-    slotMaxTime: '22:00:00', // Hora de finalización personalizada
+    slotMinTime: '08:00:00', 
+    slotMaxTime: '22:00:00', 
     allDaySlot: false,
-    weekends: false, // Ocultar los fines de semana
+    weekends: false,
     plugins: [dayGridPlugin, timeGridPlugin],
     eventClick: this.handleEventClick.bind(this),
   };
@@ -96,9 +97,6 @@ export class TeacherProfileComponent implements OnInit {
   
     this.router.navigate(['/confirmation', horarioId, profesorId]);
   }
-  
-  
-  
   
 }
 

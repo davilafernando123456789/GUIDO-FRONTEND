@@ -56,7 +56,7 @@ export class CursoService {
 
   // En el servicio CursoService
   actualizarAlumno(alumnoId: string, datos: any) {
-    const url = `${this.apiUrlAlumnos}/${alumnoId}`;
+    const url = `${this.apiUrlAlumnos}/editar/${alumnoId}`;
     return this.http.put(url, datos);
   }
   // En el servicio CursoService

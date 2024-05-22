@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-register-teacher',
@@ -37,12 +38,20 @@ export class TeacherComponent {
          },
           error => {
             console.error('Error al subir la imagen:', error);
-            alert('Error al subir la imagen. Por favor, inténtalo de nuevo más tarde.');
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al subir la imagen',
+              text: 'Por favor, seleccione una imagen en el formato adecuado.'
+            });
           }
         );
     } else {
     console.error('No se ha seleccionado ningún archivo.');
-    alert('Por favor, seleccione una imagen antes de enviar el formulario.');
+    Swal.fire({
+      icon: 'warning',
+      title: 'No se ha seleccionado ninguna imagen',
+      text: 'Por favor, seleccione una imagen antes de enviar el formulario.'
+    });
   }
 }
 
@@ -79,13 +88,24 @@ export class TeacherComponent {
     .subscribe(
       response => {
         console.log('Respuesta del servidor:', response);
-        alert('Profesor creado correctamente');
-        // this.router.navigate(['/otra-pagina']);
-        this.router.navigate(['/calendarRegister', response.usuario.id]);
+        // alert('Profesor creado correctamente');
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha registrado exitosamente a nuestra plataforma',
+          showConfirmButton: false,
+          timer: 3000,
+        }).then(() => {
+          this.router.navigate(['/home', response.usuario.id]);
+        });
+       
       },
       error => {
         console.error('Error al enviar los datos:', error);
-        alert('Error al crear el profesor. Por favor, inténtalo de nuevo más tarde.');
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al enviar los datos',
+        });
+        // alert('Error al crear el profesor. Por favor, inténtalo de nuevo más tarde.');
       }
     );
   }

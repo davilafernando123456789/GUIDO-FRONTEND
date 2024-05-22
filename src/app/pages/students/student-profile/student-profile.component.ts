@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CursoService } from '../services/courses.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-student-profile',
   templateUrl: './student-profile.component.html',
-  styleUrls: ['./student-profile.component.css']
+  styleUrls: ['./student-profile.component.css'],
 })
 export class StudentProfileComponent implements OnInit {
   alumno: any;
@@ -35,22 +36,34 @@ export class StudentProfileComponent implements OnInit {
   }
 
   getAlumno() {
-    this.cursoService.obtenerAlumnoPorId(this.alumnoId).subscribe((alumno: any) => {
-      this.alumno = alumno;
-    });
+    this.cursoService
+      .obtenerAlumnoPorId(this.alumnoId)
+      .subscribe((alumno: any) => {
+        this.alumno = alumno;
+      });
   }
 
   guardarCambios() {
-    this.cursoService.actualizarAlumno(this.alumnoId, this.alumno)
-      .subscribe(
-        () => {
-          // Manejar la respuesta exitosa
-          this.editMode = false; // Salir del modo de edición
-        },
-        (error) => {
-          // Manejar el error
-          console.error(error);
-        }
-      );
+    this.cursoService.actualizarAlumno(this.alumnoId, this.alumno).subscribe(
+      () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Perfil actualizado correctamente',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        this.editMode = false;
+      },
+      (error) => {
+        // Manejar el error
+        Swal.fire({
+          icon: 'error',
+          title: 'Hubo un error al editar perfil',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        console.error(error);
+      }
+    );
   }
 }

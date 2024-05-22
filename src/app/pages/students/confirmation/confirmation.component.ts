@@ -5,10 +5,12 @@ import { IPayPalConfig, ICreateOrderRequest } from 'ngx-paypal';
 import { environment } from 'src/environments/environment';
 import { PayPalConfigExtended } from '../../../models/paypal-config.model';
 import { Router, NavigationExtras } from '@angular/router';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-confirmation',
   templateUrl: './confirmation.component.html',
-  styleUrls: ['./confirmation.component.css']
+  styleUrls: ['./confirmation.component.css'],
 })
 export class ConfirmationComponent implements OnInit {
   // showPayPalButtons = false;
@@ -21,19 +23,141 @@ export class ConfirmationComponent implements OnInit {
     private route: ActivatedRoute,
     private cursoService: CursoService,
     private router: Router
-  ) { }
+  ) {}
   ngOnInit() {
     // this.initConfig();
     this.horarioId = this.route.snapshot.paramMap.get('horarioId');
     this.profesorId = this.route.snapshot.paramMap.get('profesorId');
-  
+
     if (this.horarioId && this.profesorId) {
       this.obtenerDetallesHorario();
       this.obtenerDetallesProfesor();
     } else {
-      console.error('No se encontraron los parámetros horarioId y profesorId en la ruta');
+      console.error(
+        'No se encontraron los parámetros horarioId y profesorId en la ruta'
+      );
     }
   }
+
+  obtenerDetallesHorario() {
+    if (this.horarioId) {
+      // Llama al servicio para obtener los detalles del horario
+      this.cursoService
+        .obtenerHorariosPorId(this.horarioId)
+        .subscribe((horario) => (this.horario = horario));
+    } else {
+      console.error('ID del horario no válido');
+    }
+  }
+
+  obtenerDetallesProfesor() {
+    if (this.profesorId) {
+      // Llama al servicio para obtener los detalles del profesor
+      this.cursoService
+        .obtenerProfesorPorId(this.profesorId)
+        .subscribe((profesor) => (this.profesor = profesor));
+    } else {
+      console.error('ID del profesor no válido');
+    }
+  }
+
+  // registrarInscripcion() {
+  //   // Obtener el ID del alumno logueado desde sessionStorage
+  //   const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  //   const alumnoId = usuario.id;
+
+  //   if (!alumnoId) {
+  //     console.error('No se pudo obtener el ID del alumno logueado');
+  //     return;
+  //   }
+  //   const inscripcion = {
+  //     Alumnos_id: alumnoId,
+  //     Profesores_id: this.profesorId,
+  //     Horario_id: this.horarioId,
+  //   };
+
+  //   this.cursoService.registrarInscripcion(inscripcion).subscribe(
+  //     () => {
+  //       console.log('Inscripción registrada correctamente');
+  //       this.router.navigate(['/home']);
+  //     },
+  //     (error) => {
+  //       console.error('Error al registrar la inscripción:', error);
+  //       alert(
+  //         'Error al registrar la inscripción. Por favor, inténtalo de nuevo.'
+  //       );
+  //     }
+  //   );
+  
+  // }
+
+  registrarInscripcion() {
+    const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+    const alumnoId = usuario.id;
+
+    if (!alumnoId) {
+      console.error('No se pudo obtener el ID del alumno logueado');
+      return;
+    }
+
+    const inscripcion = {
+      Alumnos_id: alumnoId,
+      Profesores_id: this.profesorId,
+      Horario_id: this.horarioId,
+    };
+
+    Swal.fire({
+      title: '¿Deseas reservar la inscripción?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.cursoService.registrarInscripcion(inscripcion).subscribe(
+          () => {
+            Swal.fire({
+              icon: 'success',
+              title: 'Reservación realizada correctamente',
+              showConfirmButton: false,
+              timer: 3000,
+            });
+            this.router.navigate(['/home']);
+          },
+          (error) => {
+            console.error('Error al registrar la inscripción:', error);
+            if (error.status === 400 && error.error.message === 'Ya existe una inscripción para este horario') {
+              Swal.fire({
+                icon: 'error',
+                title: 'Horario ya reservado',
+                text: 'El horario ya ha sido reversado',
+                showConfirmButton: true,
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error al registrar la reservación',
+                text: 'Por favor, inténtalo de nuevo.',
+                showConfirmButton: true,
+              });
+            }
+          }
+        );
+      } else {
+        Swal.fire({
+          icon: 'info',
+          title: 'Inscripción cancelada',
+          text: 'Por favor, completa tus datos y vuelve a intentarlo.',
+          showConfirmButton: true,
+        });
+      }
+    });
+  }
+}
+
+
+  //PARA EL METODO DE PAGO
+
   // private initConfig(): void {
   //   this.payPalConfig = {
   //     currency: 'USD',
@@ -86,60 +210,6 @@ export class ConfirmationComponent implements OnInit {
   //       console.log('onClick', data, actions);
   //     },
   //   };
-  
+
   //   this.showPayPalButtons = true;
   // }
-  obtenerDetallesHorario() {
-    if (this.horarioId) {
-      // Llama al servicio para obtener los detalles del horario
-      this.cursoService.obtenerHorariosPorId(this.horarioId).subscribe(
-        horario => this.horario = horario
-      );
-    } else {
-      console.error('ID del horario no válido');
-    }
-  }
-  
-  obtenerDetallesProfesor() {
-    if (this.profesorId) {
-      // Llama al servicio para obtener los detalles del profesor
-      this.cursoService.obtenerProfesorPorId(this.profesorId).subscribe(
-        profesor => this.profesor = profesor
-      );
-    } else {
-      console.error('ID del profesor no válido');
-    }
-  }
-  
-  registrarInscripcion() {
-    // Obtener el ID del alumno logueado desde sessionStorage
-    const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
-    const alumnoId = usuario.id;
-  
-    if (!alumnoId) {
-      console.error('No se pudo obtener el ID del alumno logueado');
-      return;
-    }
-  
-    // Aquí debes llamar al servicio para registrar la inscripción
-    // Asegúrate de tener un método en el CursoService para registrar una inscripción
-    const inscripcion = {
-      Alumnos_id: alumnoId,
-      Profesores_id: this.profesorId,
-      Horario_id: this.horarioId
-    };
-  
-    this.cursoService.registrarInscripcion(inscripcion).subscribe(
-      () => {
-        console.log('Inscripción registrada correctamente');
-        // Redirigir al usuario a /home en caso de éxito
-        this.router.navigate(['/home']);
-      },
-      error => {
-        console.error('Error al registrar la inscripción:', error);
-        // Mostrar mensaje de alerta en caso de error
-        alert('Error al registrar la inscripción. Por favor, inténtalo de nuevo.');
-      }
-    );
-  }
-}

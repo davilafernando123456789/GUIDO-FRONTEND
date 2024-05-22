@@ -46,6 +46,11 @@ export class AdminService {
     const url = `${this.apiUrlInscripciones}/${id}`;
     return this.http.delete<any>(url);
   }
+  // Método para obtener inscripciones por ID de 
+  obtenerInscripcionesById(InscripcionId: string): Observable<any[]> {
+    const url = `${this.apiUrlInscripciones}/${InscripcionId}`;
+    return this.http.get<any[]>(url);
+  }
 
   // Método para guardar la edición de un inscripcion
   guardarInscripcionEditada(inscripcion: any): Observable<any> {

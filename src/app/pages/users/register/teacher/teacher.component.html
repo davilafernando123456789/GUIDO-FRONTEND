@@ -9,7 +9,7 @@
   <div class="container mt-3" >
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <form class="card">
+        <form  class="card-body"  (ngSubmit)="submitForm()" #profesorForm="ngForm">
           <div class="card-header">
             <h3 class="text text-center">Datos del Profesor</h3>
             <!-- <a href="login">

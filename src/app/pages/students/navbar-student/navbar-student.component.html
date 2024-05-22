@@ -24,6 +24,17 @@
                 </li>
                 <ng-container *ngIf="usuarioLogueado?.rol === 2">
                     <li>
+                        <a routerLink="/calendarRegister" class="nav-link">
+                            <span class="icon">
+                                <ion-icon name="calendar-clear-outline"></ion-icon>
+
+                            </span>
+                            <span class="title">Horario</span>
+                        </a>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="usuarioLogueado?.rol === 2">
+                    <li>
                         <a routerLink="/conversations" class="nav-link">
                             <span class="icon">
                                 <ion-icon name="mail-outline"></ion-icon>

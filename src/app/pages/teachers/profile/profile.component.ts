@@ -7,6 +7,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventClickArg } from '@fullcalendar/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { TeacherService } from '../teacher.service';
+import Swal from 'sweetalert2';
 
 interface ExtendedProps {
   horarioId: string;
@@ -72,10 +73,22 @@ export class ProfileComponent implements OnInit {
       .subscribe(
         () => {
           // Manejar la respuesta exitosa
+          Swal.fire({
+            icon: 'success',
+            title: 'Perfil actualizado correctamente',
+            showConfirmButton: false,
+            timer: 3000,
+          });
           this.editMode = false; // Salir del modo de edición
         },
         (error) => {
           // Manejar el error
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar perfil',
+            showConfirmButton: false,
+            timer: 3000,
+          });
           console.error(error);
         }
       );
