@@ -23,12 +23,26 @@
           </ng-container>
           <ng-container *ngIf="usuarioLogueado?.rol === 1">
             <h2>Explora a tus Tutores</h2>
-            <div class="buscar">
+            <!-- <div class="buscar">
               <input type="text" placeholder="Buscar por especialidad" required [(ngModel)]="filtroEspecialidad" />
               <button class="btn btn-primary" (click)="buscarPorEspecialidad()">
                 <i class="fas fa-search"></i>
               </button>
+            </div> -->
+           <div>Selecciona la especialidad por la que deseas buscar: </div> <div class="buscar d-flex justify-content-center mb-4">
+              <select
+                [(ngModel)]="filtroEspecialidad"
+                (change)="filtrarPorEspecialidad(filtroEspecialidad)"
+                class="form-select form-select-lg"
+                aria-label="Selecciona una especialidad"
+              >
+                <option value="">Selecciona una especialidad</option>
+                <option value="Matemática">Matemática</option>
+                <option value="Comunicación">Comunicación</option>
+                <option value="Ciencias Sociales">Ciencias Sociales</option>
+              </select>
             </div>
+            
             <div *ngIf="profesores.length === 0" class="alert alert-warning" role="alert" style="padding: 5px;">
               No se encontraron tutores.
             </div>

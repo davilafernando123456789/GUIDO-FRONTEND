@@ -24,6 +24,7 @@ import { StudentProfileComponent } from './pages/students/student-profile/studen
 import { ProfileComponent } from './pages/teachers/profile/profile.component';
 import { ConversationComponent } from './pages/students/conversation/conversation.component';
 import { ConversationsComponent } from './pages/teachers/conversations/conversations.component';
+
 import { CalendarComponent } from './pages/users/register/calendar/calendar.component';
 import { ConfirmationComponent } from './pages/students/confirmation/confirmation.component';
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
@@ -77,6 +78,7 @@ const routesInicio: Routes = [
   { path: 'calendarTeacher', component: CalendarTeacherComponent, data: { message: 'Calendar Student route' } },
   { path: 'editar-producto/:id', component: EditarProductosComponent, data: { message: 'Edit Product route' } },
   { path: 'teacherProfile/:id', component: TeacherProfileComponent, data: { message: 'Edit Product route' } },
+
   { path: 'confirmation/:horarioId/:profesorId', component: ConfirmationComponent, data: { message: 'Edit Product route' } },
   { path: 'calendarRegister', component: CalendarComponent, data: { message: 'Edit Product route' } },
   { path: '**', redirectTo: '', pathMatch: 'full' }

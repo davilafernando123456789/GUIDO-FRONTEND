@@ -9,21 +9,34 @@ import Swal from 'sweetalert2';
   styleUrls: ['./teacher.component.css', './adminlte.min.css']
 })
 export class TeacherComponent {
-
-  profesores: any = {};
+  profesores: any = {
+    especialidad: [] // Inicializar como un array vacío
+  };
+  especialidades = ['Matemática', 'Comunicación', 'Ciencias Sociales'];
+  // profesores: any = {};
   educativos: any = {};
   direccion: any = {};
   selectedFile: File | null = null; // Inicializar selectedFile como null
 
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.profesores.especialidad = [];
+  }
 
   onFileSelected(event: any) {
     if (event.target.files.length > 0) { // Verificar si se seleccionó algún archivo
       this.selectedFile = event.target.files[0]; // Asignar el archivo seleccionado
     }
   }
-
+  toggleEspecialidad(especialidad: string) {
+    if (this.profesores.especialidad.includes(especialidad)) {
+      this.profesores.especialidad = this.profesores.especialidad.filter(
+        (e: string) => e !== especialidad
+      );
+    } else {
+      this.profesores.especialidad.push(especialidad);
+    }
+  }
   submitForm() {
     if (this.selectedFile) { // Verificar si se ha seleccionado un archivo antes de enviar el formulario
       const formData = new FormData();
@@ -68,7 +81,7 @@ export class TeacherComponent {
       telefono: this.profesores.telefono,
       fecha_nac: this.profesores.fecha_nac,
       Roles_id: 2,
-      especialidad: this.profesores.especialidad,
+      especialidad: this.profesores.especialidad.join(','),
       foto:this.profesores.foto,
       educativos: {
         nombre: this.educativos.nombre,
@@ -110,55 +123,3 @@ export class TeacherComponent {
     );
   }
 }
-
-
-// export class TeacherComponent {
-
-//   profesores: any = {};
-//   educativos: any = {};
-//   direccion: any = {};
-
-// constructor(private http: HttpClient, private router: Router) {}
-
-// submitForm() {
-//   const data = {
-//     email: this.profesores.email,
-//     usuario: this.profesores.usuario,
-//     password: this.profesores.password,
-//     nombre: this.profesores.nombre,
-//     apellido: this.profesores.apellido,
-//     genero: this.profesores.genero,
-//     dni: this.profesores.dni,
-//     telefono: this.profesores.telefono,
-//     fecha_nac: this.profesores.fecha_nac,
-//     Roles_id: 2,
-//     especialidad: this.profesores.especialidad,
-//     // foto:this.profesor.foto,
-//     foto: "Imagen de un profesor",
-//     educativos: {
-//       nombre: this.educativos.nombre,
-//       institucion: this.educativos.institucion,
-//       fecha_obtencion: this.educativos.fecha_obtencion,
-//       pais_institucion: this.educativos.pais_institucion,
-//       nivel_educacion: this.educativos.nivel_educacion
-//     },
-//     direccion: {
-//       calle: this.direccion.calle,
-//       distrito: this.direccion.distrito,
-//       ciudad: this.direccion.ciudad,
-//       codigo_postal: this.direccion.codigo_postal
-//     }
-//   };
-// this.http.post<any>('http://localhost:4000/api/profesores', data)
-//   .subscribe(
-//     response => {
-//       console.log('Respuesta del servidor:', response);
-//       alert('Profesor creado correctamente. ID del profesor: ' + response.id);
-//       this.router.navigate(['/otra-pagina']);
-//     },
-//     error => {
-//       console.error('Error al enviar los datos:', error);
-//       alert('Error al crear el profesor. Por favor, inténtalo de nuevo más tarde.');
-//     }
-//   );
-// }

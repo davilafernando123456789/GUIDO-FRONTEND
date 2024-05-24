@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -10,11 +10,32 @@ export class CursoService {
   private apiUrlProfesores = 'http://localhost:4000/api/profesores';
   private apiUrlInscripciones = 'http://localhost:4000/api/inscripciones'; // Nueva URL para filtrar por inscripciones
   private apiUrlAlumnos = 'http://localhost:4000/api/alumnos';
+  private apiUrlProfesoresBuscar =
+    'http://localhost:4000/api/profesores/buscar';
   constructor(private http: HttpClient) {}
 
   // Método para obtener todos los profesores
   obtenerProfesores(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrlProfesores);
+  }
+
+  obtenerProfesoresPorEspecialidad(
+    especialidades: string[]
+  ): Observable<any[]> {
+    let params = new HttpParams();
+    if (especialidades && especialidades.length > 0) {
+      params = params.append('especialidades', especialidades.join(','));
+    }
+    return this.http.get<any[]>(this.apiUrlProfesoresBuscar, { params });
+  }
+
+  // Nuevo método para obtener todos los profesores si no se ha seleccionado ninguna especialidad
+  obtenerProfesoresConFiltro(especialidades: string[]): Observable<any[]> {
+    if (especialidades && especialidades.length > 0) {
+      return this.obtenerProfesoresPorEspecialidad(especialidades);
+    } else {
+      return this.obtenerProfesores();
+    }
   }
 
   // Método para obtener un profesor por su ID
@@ -74,7 +95,6 @@ export class CursoService {
     const params = { ids: horariosIds.join(',') };
     return this.http.get<any[]>(url, { params });
   }
-  
 
   obtenerHorarios(): Observable<any[]> {
     const url = `${this.apiUrlHorarios}`;
@@ -84,5 +104,4 @@ export class CursoService {
     const url = `${this.apiUrlInscripciones}/alumno/${alumnoId}`;
     return this.http.get<string[]>(url);
   }
-  
 }

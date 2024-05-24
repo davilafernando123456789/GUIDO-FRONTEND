@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./confirmation.component.css'],
 })
 export class ConfirmationComponent implements OnInit {
-  // showPayPalButtons = false;
+  showPayPalButtons = false;
   horarioId: string | null = null;
   profesorId: string | null = null;
   horario: any;
@@ -25,7 +25,7 @@ export class ConfirmationComponent implements OnInit {
     private router: Router
   ) {}
   ngOnInit() {
-    // this.initConfig();
+    this.initConfig();
     this.horarioId = this.route.snapshot.paramMap.get('horarioId');
     this.profesorId = this.route.snapshot.paramMap.get('profesorId');
 
@@ -88,8 +88,75 @@ export class ConfirmationComponent implements OnInit {
   //       );
   //     }
   //   );
-  
+
   // }
+  private initConfig(): void {
+    this.payPalConfig = {
+      currency: 'USD',
+      clientId: environment.payPalClientId, // Reemplaza con tu ID de cliente de PayPal
+      createOrderOnClient: (data) =>
+        <ICreateOrderRequest>{
+          intent: 'CAPTURE',
+          purchase_units: [
+            {
+              amount: {
+                currency_code: 'USD',
+                value: '9.99', // Reemplaza con el monto a pagar
+                breakdown: {
+                  item_total: {
+                    currency_code: 'USD',
+                    value: '9.99', // Reemplaza con el monto a pagar
+                  },
+                },
+              },
+              items: [
+                {
+                  name: 'Inscripción al curso', // Reemplaza con la descripción del pago
+                  quantity: '1',
+                  category: 'DIGITAL_GOODS',
+                  unit_amount: {
+                    currency_code: 'USD',
+                    value: '9.99', // Reemplaza con el monto a pagar
+                  },
+                },
+              ],
+            },
+          ],
+        },
+      advanced: {
+        commit: 'true',
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical',
+      },
+      onApprovePayment: (data, actions) => {
+        console.log(
+          'onApprovePayment - you should make an AJAX call to your server to complete the payment',
+          data,
+          actions
+        );
+        this.registrarInscripcion(); // Llama al método registrarInscripcion después de un pago exitoso
+      },
+      onClientAuthorization: (data) => {
+        console.log(
+          'onClientAuthorization - you should fire tracking events here',
+          data
+        );
+      },
+      onCancel: (data, actions) => {
+        console.log('OnCancel', data, actions);
+      },
+      onError: (err) => {
+        console.log('OnError', err);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      },
+    };
+
+    this.showPayPalButtons = true;
+  }
 
   registrarInscripcion() {
     const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
@@ -126,7 +193,11 @@ export class ConfirmationComponent implements OnInit {
           },
           (error) => {
             console.error('Error al registrar la inscripción:', error);
-            if (error.status === 400 && error.error.message === 'Ya existe una inscripción para este horario') {
+            if (
+              error.status === 400 &&
+              error.error.message ===
+                'Ya existe una inscripción para este horario'
+            ) {
               Swal.fire({
                 icon: 'error',
                 title: 'Horario ya reservado',
@@ -155,61 +226,4 @@ export class ConfirmationComponent implements OnInit {
   }
 }
 
-
-  //PARA EL METODO DE PAGO
-
-  // private initConfig(): void {
-  //   this.payPalConfig = {
-  //     currency: 'USD',
-  //     clientId: environment.payPalClientId, // Reemplaza con tu ID de cliente de PayPal
-  //     createOrderOnClient: (data) => <ICreateOrderRequest>{
-  //       intent: 'CAPTURE',
-  //       purchase_units: [{
-  //         amount: {
-  //           currency_code: 'USD',
-  //           value: '9.99', // Reemplaza con el monto a pagar
-  //           breakdown: {
-  //             item_total: {
-  //               currency_code: 'USD',
-  //               value: '9.99' // Reemplaza con el monto a pagar
-  //             }
-  //           }
-  //         },
-  //         items: [{
-  //           name: 'Inscripción al curso', // Reemplaza con la descripción del pago
-  //           quantity: '1',
-  //           category: 'DIGITAL_GOODS',
-  //           unit_amount: {
-  //             currency_code: 'USD',
-  //             value: '9.99', // Reemplaza con el monto a pagar
-  //           },
-  //         }]
-  //       }]
-  //     },
-  //     advanced: {
-  //       commit: 'true'
-  //     },
-  //     style: {
-  //       label: 'paypal',
-  //       layout: 'vertical'
-  //     },
-  //     onApprovePayment: (data, actions) => {
-  //       console.log('onApprovePayment - you should make an AJAX call to your server to complete the payment', data, actions);
-  //       this.registrarInscripcion(); // Llama al método registrarInscripcion después de un pago exitoso
-  //     },
-  //     onClientAuthorization: (data) => {
-  //       console.log('onClientAuthorization - you should fire tracking events here', data);
-  //     },
-  //     onCancel: (data, actions) => {
-  //       console.log('OnCancel', data, actions);
-  //     },
-  //     onError: err => {
-  //       console.log('OnError', err);
-  //     },
-  //     onClick: (data, actions) => {
-  //       console.log('onClick', data, actions);
-  //     },
-  //   };
-
-  //   this.showPayPalButtons = true;
-  // }
+//PARA EL METODO DE PAGO
