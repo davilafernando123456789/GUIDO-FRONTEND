@@ -6,10 +6,10 @@
   <div class="circle"></div>
   <div class="circle"></div>
 
-  <div class="container mt-3" >
+  <div class="container mt-3">
     <div class="row justify-content-center">
       <div class="col-md-8">
-        <form  class="card-body"  (ngSubmit)="submitForm()" #profesorForm="ngForm">
+        <form class="card-body" (ngSubmit)="submitForm()" #profesorForm="ngForm">
           <div class="card-header">
             <h3 class="text text-center">Datos del Profesor</h3>
             <!-- <a href="login">
@@ -95,34 +95,13 @@
                 </select>
               </div> -->
               <div class="form-group col-md-6">
-                <label for="especialidadProfesor">Especialidad</label>
-                <div class="dropdown">
-                  <button
-                    class="btn btn-secondary dropdown-toggle"
-                    type="button"
-                    id="dropdownEspecialidades"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    Seleccionar especialidades
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownEspecialidades">
-                    <div class="dropdown-item" *ngFor="let especialidad of especialidades">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          [value]="especialidad"
-                          (change)="toggleEspecialidad(especialidad)"
-                          [checked]="profesores.especialidad.includes(especialidad)"
-                        />
-                        <label class="form-check-label">{{ especialidad }}</label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <label for="especialidadProfesor">ESPECIALIDAD</label>
+                <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesores.especialidad" name="especialidadProfesor">
+                    <option value="">Seleccionar especialidad</option>
+                    <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+                </select>
+            </div>
+            
               <div class="form-group col-md-6">
                 <label for="descripcionProfesor">Descripción de tu perfil</label>
                 <input type="text" class="form-control" id="descripcionProfesor" name="descripcionProfesor"

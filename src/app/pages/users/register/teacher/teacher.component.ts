@@ -6,68 +6,58 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-register-teacher',
   templateUrl: './teacher.component.html',
-  styleUrls: ['./teacher.component.css', './adminlte.min.css']
+  styleUrls: ['./teacher.component.css', './adminlte.min.css'],
 })
 export class TeacherComponent {
   profesores: any = {
-    especialidad: [] // Inicializar como un array vacío
+    especialidad: '',
   };
   especialidades = ['Matemática', 'Comunicación', 'Ciencias Sociales'];
-  // profesores: any = {};
   educativos: any = {};
   direccion: any = {};
-  selectedFile: File | null = null; // Inicializar selectedFile como null
+  selectedFile: File | null = null;
 
-
-  constructor(private http: HttpClient, private router: Router) {
-    this.profesores.especialidad = [];
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   onFileSelected(event: any) {
-    if (event.target.files.length > 0) { // Verificar si se seleccionó algún archivo
-      this.selectedFile = event.target.files[0]; // Asignar el archivo seleccionado
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
     }
   }
+
   toggleEspecialidad(especialidad: string) {
-    if (this.profesores.especialidad.includes(especialidad)) {
-      this.profesores.especialidad = this.profesores.especialidad.filter(
-        (e: string) => e !== especialidad
-      );
-    } else {
-      this.profesores.especialidad.push(especialidad);
-    }
+    this.profesores.especialidad = especialidad;
   }
+
   submitForm() {
-    if (this.selectedFile) { // Verificar si se ha seleccionado un archivo antes de enviar el formulario
+    if (this.selectedFile) {
       const formData = new FormData();
       formData.append('image', this.selectedFile);
-      // Upload the image to your Node.js server
-      this.http.post<any>('http://localhost:4000/api/imagen/upload-image', formData)
-       .subscribe(
-          response => {
-           // Now response.imageUrl contains the URL of the uploaded image
-            this.profesores.foto = response.imageUrl; // Assign the image URL to profesores.foto
-            this.saveProfesor(); // Call saveProfesor() function to save the profesor with image URL
-         },
-          error => {
+      this.http
+        .post<any>('http://localhost:4000/api/imagen/upload-image', formData)
+        .subscribe(
+          (response) => {
+            this.profesores.foto = response.imageUrl;
+            this.saveProfesor();
+          },
+          (error) => {
             console.error('Error al subir la imagen:', error);
             Swal.fire({
               icon: 'error',
               title: 'Error al subir la imagen',
-              text: 'Por favor, seleccione una imagen en el formato adecuado.'
+              text: 'Por favor, seleccione una imagen en el formato adecuado.',
             });
           }
         );
     } else {
-    console.error('No se ha seleccionado ningún archivo.');
-    Swal.fire({
-      icon: 'warning',
-      title: 'No se ha seleccionado ninguna imagen',
-      text: 'Por favor, seleccione una imagen antes de enviar el formulario.'
-    });
+      console.error('No se ha seleccionado ningún archivo.');
+      Swal.fire({
+        icon: 'warning',
+        title: 'No se ha seleccionado ninguna imagen',
+        text: 'Por favor, seleccione una imagen antes de enviar el formulario.',
+      });
+    }
   }
-}
-
 
   saveProfesor() {
     const data = {
@@ -78,30 +68,18 @@ export class TeacherComponent {
       apellido: this.profesores.apellido,
       genero: this.profesores.genero,
       dni: this.profesores.dni,
+      descripcion: this.profesores.descripcion,
       telefono: this.profesores.telefono,
       fecha_nac: this.profesores.fecha_nac,
       Roles_id: 2,
-      especialidad: this.profesores.especialidad.join(','),
-      foto:this.profesores.foto,
-      educativos: {
-        nombre: this.educativos.nombre,
-        institucion: this.educativos.institucion,
-        fecha_obtencion: this.educativos.fecha_obtencion,
-        pais_institucion: this.educativos.pais_institucion,
-        nivel_educacion: this.educativos.nivel_educacion
-      },
-      direccion: {
-        calle: this.direccion.calle,
-        distrito: this.direccion.distrito,
-        ciudad: this.direccion.ciudad,
-        codigo_postal: this.direccion.codigo_postal
-      }
+      especialidad: this.profesores.especialidad,
+      foto: this.profesores.foto,
+      educativos: this.educativos,
+      direccion: this.direccion,
     };
-  this.http.post<any>('http://localhost:4000/api/profesores', data)
-    .subscribe(
-      response => {
+    this.http.post<any>('http://localhost:4000/api/profesores', data).subscribe(
+      (response) => {
         console.log('Respuesta del servidor:', response);
-        // alert('Profesor creado correctamente');
         Swal.fire({
           icon: 'success',
           title: 'Se ha registrado exitosamente a nuestra plataforma',
@@ -110,15 +88,13 @@ export class TeacherComponent {
         }).then(() => {
           this.router.navigate(['/home', response.usuario.id]);
         });
-       
       },
-      error => {
+      (error) => {
         console.error('Error al enviar los datos:', error);
         Swal.fire({
           icon: 'error',
           title: 'Error al enviar los datos',
         });
-        // alert('Error al crear el profesor. Por favor, inténtalo de nuevo más tarde.');
       }
     );
   }
