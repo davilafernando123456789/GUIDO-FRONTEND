@@ -29,7 +29,7 @@
                 <i class="fas fa-search"></i>
               </button>
             </div> -->
-           <div>Selecciona la especialidad por la que deseas buscar: </div> <div class="buscar d-flex justify-content-center mb-4">
+           <!-- <div>Selecciona la especialidad por la que deseas buscar: </div> <div class="buscar d-flex justify-content-center mb-4">
               <select
                 [(ngModel)]="filtroEspecialidad"
                 (change)="filtrarPorEspecialidad(filtroEspecialidad)"
@@ -61,7 +61,39 @@
               </div>
             </div>
           </ng-container>
+        </div> -->
+
+        <div class="container">
+          <!-- <div class="search-bar">
+            <input type="text" placeholder="¿Qué quieres aprender?" [(ngModel)]="filtroEspecialidad">
+          </div> -->
+          <h2>Seleccionar Tema</h2>
+          <div class="tags">
+            <span class="tag" (click)="filtrarPorEspecialidad('Matemática')">Matemática</span>
+            <span class="tag" (click)="filtrarPorEspecialidad('Comunicación')">Comunicación</span>
+            <span class="tag" (click)="filtrarPorEspecialidad('Ciencias Sociales')">Ciencias Sociales</span>
+          </div>
+          <div *ngIf="profesores.length === 0" class="alert alert-warning" role="alert">
+            No se encontraron tutores.
+          </div>
+        
+      </div>
+        <div class="cardBox">
+          <div class="card col-md-3" *ngFor="let profesor of profesores">
+            <div class="card-content" (click)="irAPerfil(profesor.id)">
+              <div class="card-img-container">
+                <img [src]="profesor.foto" class="card-img-top">
+              </div>
+              <div class="card-body">
+                <h5 class="card-title cardName">{{ profesor.nombre }}</h5>
+                <p class="cardName cardSpecialty">{{ profesor.especialidad }}</p>
+                <p class="cardName cardDescription">{{ profesor.descripcion }}</p>
+              </div>
+            </div>
+          </div>
         </div>
+      </ng-container>
+    </div>
         <button class="btn btn-primary mt-3" (click)="cargarMasProfesores()"
           *ngIf="profesores.length >= mostrarCantidad && !cargandoMas">Más</button>
         <div *ngIf="cargandoMas" class="text-center mt-3">
