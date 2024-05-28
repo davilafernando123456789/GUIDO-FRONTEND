@@ -24,7 +24,6 @@ export class LoginComponent {
           if (response.mensaje === 'OK') {
             // Almacena los datos de sesión en sessionStorage
             sessionStorage.setItem('token', response.token);
-            // sessionStorage.setItem('usuario', JSON.stringify(response.usuario));
             sessionStorage.setItem(
               'usuario',
               JSON.stringify({ ...response.usuario, rol: response.rol })

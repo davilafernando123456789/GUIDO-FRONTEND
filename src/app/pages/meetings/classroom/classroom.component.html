@@ -6,17 +6,21 @@
       <div class="cardHeader">
         <div class="col-md-8 offset-md-3">
           <h2>Bienvenido a la sección de reuniones pendientes</h2>
-
-          <div *ngFor="let reunion of reuniones" class="card mb-3">
-            <div class="card-body">
-              <p class="card-text"><strong>Fecha:</strong> {{ reunion.fecha }}</p>
-              <p class="card-text"><strong>Hora de inicio:</strong> {{ reunion.horaInicio }}</p>
-              <p class="card-text"><strong>Hora de fin:</strong> {{ reunion.horaFin }}</p>
-              <div *ngIf="reunion.sala">
-                <button class="btn btn-primary" (click)="ingresarReunion(reunion.sala)">Ir a Reunión</button>
-            </div>
+          <div *ngIf="reuniones.length > 0; else noReuniones">
+            <div *ngFor="let reunion of reuniones" class="card mb-3">
+              <div class="card-body">
+                <p class="card-text"><strong>Fecha:</strong> {{ reunion.fecha }}</p>
+                <p class="card-text"><strong>Hora de inicio:</strong> {{ reunion.horaInicio }}</p>
+                <p class="card-text"><strong>Hora de fin:</strong> {{ reunion.horaFin }}</p>
+                <div *ngIf="reunion.sala">
+                  <button class="btn btn-primary" (click)="ingresarReunion(reunion.sala)">Ir a Reunión</button>
+                </div>
+              </div>
             </div>
           </div>
+          <ng-template #noReuniones>
+            <p>No tienes reuniones pendientes aún.</p>
+          </ng-template>
         </div>
       </div>
     </div>
