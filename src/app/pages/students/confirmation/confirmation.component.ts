@@ -61,35 +61,7 @@ export class ConfirmationComponent implements OnInit {
     }
   }
 
-  // registrarInscripcion() {
-  //   // Obtener el ID del alumno logueado desde sessionStorage
-  //   const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
-  //   const alumnoId = usuario.id;
-
-  //   if (!alumnoId) {
-  //     console.error('No se pudo obtener el ID del alumno logueado');
-  //     return;
-  //   }
-  //   const inscripcion = {
-  //     Alumnos_id: alumnoId,
-  //     Profesores_id: this.profesorId,
-  //     Horario_id: this.horarioId,
-  //   };
-
-  //   this.cursoService.registrarInscripcion(inscripcion).subscribe(
-  //     () => {
-  //       console.log('Inscripción registrada correctamente');
-  //       this.router.navigate(['/home']);
-  //     },
-  //     (error) => {
-  //       console.error('Error al registrar la inscripción:', error);
-  //       alert(
-  //         'Error al registrar la inscripción. Por favor, inténtalo de nuevo.'
-  //       );
-  //     }
-  //   );
-
-  // }
+ 
   private initConfig(): void {
     this.payPalConfig = {
       currency: 'USD',
@@ -225,5 +197,33 @@ export class ConfirmationComponent implements OnInit {
     });
   }
 }
+ // registrarInscripcion() {
+  //   // Obtener el ID del alumno logueado desde sessionStorage
+  //   const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+  //   const alumnoId = usuario.id;
 
+  //   if (!alumnoId) {
+  //     console.error('No se pudo obtener el ID del alumno logueado');
+  //     return;
+  //   }
+  //   const inscripcion = {
+  //     Alumnos_id: alumnoId,
+  //     Profesores_id: this.profesorId,
+  //     Horario_id: this.horarioId,
+  //   };
+
+  //   this.cursoService.registrarInscripcion(inscripcion).subscribe(
+  //     () => {
+  //       console.log('Inscripción registrada correctamente');
+  //       this.router.navigate(['/home']);
+  //     },
+  //     (error) => {
+  //       console.error('Error al registrar la inscripción:', error);
+  //       alert(
+  //         'Error al registrar la inscripción. Por favor, inténtalo de nuevo.'
+  //       );
+  //     }
+  //   );
+
+  // }
 //PARA EL METODO DE PAGO

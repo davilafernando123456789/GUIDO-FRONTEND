@@ -10,10 +10,32 @@ export class CursoService {
   private apiUrlProfesores = 'http://localhost:4000/api/profesores';
   private apiUrlInscripciones = 'http://localhost:4000/api/inscripciones'; // Nueva URL para filtrar por inscripciones
   private apiUrlAlumnos = 'http://localhost:4000/api/alumnos';
+  private apiUrlSuscripcion = 'http://localhost:4000/api/suscripcion';
   private apiUrlProfesoresBuscar =
     'http://localhost:4000/api/profesores/buscar';
   constructor(private http: HttpClient) {}
 
+
+  suscribirse(usuarioId: string, rol: String, tipoSuscripcion: string): Observable<any> {
+    const body = { usuarioId: usuarioId,rol: rol, tipo_suscripcion: tipoSuscripcion };
+    return this.http.post<any>(`${this.apiUrlSuscripcion}`, body);
+  }
+  verificarSuscripcion(usuarioId: string, rol: string): Observable<boolean> {
+    const url = `${this.apiUrlSuscripcion}/${usuarioId}/suscripcion-activa/${rol}`;
+    return this.http.get<boolean>(url);
+  }
+
+  // verificarSuscripcion(usuarioId: string): Observable<boolean> {
+  //   return this.http.get<boolean>(`${this.apiUrlSuscripcion}/${usuarioId}/suscripcion-activa/`);
+  // }
+  
+  // suscribirse(alumnoId: string, tipoSuscripcion: string): Observable<any> {
+  //   return this.http.post(`${this.apiUrlAlumnos}/alumnos/${alumnoId}/suscribirse`, { tipoSuscripcion });
+  // }
+  // suscribirse(alumnoId: string, tipoSuscripcion: string): Observable<any> {
+  //   const body = { Alumno_id: alumnoId, tipo_suscripcion: tipoSuscripcion };
+  //   return this.http.post<any>(`${this.apiUrlSuscripcion}`, body);
+  // }
   // Método para obtener todos los profesores
   obtenerProfesores(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrlProfesores);
@@ -28,6 +50,7 @@ export class CursoService {
     }
     return this.http.get<any[]>(this.apiUrlProfesoresBuscar, { params });
   }
+
 
   // Nuevo método para obtener todos los profesores si no se ha seleccionado ninguna especialidad
   obtenerProfesoresConFiltro(especialidades: string[]): Observable<any[]> {
@@ -48,6 +71,7 @@ export class CursoService {
     const url = `${this.apiUrlInscripciones}/alumno/${usuarioId}`;
     return this.http.get<any[]>(url);
   }
+
   // Método para obtener profesores por ID de usuario (filtrando por inscripciones)
   obtenerProfesoresPorUsuarioId(usuarioId: string): Observable<any[]> {
     const url = `${this.apiUrlInscripciones}/profesor/${usuarioId}`;
@@ -74,7 +98,9 @@ export class CursoService {
     const url = `${this.apiUrlAlumnos}/${id}`;
     return this.http.get<any>(url);
   }
-
+  // verificarSuscripcion(alumnoId: string): Observable<boolean> {
+  //   return this.http.get<boolean>(`${this.apiUrlAlumnos}/suscripcion/${alumnoId}/suscripcion-activa`);
+  // }
   // En el servicio CursoService
   actualizarAlumno(alumnoId: string, datos: any) {
     const url = `${this.apiUrlAlumnos}/editar/${alumnoId}`;

@@ -33,6 +33,7 @@ import { ScholarsComponent } from './pages/admin/scholars/scholars.component';
 import { MessengerComponent } from './pages/admin/messenger/messenger.component';
 import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.component';
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
+import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
 
 const routesInicio: Routes = [
   { path: '', component: InicioComponent },
@@ -78,6 +79,9 @@ const routesInicio: Routes = [
   { path: 'calendarTeacher', component: CalendarTeacherComponent, data: { message: 'Calendar Student route' } },
   { path: 'editar-producto/:id', component: EditarProductosComponent, data: { message: 'Edit Product route' } },
   { path: 'teacherProfile/:id', component: TeacherProfileComponent, data: { message: 'Edit Product route' } },
+  { path: 'suscripcion', component: SuscripcionComponent, data: { message: 'Suscripcion alumno route' } },
+
+
 
   { path: 'confirmation/:horarioId/:profesorId', component: ConfirmationComponent, data: { message: 'Edit Product route' } },
   { path: 'calendarRegister', component: CalendarComponent, data: { message: 'Edit Product route' } },

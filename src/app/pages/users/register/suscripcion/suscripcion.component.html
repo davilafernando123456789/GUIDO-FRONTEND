@@ -1,0 +1,18 @@
+<app-navbar-student></app-navbar-student>
+<div class="main">
+    <app-topbar></app-topbar>
+    <div class="container">
+        <div class="details">
+            <div class="suscripcion">
+                <h2>Suscribirse</h2>
+                <button (click)="suscribirse('Mensual')">Suscripción Mensual</button>
+                <button (click)="suscribirse('Trimestral')">Suscripción Trimestral</button>
+                <button (click)="suscribirse('Anual')">Suscripción Anual</button>
+               <br><br>
+                <div *ngIf="showPayPalButtons">
+                    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -46,6 +46,7 @@ import { ScholarsComponent } from './pages/admin/scholars/scholars.component';
 import { MessengerComponent } from './pages/admin/messenger/messenger.component';
 import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.component';
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
+import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { SchedulesComponent } from './pages/admin/schedules/schedules.component'
     ScholarsComponent,
     MessengerComponent,
     InscriptionsComponent,
-    SchedulesComponent
+    SchedulesComponent,
+    SuscripcionComponent
   ],
   imports: [
     BrowserModule,
