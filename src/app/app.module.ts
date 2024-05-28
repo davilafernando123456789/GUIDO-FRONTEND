@@ -41,6 +41,7 @@ import { StudentProfileComponent } from './pages/students/student-profile/studen
 import { CalendarTeacherComponent } from './pages/teachers/calendar-teacher/calendar-teacher.component';
 import { TopbarComponent } from './pages/topbar/topbar.component';
 import { IonicModule } from '@ionic/angular';
+
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { MastersComponent } from './pages/admin/masters/masters.component';
 import { ScholarsComponent } from './pages/admin/scholars/scholars.component';
@@ -49,6 +50,7 @@ import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.c
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
 import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
+import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component';
 
 @NgModule({
   declarations: [
@@ -90,10 +92,13 @@ import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal
     SchedulesComponent,
     SuscripcionComponent,
     ProfesorPaypalAccountComponent,
+    RecomendacionesComponent,
   ],
   imports: [
     BrowserModule,
+    
     IonicModule,
+
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,

@@ -36,6 +36,8 @@ import { SchedulesComponent } from './pages/admin/schedules/schedules.component'
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
 import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
 
+import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component'; 
+
 const routesInicio: Routes = [
   { path: '', component: InicioComponent },
   { path: 'crear-usuario', component: CreateUserComponent, data: { message: 'Create User route' } },
@@ -47,6 +49,7 @@ const routesInicio: Routes = [
   // { path: 'home', component: NavbarStudentComponent },
   // { path: 'coursesStudent', component: CoursesComponent, data: { message: 'Courses Student route' } },
 
+  { path: 'recomendaciones', component: RecomendacionesComponent },
 
   
   { path: 'schedules', component: SchedulesComponent },
@@ -88,6 +91,8 @@ const routesInicio: Routes = [
   { path: 'confirmation/:horarioId/:profesorId', component: ConfirmationComponent, data: { message: 'Edit Product route' } },
   { path: 'calendarRegister', component: CalendarComponent, data: { message: 'Edit Product route' } },
   { path: '**', redirectTo: '', pathMatch: 'full' }
+
+
 ];
 
 @NgModule({
