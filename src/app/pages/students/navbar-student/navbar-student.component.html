@@ -106,6 +106,7 @@
                         </a>
                     </li>
                 </ng-container>
+                
                 <ng-container *ngIf="usuarioLogueado?.rol === 2">
                     <li>
                         <a routerLink="/profile" class="nav-link" routerLinkActive="active">
@@ -113,6 +114,16 @@
                                 <ion-icon name="person-outline"></ion-icon>
                             </span>
                             <span class="title"> Cuenta</span>
+                        </a>
+                    </li>
+                </ng-container>
+                <ng-container *ngIf="usuarioLogueado?.rol === 2">
+                    <li>
+                        <a routerLink="/paymentAccount" class="nav-link" routerLinkActive="active">
+                            <span class="icon">
+                                <ion-icon name="person-outline"></ion-icon>
+                            </span>
+                            <span class="title"> Pagos</span>
                         </a>
                     </li>
                 </ng-container>

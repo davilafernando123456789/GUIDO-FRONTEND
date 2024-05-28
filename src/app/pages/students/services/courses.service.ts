@@ -11,10 +11,29 @@ export class CursoService {
   private apiUrlInscripciones = 'http://localhost:4000/api/inscripciones'; // Nueva URL para filtrar por inscripciones
   private apiUrlAlumnos = 'http://localhost:4000/api/alumnos';
   private apiUrlSuscripcion = 'http://localhost:4000/api/suscripcion';
+  private apiUrlPaypal = 'http://localhost:4000/api';
   private apiUrlProfesoresBuscar =
     'http://localhost:4000/api/profesores/buscar';
   constructor(private http: HttpClient) {}
 
+  createProfesorPayPalAccount(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrlPaypal}/profesorPayPalAccount`, data);
+  }
+
+  getProfesorPayPalAccount(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrlPaypal}/profesorPayPalAccount/${id}`);
+  }
+
+  updateProfesorPayPalAccount(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrlPaypal}/profesorPayPalAccount/${id}`, data);
+  }
+
+  deleteProfesorPayPalAccount(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrlPaypal}/profesorPayPalAccount/${id}`);
+  }
+  getProfesorPayPalAccountByProfesorId(profesorId: number): Observable<any> {
+    return this.http.get(`${this.apiUrlPaypal}/profesorPayPalAccount/profesor/${profesorId}`);
+  }
 
   suscribirse(usuarioId: string, rol: String, tipoSuscripcion: string): Observable<any> {
     const body = { usuarioId: usuarioId,rol: rol, tipo_suscripcion: tipoSuscripcion };

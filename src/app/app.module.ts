@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'; 
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/users/login/login.component';
 import { CreateUserComponent } from './pages/users/create-user/create-user.component';
@@ -47,6 +48,7 @@ import { MessengerComponent } from './pages/admin/messenger/messenger.component'
 import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.component';
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
+import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +88,8 @@ import { SuscripcionComponent } from './pages/users/register/suscripcion/suscrip
     MessengerComponent,
     InscriptionsComponent,
     SchedulesComponent,
-    SuscripcionComponent
+    SuscripcionComponent,
+    ProfesorPaypalAccountComponent,
   ],
   imports: [
     BrowserModule,

@@ -34,6 +34,7 @@ import { MessengerComponent } from './pages/admin/messenger/messenger.component'
 import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.component';
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
+import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
 
 const routesInicio: Routes = [
   { path: '', component: InicioComponent },
@@ -80,6 +81,7 @@ const routesInicio: Routes = [
   { path: 'editar-producto/:id', component: EditarProductosComponent, data: { message: 'Edit Product route' } },
   { path: 'teacherProfile/:id', component: TeacherProfileComponent, data: { message: 'Edit Product route' } },
   { path: 'suscripcion', component: SuscripcionComponent, data: { message: 'Suscripcion alumno route' } },
+  { path: 'paymentAccount', component: ProfesorPaypalAccountComponent, data: { message: 'ProfesorPaypalAccountComponent alumno route' } },
 
 
 
