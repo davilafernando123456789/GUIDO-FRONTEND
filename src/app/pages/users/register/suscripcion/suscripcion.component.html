@@ -1,18 +1,53 @@
 <app-navbar-student></app-navbar-student>
 <div class="main">
     <app-topbar></app-topbar>
-    <div class="container">
-        <div class="details">
-            <div class="suscripcion">
-                <h2>Suscribirse</h2>
-                <button (click)="suscribirse('Mensual')">Suscripción Mensual</button>
-                <button (click)="suscribirse('Trimestral')">Suscripción Trimestral</button>
-                <button (click)="suscribirse('Anual')">Suscripción Anual</button>
-               <br><br>
+    <!-- <section class="ftco-section bg-light ftco-no-pt"> -->
+        <section class="ftco-section  ftco-no-pt">
+
+        <div class="container">
+            <div class="row justify-content-center pb-3 mb-3">
+                <div class="col-md-7 heading-section text-center">
+                    <br>
+                    <h2>Suscribirse</h2>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+                    <div class="block-7 w-100">
+                        <div class="text-center">
+                            <span class="excerpt d-block">Mensual</span>
+                            <span class="price"><sup>S/</sup> <span class="number">20</span> <sub></sub></span>
+                            <button class="btn btn-primary d-block px-2 py-3" (click)="suscribirse('Mensual')">Suscripción Mensual</button>
+
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+                    <div class="block-7 w-100">
+                        <div class="text-center">
+                            <span class="excerpt d-block">Trimestral</span>
+                            <span class="price"><sup>S/</sup> <span class="number">50</span> <sub></sub></span>
+                            <button  class="btn btn-primary d-block px-2 py-3" (click)="suscribirse('Trimestral')">Suscripción Trimestral</button>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 d-flex align-items-stretch">
+                    <div class="block-7 w-100">
+                        <div class="text-center">
+                            <span class="excerpt d-block">Anual</span>
+                            <span class="price"><sup>S/</sup> <span class="number">180</span> <sub></sub></span>
+                            <button class="btn btn-primary d-block px-2 py-3" (click)="suscribirse('Anual')">Suscripción Anual</button>
+
+                           
+                        </div>
+                    </div>
+                </div>
                 <div *ngIf="showPayPalButtons">
                     <ngx-paypal [config]="payPalConfig"></ngx-paypal>
                 </div>
             </div>
         </div>
-    </div>
+      </section>
 </div>

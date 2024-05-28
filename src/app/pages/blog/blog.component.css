@@ -2063,7 +2063,7 @@
         -o-transition: none;
         transition: none; } }
     .btn:hover {
-      color: #212529;
+      color: #eceef0;
       text-decoration: none; }
     .btn:focus, .btn.focus {
       outline: 0;
@@ -2128,22 +2128,23 @@
         -webkit-box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
         box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5); }
   /* Estilo para los botones */
-  /* Estilo para los botones */
-   .btn-custom {
-          background-color: #36D7FF;
-          border-color: #36D7FF;
-          color: #FFFFFF;
-          margin-top: 3px; /* Reducido el margen superior */
-          text-transform: lowercase; /* Texto en minúsculas */
-          text-shadow: 0 1px 0 rgba(0, 0, 0, 0.15); /* Sombra de texto */
-          box-shadow: 0 2px 0 rgba(0,0,0,0.15), 0 2px 0 rgba(255,255,255,0.8) inset; /* Sombra en la parte superior */
-          transition: all 0.3s ease; /* Transición suave */
-      }
-  
-      .btn-custom:hover {
-          box-shadow: 0 6px 0 rgba(0,0,0,0.15), 0 6px 0 rgba(255,255,255,0.8) inset; /* Cambio de sombra al pasar el ratón */
-          transform: translateY(-3px); /* Efecto de elevación al pasar el ratón */
-      }
+  .btn-custom {
+    background-color: #1C1678;
+    border-color: #1C1678;
+    color: #FFFFFF;
+    margin-top: 3px; /* Reducido el margen superior */
+    text-transform: lowercase; /* Texto en minúsculas */
+    box-shadow: 0 2px 0 rgba(255,255,255,0.8); /* Sombra en la parte superior */
+}
+
+.btn-custom:hover {
+    box-shadow: 0 6px 0 rgba(255,255,255,0.8), 0 6px 0 rgba(255,255,255,0.8) inset; /* Cambio de sombra al pasar el ratón */
+    transform: translateY(-3px); /* Efecto de elevación al pasar el ratón */
+}
+
+.btn-custom:active {
+    color: #FFFFFF; /* Cambio de color del texto al hacer clic */
+}
   
   
   .btn-success {

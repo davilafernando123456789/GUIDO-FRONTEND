@@ -192,3 +192,17 @@ h1 {
 .tags .tag {
   text-transform: capitalize;
 }
+.star-rating {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 1.5em;
+  color: #d3d3d3;
+}
+
+.star.filled {
+  color: #ffca28;
+}

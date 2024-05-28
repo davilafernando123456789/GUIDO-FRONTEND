@@ -40,6 +40,7 @@ import { StudentProfileComponent } from './pages/students/student-profile/studen
 import { CalendarTeacherComponent } from './pages/teachers/calendar-teacher/calendar-teacher.component';
 import { TopbarComponent } from './pages/topbar/topbar.component';
 import { IonicModule } from '@ionic/angular';
+
 import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
 import { MastersComponent } from './pages/admin/masters/masters.component';
 import { ScholarsComponent } from './pages/admin/scholars/scholars.component';
@@ -47,6 +48,7 @@ import { MessengerComponent } from './pages/admin/messenger/messenger.component'
 import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.component';
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
+import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component';
 
 @NgModule({
   declarations: [
@@ -86,11 +88,14 @@ import { SuscripcionComponent } from './pages/users/register/suscripcion/suscrip
     MessengerComponent,
     InscriptionsComponent,
     SchedulesComponent,
-    SuscripcionComponent
+    SuscripcionComponent,
+    RecomendacionesComponent
   ],
   imports: [
     BrowserModule,
+    
     IonicModule,
+
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,

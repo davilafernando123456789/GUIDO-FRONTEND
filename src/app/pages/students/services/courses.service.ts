@@ -24,6 +24,9 @@ export class CursoService {
     const url = `${this.apiUrlSuscripcion}/${usuarioId}/suscripcion-activa/${rol}`;
     return this.http.get<boolean>(url);
   }
+  guardarSuscripcion(suscripcion: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlSuscripcion, suscripcion);
+  }
 
   // verificarSuscripcion(usuarioId: string): Observable<boolean> {
   //   return this.http.get<boolean>(`${this.apiUrlSuscripcion}/${usuarioId}/suscripcion-activa/`);

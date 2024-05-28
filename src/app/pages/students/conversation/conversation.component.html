@@ -3,26 +3,30 @@
   <app-topbar></app-topbar>
   <div class="details">
     <div class="recentCustomers">
-            <div class="cardHeader " *ngIf="profesores.length > 0">
-              <table *ngIf="profesores.length > 0">
-                <h2 >Mensajes</h2>
-                <tr *ngFor="let profesor of profesores">
-                  <td width="60px">
-                    <div class="imgBx">
-                      <img src="{{ profesor.foto }}" alt="" (click)="iniciarConversacion(profesor.id)">
-                    </div>
-                  </td>
-                  <td>
-                    <h4 (click)="iniciarConversacion(profesor.id)">{{ profesor.nombre }} {{ profesor.apellido }}</h4>
-                  </td>
-              </tr>
-          </table>
-          </div>
-        </div>
-       
+      <h2>Bienvenido a la sección de mensajes</h2>
+      <div class="cardHeader" *ngIf="profesores.length > 0">
+        <table>
+          <tr *ngFor="let profesor of profesores">
+            <td width="60px">
+              <div class="imgBx">
+                <img src="{{ profesor.foto }}" alt="" (click)="iniciarConversacion(profesor.id)">
+              </div>
+            </td>
+            <td>
+              <h4 (click)="iniciarConversacion(profesor.id)">{{ profesor.nombre }} {{ profesor.apellido }}</h4>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div *ngIf="profesores.length === 0">
+        <p>No tienes chats con ningún profesor aún.</p>
+      </div>
     </div>
+  </div>
 </div>
-      <!-- <div class="cardHeader" *ngIf="profesores.length > 0">
+
+
+<!-- <div class="cardHeader" *ngIf="profesores.length > 0">
         <h2>Mensajes</h2>
       </div>
         <table *ngIf="profesores.length > 0">

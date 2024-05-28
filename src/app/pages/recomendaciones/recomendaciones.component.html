@@ -1,0 +1,69 @@
+<!-- <app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+
+  <form #recomendacionForm="ngForm" (ngSubmit)="submitRecomendacion(recomendacionForm)">
+    <label for="estrellas">Estrellas:</label>
+    <div class="star-rating">
+      <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" 
+            (click)="setEstrellas(i + 1)" 
+            [class.filled]="i < estrellas">&#9733;</span>
+    </div>
+
+    <label for="comentario">Comentario:</label>
+    <textarea id="comentario" [(ngModel)]="comentario" name="comentario"></textarea>
+
+    <label for="Alumnos_id">ID del Alumno:</label>
+    <input type="number" id="Alumnos_id" [(ngModel)]="Alumnos_id" name="Alumnos_id" required>
+
+    <label for="Profesores_id">ID del Profesor:</label>
+    <input type="number" id="Profesores_id" [(ngModel)]="Profesores_id" name="Profesores_id" required>
+
+    <button type="submit">Enviar Reseña</button>
+  </form>
+</div> -->
+<app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentOrders">
+      <div class="cardHeader">
+        <form #recomendacionForm="ngForm" (ngSubmit)="submitRecomendacion(recomendacionForm)">
+            <h2>Escribe tu opinión sobre Jose como profesor</h2>
+      
+            <label for="estrellas">Estrellas:</label>
+            <div class="star-rating">
+              <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" 
+                    (click)="setEstrellas(i + 1)" 
+                    [class.filled]="i < estrellas">&#9733;</span>
+            </div>
+      
+            <label for="comentario">Comentario:</label>
+            <textarea id="comentario" [(ngModel)]="comentario" name="comentario"></textarea>
+      
+            <h3>Tus datos para la valoración</h3>
+            
+            <div class="user-info">
+              <!-- <div class="profile-pic">
+                <img src="path_to_default_image" alt="Profile Picture">
+                <a href="#">Sube una foto</a>
+              </div> -->
+              <div class="user-details">
+                <input type="text" id="nombre"  name="nombre" placeholder="Tu nombre y apellido">
+                <small>Solo será visible tu nombre y foto</small>
+              </div>
+            </div>
+      
+            <div class="terms">
+              <input type="checkbox" id="terms"  name="terms" required>
+              <label for="terms">Acepto las condiciones de uso y política de privacidad.</label>
+            </div>
+      
+            <button type="submit" >Enviar valoración</button>
+          </form>
+</div>
+  </div>
+</div>
+
+
+

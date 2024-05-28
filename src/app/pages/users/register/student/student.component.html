@@ -1,112 +1,152 @@
 <body>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
-  <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
+    <div class="circle"></div>
 
-  <div class="container mt-5">
-      <div class="row justify-content-center" >
-          <div class="col-md-8" >
-              <div class="card">
-                  <form class="card-body" (ngSubmit)="submitForm()" #alumnoForm="ngForm" style="background-color: white !important;"
-                >
-                      <div class="card-header text-center">
-                          <a href="login">
-                              <img src="assets/images/tesis/logo12.png" width="170" height="50" alt="Nombre de tu empresa">
-                          </a>
-                      </div>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <form class="card-body" (ngSubmit)="submitForm()" #alumnoForm="ngForm"
+                        style="background-color: white !important;">
+                        <div class="card-header text-center">
+                            <a href="login">
+                                <img src="assets/images/tesis/logo12.png" width="170" height="50"
+                                    alt="Nombre de tu empresa">
+                            </a>
+                        </div>
 
-                      <h3 class="text-center mt-3 mb-4">Datos del Apoderado</h3>
-                      <div class="form-group row">
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="nombreApoderado" name="nombreApoderado" placeholder="Nombre" [(ngModel)]="apoderado.nombre" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="apellidoApoderado" name="apellidoApoderado" placeholder="Apellido" [(ngModel)]="apoderado.apellido" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="number" class="form-control" id="dniApoderado" name="dniApoderado" placeholder="DNI" [(ngModel)]="apoderado.dni" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="email" class="form-control" id="emailApoderado" name="emailApoderado" placeholder="Email" [(ngModel)]="apoderado.email" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="date" class="form-control" id="fecha_nacApoderado" name="fecha_nacApoderado" placeholder="Fecha de nacimiento" [(ngModel)]="apoderado.fecha_nac" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="generoApoderado" name="generoApoderado" placeholder="Género" [(ngModel)]="apoderado.genero" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="telefonoApoderado" name="telefonoApoderado" placeholder="Teléfono" [(ngModel)]="apoderado.telefono" required>
-                          </div>
-                      </div>
+                        <h3 class="text-center mt-3 mb-4">Datos del Apoderado</h3>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="nombreApoderado" name="nombreApoderado"
+                                    placeholder="Nombre" [(ngModel)]="apoderado.nombre" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="apellidoApoderado" name="apellidoApoderado"
+                                    placeholder="Apellido" [(ngModel)]="apoderado.apellido" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="dniApoderado" name="dniApoderado"
+                                    placeholder="DNI" [(ngModel)]="apoderado.dni" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" id="emailApoderado" name="emailApoderado"
+                                    placeholder="Email" [(ngModel)]="apoderado.email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" id="fecha_nacApoderado"
+                                    name="fecha_nacApoderado" placeholder="Fecha de nacimiento"
+                                    [(ngModel)]="apoderado.fecha_nac" required>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <input type="text" class="form-control" id="generoApoderado" name="generoApoderado"
+                                    placeholder="Género" [(ngModel)]="apoderado.genero" required>
+                            </div> -->
+                            <div class="col-md-6">
+                                <label for="generoApoderado">Género</label>
+                                <select class="form-control" id="generoApoderado" name="generoApoderado" [(ngModel)]="apoderado.genero" required>
+                                  <option value="" disabled selected>Seleccione el género</option>
+                                  <option value="Masculino">Masculino</option>
+                                  <option value="Femenino">Femenino</option>
+                                </select>
+                              </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="telefonoApoderado" name="telefonoApoderado"
+                                    placeholder="Teléfono" [(ngModel)]="apoderado.telefono" required>
+                            </div>
+                        </div>
 
-                      <hr>
+                        <hr>
 
-                      <h3 class="text-center mt-3 mb-4">Dirección</h3>
-                      <div class="form-group row">
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="calle" name="calle" placeholder="Calle" [(ngModel)]="direccion.calle" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="distrito" name="distrito" placeholder="Distrito" [(ngModel)]="direccion.distrito" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Provincia" [(ngModel)]="direccion.provincia" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="codigo_postal" name="codigo_postal" placeholder="Código postal" [(ngModel)]="direccion.codigo_postal" required>
-                          </div>
-                      </div>
+                        <h3 class="text-center mt-3 mb-4">Dirección</h3>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="calle" name="calle" placeholder="Calle"
+                                    [(ngModel)]="direccion.calle" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="distrito" name="distrito"
+                                    placeholder="Distrito" [(ngModel)]="direccion.distrito" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="provincia" name="provincia"
+                                    placeholder="Provincia" [(ngModel)]="direccion.provincia" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="codigo_postal" name="codigo_postal"
+                                    placeholder="Código postal" [(ngModel)]="direccion.codigo_postal" required>
+                            </div>
+                        </div>
 
-                      <hr>
+                        <hr>
 
-                      <h3 class="text-center mt-3 mb-4">Datos del Alumno</h3>
-                      <div class="form-group row">
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="nombreAlumno" name="nombreAlumno" placeholder="Nombre" [(ngModel)]="alumno.nombre" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="apellidoAlumno" name="apellidoAlumno" placeholder="Apellido" [(ngModel)]="alumno.apellido" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="number" class="form-control" id="dniAlumno" name="dniAlumno" placeholder="DNI" [(ngModel)]="alumno.dni" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="email" class="form-control" id="emailAlumno" name="emailAlumno" placeholder="Email" [(ngModel)]="alumno.email" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="date" class="form-control" id="fecha_nacAlumno" name="fecha_nacAlumno" placeholder="Fecha de nacimiento" [(ngModel)]="alumno.fecha_nac" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="generoAlumno" name="generoAlumno" placeholder="Género" [(ngModel)]="alumno.genero" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="telefonoAlumno" name="telefonoAlumno" placeholder="Teléfono" [(ngModel)]="alumno.telefono" required>
-                          </div>
-                      </div>
+                        <h3 class="text-center mt-3 mb-4">Datos del Alumno</h3>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="nombreAlumno" name="nombreAlumno"
+                                    placeholder="Nombre" [(ngModel)]="alumno.nombre" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="apellidoAlumno" name="apellidoAlumno"
+                                    placeholder="Apellido" [(ngModel)]="alumno.apellido" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="dniAlumno" name="dniAlumno"
+                                    placeholder="DNI" [(ngModel)]="alumno.dni" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" id="emailAlumno" name="emailAlumno"
+                                    placeholder="Email" [(ngModel)]="alumno.email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" id="fecha_nacAlumno" name="fecha_nacAlumno"
+                                    placeholder="Fecha de nacimiento" [(ngModel)]="alumno.fecha_nac" required>
+                            </div>
+                            <!-- <div class="col-md-6">
+                                <input type="text" class="form-control" id="generoAlumno" name="generoAlumno"
+                                    placeholder="Género" [(ngModel)]="alumno.genero" required>
+                            </div> -->
+                            <div class="col-md-6">
+                                <label for="generoAlumno">Género</label>
+                                <select class="form-control" id="generoAlumno" name="generoAlumno"
+                                    [(ngModel)]="alumno.genero" required>
+                                    <option value="" disabled selected>Seleccione el género</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="telefonoAlumno" name="telefonoAlumno"
+                                    placeholder="Teléfono" [(ngModel)]="alumno.telefono" required>
+                            </div>
 
-                      <hr>
+                        </div>
 
-                      <h3 class="text-center mt-3 mb-4">Datos de cuenta</h3>
-                      <div class="form-group row">
-                          <div class="col-md-6">
-                              <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" [(ngModel)]="alumno.usuario" required>
-                          </div>
-                          <div class="col-md-6">
-                              <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" [(ngModel)]="alumno.password" required>
-                          </div>
-                      </div>
+                        <hr>
 
-                      <div class="text-center mt-3">
-                          <button type="submit" class="btn btn-primary">Registrar</button>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-      <br><br><br>
-  </div>
+                        <h3 class="text-center mt-3 mb-4">Datos de cuenta</h3>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="usuario" name="usuario"
+                                    placeholder="Usuario" [(ngModel)]="alumno.usuario" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Contraseña" [(ngModel)]="alumno.password" required>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <button type="submit" class="btn btn-primary">Registrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br><br><br>
+    </div>
 </body>
