@@ -13,4 +13,7 @@ export class RecomendacionesService {
   createRecomendacion(recomendacion: any): Observable<any> {
     return this.http.post(this.apiUrl, recomendacion);
   }
+  obtenerRecomendaciones(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}`);
+  }
 }

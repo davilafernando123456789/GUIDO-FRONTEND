@@ -46,10 +46,15 @@
                     <h5 class="card-title cardName">{{ profesor.nombre }}</h5>
                     <p class="cardName cardSpecialty">{{ profesor.especialidad }}</p>
                     <p class="cardName cardDescription">{{ profesor.descripcion }}</p>
+                    <!-- <div class="star-rating">
+                      <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                            [class.filled]="i < profesor.estrellas">&#9733;</span>
+                    </div> -->
                     <div class="star-rating">
                       <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
                             [class.filled]="i < profesor.estrellas">&#9733;</span>
                     </div>
+                    
                   </div>
                 </div>
               </div>

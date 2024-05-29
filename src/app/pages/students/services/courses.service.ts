@@ -16,6 +16,11 @@ export class CursoService {
     'http://localhost:4000/api/profesores/buscar';
   constructor(private http: HttpClient) {}
 
+  obtenerProfesoresPorAlumnoId(alumnoId: string): Observable<any[]> {
+    const url = `${this.apiUrlInscripciones}/alumno/${alumnoId}/profesores`;
+    return this.http.get<any[]>(url);
+  }
+
   createProfesorPayPalAccount(data: any): Observable<any> {
     return this.http.post(`${this.apiUrlPaypal}/profesorPayPalAccount`, data);
   }
