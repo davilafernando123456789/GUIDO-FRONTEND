@@ -206,3 +206,53 @@ h1 {
 .star.filled {
   color: #ffca28;
 }
+
+
+
+
+.welcome-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.welcome-title {
+  font-family: 'Arial', sans-serif;
+  font-size: 2.5em;
+  color: #2C3E50;
+  margin-bottom: 10px;
+}
+
+.welcome-subtitle {
+  font-family: 'Verdana', sans-serif;
+  font-size: 2em;
+  color: #34495E;
+  margin-bottom: 20px;
+}
+
+.select-topic {
+  font-family: 'Tahoma', sans-serif;
+  font-size: 1.8em;
+  color: #5D6D7E;
+  margin-bottom: 20px;
+}
+
+.topics {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.topic-button {
+  font-family: 'Georgia', serif;
+  font-size: 1.2em;
+  color: white;
+  background-color: #2E86C1;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.topic-button:hover {
+  background-color: #1A5276;
+}

@@ -106,7 +106,7 @@ export class ConfirmationComponent implements OnInit {
     //       data,
     //       actions
     //     );
-        this.registrarInscripcion(); // Llama al método registrarInscripcion después de un pago exitoso
+        // this.registrarInscripcion(); // Llama al método registrarInscripcion después de un pago exitoso
     //   },
     //   onClientAuthorization: (data) => {
     //     console.log(

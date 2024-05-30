@@ -1,4 +1,4 @@
-<app-navbar-student></app-navbar-student>
+<!-- <app-navbar-student></app-navbar-student>
 
 <div class="main">
   <app-topbar></app-topbar>
@@ -16,6 +16,26 @@
           </div>
         </div>
  
+    </div>
+  </div>
+</div> -->
+
+<app-navbar-student></app-navbar-student>
+
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="container mt-4">
+      <div class="card border rounded shadow-sm">
+        <div class="card-body">
+          <div class="cardHeader">
+          <h2 >Clases Programadas</h2>
+        </div>
+          <div class="calendar-container">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
