@@ -51,6 +51,8 @@ import { SchedulesComponent } from './pages/admin/schedules/schedules.component'
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
 import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
 import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component';
+import { ReportsComponent } from './pages/teachers/reports/reports.component';
+import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +95,8 @@ import { RecomendacionesComponent } from './pages/recomendaciones/recomendacione
     SuscripcionComponent,
     ProfesorPaypalAccountComponent,
     RecomendacionesComponent,
+    ReportsComponent,
+    NotificacionesComponent,
   ],
   imports: [
     BrowserModule,

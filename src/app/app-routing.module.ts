@@ -24,6 +24,7 @@ import { StudentProfileComponent } from './pages/students/student-profile/studen
 import { ProfileComponent } from './pages/teachers/profile/profile.component';
 import { ConversationComponent } from './pages/students/conversation/conversation.component';
 import { ConversationsComponent } from './pages/teachers/conversations/conversations.component';
+import { ReportsComponent } from './pages/teachers/reports/reports.component';
 
 import { CalendarComponent } from './pages/users/register/calendar/calendar.component';
 import { ConfirmationComponent } from './pages/students/confirmation/confirmation.component';
@@ -35,7 +36,7 @@ import { InscriptionsComponent } from './pages/admin/inscriptions/inscriptions.c
 import { SchedulesComponent } from './pages/admin/schedules/schedules.component';
 import { SuscripcionComponent } from './pages/users/register/suscripcion/suscripcion.component';
 import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
-
+import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component'; 
 
 const routesInicio: Routes = [
@@ -74,6 +75,7 @@ const routesInicio: Routes = [
   { path: 'navbar', component: NavbarStudentComponent },
   { path: 'navbar-teacher', component: NavbarTeacherComponent },
   { path: 'home', component: HomeComponent },
+
   { path: 'meetings', component: ClassroomComponent, data: { message: 'meetings route' } },
   { path: 'conversation', component: ConversationComponent, data: { message: 'ConversationComponent route' } },
   { path: 'conversations', component: ConversationsComponent, data: { message: 'ConversationComponent route' } },
@@ -84,6 +86,8 @@ const routesInicio: Routes = [
   { path: 'editar-producto/:id', component: EditarProductosComponent, data: { message: 'Edit Product route' } },
   { path: 'teacherProfile/:id', component: TeacherProfileComponent, data: { message: 'Edit Product route' } },
   { path: 'suscripcion', component: SuscripcionComponent, data: { message: 'Suscripcion alumno route' } },
+  { path: 'reportes', component: ReportsComponent, data: { message: 'ReportsComponent alumno route' } },
+  { path: 'notificaciones', component: NotificacionesComponent, data: { message: 'NotificacionesComponent alumno route' } },
   { path: 'paymentAccount', component: ProfesorPaypalAccountComponent, data: { message: 'ProfesorPaypalAccountComponent alumno route' } },
 
 

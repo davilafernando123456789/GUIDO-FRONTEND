@@ -89,7 +89,7 @@ export class SuscripcionComponent implements OnInit {
     };
 
     // Simular llamada a la suscripción con el tipo deseado
-    this.suscribirse('Mensual'); 
+    //this.suscribirse('Mensual'); 
   }
 }
 

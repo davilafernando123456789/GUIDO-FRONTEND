@@ -95,7 +95,7 @@ export class ProfileComponent implements OnInit {
   }
 
   handleEventClick(arg: EventClickArg) {
-    this.navigateToRegistration(arg);
+   // this.navigateToRegistration(arg);
   }
   obtenerHorariosProfesor(): void {
     this.cursoService.obtenerHorariosPorProfesor(this.profesorId!).subscribe(
@@ -115,16 +115,5 @@ export class ProfileComponent implements OnInit {
         console.error('Error al obtener los horarios del profesor:', error);
       }
     );
-  }
-  navigateToRegistration($event: EventClickArg): void {
-    const eventInfo = $event.event; 
-    const extendedProps = eventInfo.extendedProps as ExtendedProps; 
-    const horarioId = extendedProps.horarioId;
-    const profesorId = extendedProps.profesorId;
-  
-    console.log('Horario ID:', horarioId);
-    console.log('Profesor ID:', profesorId);
-  
-    this.router.navigate(['/confirmation', horarioId, profesorId]);
   }
 }

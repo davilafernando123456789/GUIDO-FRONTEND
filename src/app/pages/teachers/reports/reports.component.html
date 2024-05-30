@@ -1,0 +1,58 @@
+<app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentCustomers">
+      <div class="report-form">
+        <h2 class="title-center-blue">Crear Reporte</h2>
+        <form (ngSubmit)="submitReport()">
+          <div class="buscar text-alinear-izquierda">
+            <label for="alumno">Seleccionar Alumno: </label>
+            <select id="alumno" [(ngModel)]="report.Alumno_id" name="Alumno_id" class="custom-select" required>
+              <option *ngFor="let alumno of alumnos" [value]="alumno.id">{{ alumno.nombre }} {{ alumno.apellido }}</option>
+            </select>
+          </div>
+          <div class="buscar text-alinear-izquierda">
+            <label for="asistencia">Asistencia: </label>
+            <select id="asistencia" [(ngModel)]="report.asistencia" name="asistencia" class="custom-select">
+              <option [value]="true">Sí</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+          <div class="buscar text-alinear-izquierda">
+            <label for="participacion">Participación: </label>
+            <select id="participacion" [(ngModel)]="report.participacion" name="participacion" class="custom-select">
+              <option [value]="true">Sí</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+          <div class="buscar text-alinear-izquierda">
+            <label for="comprension">Comprensión: </label>
+            <select id="comprension" [(ngModel)]="report.comprension" name="comprension" class="custom-select">
+              <option [value]="true">Sí</option>
+              <option [value]="false">No</option>
+            </select>
+          </div>
+          <div class="buscar text-alinear-izquierda">
+            <label for="comportamiento">Comportamiento: </label>
+            <select id="comportamiento" [(ngModel)]="report.comportamiento" name="comportamiento" class="custom-select">
+              <option [value]="true">Adecuado</option>
+              <option [value]="false">Inadecuado</option>
+            </select>
+          </div>
+          <div class="buscar text-alinear-izquierda">
+            <label for="observaciones">Observaciones: </label>
+            <textarea id="observaciones" [(ngModel)]="report.observaciones" name="observaciones" class="custom-select"></textarea>
+          </div>
+          <div class="buscar text-alinear-izquierda">
+            <label for="recomendaciones">Recomendaciones: </label>
+            <textarea id="recomendaciones" [(ngModel)]="report.recomendaciones" name="recomendaciones" class="custom-select"></textarea>
+          </div>
+          <div class="buscar">
+          <button type="submit" class="tag">Enviar Reporte</button>
+         </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
