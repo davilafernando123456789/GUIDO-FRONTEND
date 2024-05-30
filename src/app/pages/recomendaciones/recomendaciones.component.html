@@ -78,7 +78,7 @@
               <option *ngFor="let profesor of profesores" [value]="profesor.id">{{ profesor.nombre }}</option>
             </select>
 
-            <label for="estrellas">Estrellas:</label>
+            <label for="estrellas"></label>
             <div class="star-rating">
               <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" 
                     (click)="setEstrellas(i + 1)" 
