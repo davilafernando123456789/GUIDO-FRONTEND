@@ -5,10 +5,11 @@
   <div class="recentCustomers">
     <div class="cardHeader">
     <h2>Bienvenido a la sección de mensajes</h2>
-    <div class="cardHeader" *ngIf="alumnos.length > 0">
     </div>
+    <div class="cardHeader" *ngIf="alumnos.length > 0">
+
       <table  *ngIf="alumnos.length > 0">
-        <h2>Mensajes</h2>
+
           <tr *ngFor="let alumno of alumnos">
             <td width="60px" >
               <div class="imgBx">
