@@ -8615,7 +8615,9 @@ form .buttons button , .backBtn{
     }
 }
 
-
+.card-body{
+  background-color: #ffffff !important;
+}
 
 
 
