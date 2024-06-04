@@ -10,6 +10,11 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <form class="card-body" (ngSubmit)="submitForm()" #profesorForm="ngForm">
+          <div class="card-header text-center">
+            <a href="login">
+              <img src="assets/images/tesis/log_inicio.png" width="170" height="50" alt="Nombre de tu empresa">
+            </a>
+          </div>
           <div class="card-header">
             <h3 class="text text-center">Datos del Profesor</h3>
             <!-- <a href="login">
@@ -46,7 +51,8 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="generoProfesor">Género</label>
-                <select class="form-control" id="generoProfesor" name="generoProfesor" [(ngModel)]="profesores.genero" required>
+                <select class="form-control" id="generoProfesor" name="generoProfesor" [(ngModel)]="profesores.genero"
+                  required>
                   <option value="" disabled selected>Seleccione el género</option>
                   <option value="Masculino">Masculino</option>
                   <option value="Femenino">Femenino</option>
@@ -86,12 +92,13 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="especialidadProfesor">ESPECIALIDAD</label>
-                <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesores.especialidad" name="especialidadProfesor">
-                    <option value="">Seleccionar especialidad</option>
-                    <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+                <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesores.especialidad"
+                  name="especialidadProfesor">
+                  <option value="">Seleccionar especialidad</option>
+                  <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
                 </select>
-            </div>
-            
+              </div>
+
               <div class="form-group col-md-6">
                 <label for="descripcionProfesor">Descripción de tu perfil</label>
                 <input type="text" class="form-control" id="descripcionProfesor" name="descripcionProfesor"
@@ -149,6 +156,10 @@
           </div>
           <div class="card-footer text-center">
             <button type="submit" class="btn btn-primary">Registrar</button>
+          </div>
+          <br>
+          <div class="login-link text-center">
+            <a href="/login">Ya tengo una cuenta, iniciar sesión</a>
           </div>
         </form>
       </div>

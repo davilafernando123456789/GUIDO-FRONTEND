@@ -19,3 +19,79 @@
 .no-classes-container p {
   font-size: 1.2em;
 }
+
+/* Recent Orders */
+.recentOrders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-text {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.card-text strong {
+  font-weight: bold;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary {
+  background-color: #1C1678;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #1f6391;
+}
+
+/* No Classes Container */
+.no-classes-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.icon-container {
+  font-size: 2rem;
+  color: #1C1678;
+  margin-bottom: 10px;
+}
+
+.no-classes-container p {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+}

@@ -38,7 +38,7 @@
                   placeholder="Descripción"></textarea>
               </div>
               <div class="profile-actions text-center">
-                <button (click)="guardarCambios()" class="btn btn-success">
+                <button (click)="guardarCambios()" class="btn btn-primary">
                   <i class="fas fa-save"></i> Guardar
                 </button>
                 <button (click)="editMode = false" class="btn btn-danger">
@@ -57,19 +57,17 @@
           </div>
         </div>
       </div>
-      </div>
-      
-      <div class="details">
-
-        <div class="recentOrders">
-          <div class="cardHeader">
-          <div class="teacher-profile">
-            <h2>Mi Disponibilidad</h2>
-            <full-calendar [options]="calendarOptions"></full-calendar>
-          </div>          
-      </div>
-    </div>
-      </div>
-      </div>
     </div>
 
+    <div class="details">
+
+      <div class="recentOrders">
+
+
+          <h2>Mi Disponibilidad</h2>
+          <full-calendar [options]="calendarOptions"></full-calendar>
+
+      </div>
+    </div>
+  </div>
+</div>
