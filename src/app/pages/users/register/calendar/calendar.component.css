@@ -8314,3 +8314,13 @@ a.text-dark:hover {
   }
 }
 /*# sourceMappingURL=bootstrap.min.css.map */
+/* calendar.component.css */
+
+:host {
+  display: block;
+  height: calc(100vh - 100px); /* Ajusta según tu diseño */
+}
+
+.fc {
+  height: 100%;
+}

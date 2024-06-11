@@ -59,8 +59,8 @@ export class CalendarTeacherComponent implements OnInit {
             console.log('Horarios obtenidos:', horarios);
             this.horarios = horarios;
             this.calendarOptions.events = this.horarios.map((horario) => ({
-              title: "Reservada",
-              //title: horario.titulo,
+              //title: "Reservada",
+              title: horario.titulo,
               start: horario.fecha + 'T' + horario.hora_inicio,
               end: horario.fecha + 'T' + horario.hora_fin,
             }));

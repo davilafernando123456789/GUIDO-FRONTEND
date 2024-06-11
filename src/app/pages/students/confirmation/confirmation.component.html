@@ -5,6 +5,65 @@
     <div class="recentCustomers">
       <div class="container">
         <div class="row">
+          <div class="cardHeader">
+            <h2>Reservar tutoria</h2>
+          </div>
+          <div class="col-md-6 offset-md-3">
+
+
+
+            <div class="card mt-5">
+              <div class="card-header text-center">
+                Detalles del Horario
+              </div>
+              <div class="card-body">
+                <!-- <p class="card-text">Título: {{ horario.titulo }}</p> -->
+                <p class="card-text">Fecha: {{ horario.fecha }}</p>
+                <p class="card-text">Hora de inicio: {{ horario.hora_inicio }}</p>
+                <p class="card-text">Hora de fin: {{ horario.hora_fin }}</p>
+              </div>
+            </div>
+
+            <div class="card mt-3">
+              <div class="card-header text-center">
+                Detalles del Profesor
+              </div>
+              <div class="card-body">
+                <p class="card-text">Nombre: {{ profesor.nombre }}</p>
+                <p class="card-text">Especialidad: {{ profesor.especialidad }}</p>
+                <p class="card-text">Descripción: {{ profesor.descripcion }}</p>
+              </div>
+            </div>
+            <!-- Card del Precio -->
+            <div class="card mt-5">
+              <!-- <div class="card-header text-center" style="font-size: 1.5em; font-weight: bold;">
+                Precio
+              </div> -->
+              <div class="card-body text-center">
+                <p style="font-size: 3em; font-weight: bold;">S/25</p>
+              </div>
+            </div>
+            <div *ngIf="showPayPalButtons" class="text-center mt-3">
+              <ngx-paypal [config]="payPalConfig"></ngx-paypal>
+            </div>
+            <div class="card-footer text-center">
+              <button class="btn btn-primary mt-3" (click)="registrarInscripcion()">Registrar Inscripción</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <app-navbar-student></app-navbar-student>
+<div class="main">
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentCustomers">
+      <div class="container">
+        <div class="row">
           <div class="col-md-6 offset-md-3">
             <div class="card mt-5">
               <div class="card-header text-center">
@@ -39,7 +98,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <!-- <app-navbar-student></app-navbar-student>
 <div class="main">

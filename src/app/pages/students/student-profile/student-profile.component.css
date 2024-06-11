@@ -130,3 +130,16 @@ input[type="date"] {
 .white-icon {
   color: white;
 }
+.profile-actions button {
+  margin-right: 0.5rem; /* Mantiene el espacio entre los botones */
+}
+
+.profile-actions button:last-child {
+  margin-right: 0; /* Elimina el margen derecho del último botón */
+}
+.profile-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Opcional: añade un margen superior para separar los botones del formulario */
+}
