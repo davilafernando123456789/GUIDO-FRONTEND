@@ -17,6 +17,12 @@
               </div>
             </li>
           </ul>
+          <div *ngIf="notificaciones.length === 0" class="no-notifications-container">
+            <div class="icon-container">
+              <i class="fas fa-bell"></i>
+            </div>
+            <p>Aún no has recibido ninguna notificación</p>
+          </div>
         </div>
       </div>
     </div>

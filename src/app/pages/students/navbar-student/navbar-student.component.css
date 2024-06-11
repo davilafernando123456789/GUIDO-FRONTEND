@@ -392,7 +392,7 @@ body {
 }
 .recentCustomers table tr td h4 span {
   font-size: 14px;
-  color: var(--black2);
+  /* color: var(--black2); */
 }
 .recentCustomers table tr:hover {
   background: var(--blue);

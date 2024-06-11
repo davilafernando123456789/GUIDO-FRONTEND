@@ -1,4 +1,4 @@
-.report-form {
+/* .report-form {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -7,7 +7,7 @@
   max-width: 800px;
   margin-bottom: 20px;
   text-align: left;
-}
+} */
 
 .report-form h2 {
   text-align: center;
@@ -67,4 +67,34 @@ textarea {
 
 .btn-primary:hover {
   background-color: #1f6391;
+}
+
+/* Aplicar color a las etiquetas y al texto dentro del formulario */
+.report-form {
+  color: #1C1678;
+}
+
+.report-form label {
+  color: #1C1678;
+  font-weight: bold;
+}
+
+.report-form select,
+.report-form textarea,
+.report-form input {
+  color: #1C1678;
+}
+
+.report-form .title-center-blue {
+  color: #1C1678;
+}
+
+.report-form .btn-primary {
+  background-color: #1C1678;
+  border-color: #1C1678;
+}
+
+.report-form .btn-primary:hover {
+  background-color: #14105a;
+  border-color: #14105a;
 }

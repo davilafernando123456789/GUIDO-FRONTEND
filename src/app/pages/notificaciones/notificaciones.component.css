@@ -1,5 +1,10 @@
 .notificaciones {
     padding: 20px;
+      width: 100%; /* Ajusta esto según tu diseño */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    
   }
   
   .notificaciones ul {
@@ -62,5 +67,30 @@
   
   .notificacion-content button:hover {
     background-color: #0056b3;
+  }
+  .no-notifications-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 5px;
+    text-align: center;
+    height: 50vh;
+    color: #6c757d;
+  }
+  
+  .icon-container {
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  
+  .icon-container i {
+    font-size: 100px;
+    color: #6c757d;
+  }
+  
+  .no-notifications-container p {
+    font-size: 1.2em;
   }
   

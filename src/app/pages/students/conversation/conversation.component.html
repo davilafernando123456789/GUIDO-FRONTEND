@@ -3,8 +3,8 @@
   <app-topbar></app-topbar>
   <div class="details">
     <div class="recentCustomers">
-      <div class="cardHeader">
-      <h2>Bienvenido a la sección de mensajes</h2>
+      <div class="cardHeader ">
+      <h2>Mensajes</h2>
       </div>
       <div class="cardHeader" *ngIf="profesores.length > 0">
         <table>
@@ -20,7 +20,7 @@
           </tr>
         </table>
       </div>
-      </div>
+
       <div *ngIf="profesores.length === 0">
         <div class="no-messages-container ">
           <div class="icon-container">
@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-
+</div>
 
 
 <!-- <div class="cardHeader" *ngIf="profesores.length > 0">
