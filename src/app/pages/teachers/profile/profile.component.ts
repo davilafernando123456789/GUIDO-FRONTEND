@@ -1,18 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { CursoService } from '../../students/services/courses.service';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventClickArg } from '@fullcalendar/core';
-import { Router, NavigationExtras } from '@angular/router';
-import { TeacherService } from '../teacher.service';
+import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
-interface ExtendedProps {
-  horarioId: string;
-  profesorId: string;
-}
 
 @Component({
   selector: 'app-profile',
@@ -24,6 +19,8 @@ export class ProfileComponent implements OnInit {
   profesor: any;
   horarios: any[] = [];
   editMode = false; 
+  selectedFile: File | null = null; // Nueva propiedad para almacenar el archivo seleccionado
+
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek', // Cambiar a la vista semanal de timeGrid
     headerToolbar: {
@@ -41,6 +38,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private http: HttpClient,
     private cursoService: CursoService,
     private router: Router
   ) {}
@@ -56,7 +54,6 @@ export class ProfileComponent implements OnInit {
     }
   }
 
-
   obtenerProfesor(): void {
     this.cursoService.obtenerProfesorPorId(this.profesorId!).subscribe(
       (data) => {
@@ -68,35 +65,63 @@ export class ProfileComponent implements OnInit {
       }
     );
   }
+
+  onFileSelected(event: any) {
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
+    }
+  }
+
   guardarCambios() {
-    this.cursoService.actualizarProfesor(this.profesorId!, this.profesor)
-      .subscribe(
-        () => {
-          // Manejar la respuesta exitosa
-          Swal.fire({
-            icon: 'success',
-            title: 'Perfil actualizado correctamente',
-            showConfirmButton: false,
-            timer: 3000,
-          });
-          this.editMode = false; // Salir del modo de edición
+    if (this.selectedFile) {
+      const formData = new FormData();
+      formData.append('image', this.selectedFile);
+      this.http.post<any>('http://localhost:4000/api/imagen/upload-image', formData).subscribe(
+        (response) => {
+          this.profesor.foto = response.imageUrl;
+          this.actualizarProfesor();
         },
         (error) => {
-          // Manejar el error
+          console.error('Error al subir la imagen:', error);
           Swal.fire({
             icon: 'error',
-            title: 'Error al actualizar perfil',
-            showConfirmButton: false,
-            timer: 3000,
+            title: 'Error al subir la imagen',
+            text: 'Por favor, seleccione una imagen en el formato adecuado.',
           });
-          console.error(error);
         }
       );
+    } else {
+      this.actualizarProfesor();
+    }
+  }
+
+  actualizarProfesor() {
+    this.cursoService.actualizarProfesor(this.profesorId!, this.profesor).subscribe(
+      () => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Perfil actualizado correctamente',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        this.editMode = false; // Salir del modo de edición
+      },
+      (error) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al actualizar perfil',
+          showConfirmButton: false,
+          timer: 3000,
+        });
+        console.error(error);
+      }
+    );
   }
 
   handleEventClick(arg: EventClickArg) {
-   // this.navigateToRegistration(arg);
+    // this.navigateToRegistration(arg);
   }
+
   obtenerHorariosProfesor(): void {
     this.cursoService.obtenerHorariosPorProfesor(this.profesorId!).subscribe(
       (data) => {
@@ -117,3 +142,124 @@ export class ProfileComponent implements OnInit {
     );
   }
 }
+
+
+// import { Component, OnInit } from '@angular/core';
+// import { ActivatedRoute } from '@angular/router';
+// import { CursoService } from '../../students/services/courses.service';
+// import { CalendarOptions } from '@fullcalendar/core';
+// import dayGridPlugin from '@fullcalendar/daygrid';
+// import timeGridPlugin from '@fullcalendar/timegrid';
+// import { EventClickArg } from '@fullcalendar/core';
+// import { Router, NavigationExtras } from '@angular/router';
+// import { TeacherService } from '../teacher.service';
+// import Swal from 'sweetalert2';
+
+// interface ExtendedProps {
+//   horarioId: string;
+//   profesorId: string;
+// }
+
+// @Component({
+//   selector: 'app-profile',
+//   templateUrl: './profile.component.html',
+//   styleUrls: ['./profile.component.css'],
+// })
+// export class ProfileComponent implements OnInit {
+//   profesorId: string | null = null;
+//   profesor: any;
+//   horarios: any[] = [];
+//   editMode = false; 
+//   calendarOptions: CalendarOptions = {
+//     initialView: 'timeGridWeek', // Cambiar a la vista semanal de timeGrid
+//     headerToolbar: {
+//       left: 'prev,next today',
+//       center: 'title',
+//       right: 'timeGridWeek,timeGridDay', // Agregar botones para cambiar entre vista semanal y diaria
+//     },
+//     slotMinTime: '08:00:00', // Hora de inicio personalizada
+//     slotMaxTime: '22:00:00', // Hora de finalización personalizada
+//     allDaySlot: false,
+//     weekends: false, // Ocultar los fines de semana
+//     plugins: [dayGridPlugin, timeGridPlugin],
+//     eventClick: this.handleEventClick.bind(this),
+//   };
+
+//   constructor(
+//     private route: ActivatedRoute,
+//     private cursoService: CursoService,
+//     private router: Router
+//   ) {}
+
+//   ngOnInit(): void {
+//     const usuarioString = sessionStorage.getItem('usuario');
+//     if (usuarioString) {
+//       const usuario = JSON.parse(usuarioString);
+//       this.profesorId = usuario.id as string;
+//       this.obtenerProfesor(); // Llama a la función para obtener los detalles del profesor
+//     } else {
+//       console.error('ID de profesor no encontrado en la sesión');
+//     }
+//   }
+
+
+//   obtenerProfesor(): void {
+//     this.cursoService.obtenerProfesorPorId(this.profesorId!).subscribe(
+//       (data) => {
+//         this.profesor = data;
+//         this.obtenerHorariosProfesor();
+//       },
+//       (error) => {
+//         console.error('Error al obtener el profesor:', error);
+//       }
+//     );
+//   }
+//   guardarCambios() {
+//     this.cursoService.actualizarProfesor(this.profesorId!, this.profesor)
+//       .subscribe(
+//         () => {
+//           // Manejar la respuesta exitosa
+//           Swal.fire({
+//             icon: 'success',
+//             title: 'Perfil actualizado correctamente',
+//             showConfirmButton: false,
+//             timer: 3000,
+//           });
+//           this.editMode = false; // Salir del modo de edición
+//         },
+//         (error) => {
+//           // Manejar el error
+//           Swal.fire({
+//             icon: 'error',
+//             title: 'Error al actualizar perfil',
+//             showConfirmButton: false,
+//             timer: 3000,
+//           });
+//           console.error(error);
+//         }
+//       );
+//   }
+
+//   handleEventClick(arg: EventClickArg) {
+//    // this.navigateToRegistration(arg);
+//   }
+//   obtenerHorariosProfesor(): void {
+//     this.cursoService.obtenerHorariosPorProfesor(this.profesorId!).subscribe(
+//       (data) => {
+//         this.horarios = data;
+//         this.calendarOptions.events = this.horarios.map((horario) => ({
+//           title: horario.titulo,
+//           start: horario.fecha + 'T' + horario.hora_inicio,
+//           end: horario.fecha + 'T' + horario.hora_fin,
+//           extendedProps: {
+//             horarioId: horario.id,
+//             profesorId: this.profesorId,
+//           },
+//         }));
+//       },
+//       (error) => {
+//         console.error('Error al obtener los horarios del profesor:', error);
+//       }
+//     );
+//   }
+// }
