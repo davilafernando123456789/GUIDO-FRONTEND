@@ -1,4 +1,4 @@
-/* Contenedor principal */
+
 .topbar {
   display: flex;
   justify-content: space-between;
@@ -78,7 +78,7 @@
   color: #007bff; 
 }
 
-/* Icono de flecha del botón */
+
 .dropbtn i {
   margin-left: 5px;
 }
@@ -110,7 +110,6 @@
   display: block;
 }
 
-/* ===================== Main ===================== */
 .main {
   position: absolute;
   width: calc(100% - 300px);
@@ -189,4 +188,4 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
+} 

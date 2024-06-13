@@ -53,6 +53,8 @@ import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal
 import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component';
 import { ReportsComponent } from './pages/teachers/reports/reports.component';
 import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
+import { CreditCardDirective } from './services/credit-card.directive';
+import { ExpiryDateDirective } from './services/expiry-date.directive';
 
 @NgModule({
   declarations: [
@@ -97,6 +99,8 @@ import { NotificacionesComponent } from './pages/notificaciones/notificaciones.c
     RecomendacionesComponent,
     ReportsComponent,
     NotificacionesComponent,
+    CreditCardDirective,
+    ExpiryDateDirective,
   ],
   imports: [
     BrowserModule,
@@ -114,6 +118,10 @@ import { NotificacionesComponent } from './pages/notificaciones/notificaciones.c
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
+  ],
+  exports: [
+    CreditCardDirective,
+    ExpiryDateDirective,
   ],
   providers: [],
   bootstrap: [AppComponent]
