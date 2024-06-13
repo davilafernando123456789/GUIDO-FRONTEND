@@ -93,4 +93,51 @@
   .no-notifications-container p {
     font-size: 1.2em;
   }
-  
+  /* Estilos para las notificaciones */
+.notificaciones {
+  padding: 20px;
+}
+
+.notificaciones ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notificaciones li {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  padding: 15px;
+}
+
+.notificaciones li.leido {
+  background-color: #e0e0e0;
+}
+
+
+.no-notifications-container {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+.icon-container {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+
+button {
+  background-color: #1c1678;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #14105e;
+}

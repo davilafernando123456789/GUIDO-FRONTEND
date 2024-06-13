@@ -17,6 +17,7 @@
               </div>
             </li>
           </ul>
+          <button *ngIf="mostrarBotonVerMas" (click)="mostrarMasNotificaciones()">Ver más</button>
           <div *ngIf="notificaciones.length === 0" class="no-notifications-container">
             <div class="icon-container">
               <i class="fas fa-bell"></i>
@@ -29,9 +30,8 @@
   </div>
 </div>
 
-<!-- 
 
-<app-navbar-student></app-navbar-student>
+<!-- <app-navbar-student></app-navbar-student>
 <div class="main">
   <app-topbar></app-topbar>
   <div class="details">
@@ -42,13 +42,23 @@
           <ul>
             <li *ngFor="let notificacion of notificaciones" [class.leido]="notificacion.leido" (click)="handleNotificacionClick(notificacion)">
               <div class="notificacion-content">
-                <p>{{ notificacion.descripcion }} </p>
-                <button style="margin-left: 15px;" (click)="marcarComoLeido(notificacion.id); $event.stopPropagation()" *ngIf="!notificacion.leido"> Marcar como leído</button>
+                <div class="notificacion-text">
+                  <p>{{ notificacion.descripcion }}</p>
+                  <span>{{ formatFecha(notificacion.createdAt) }}</span>
+                </div>
+                <button style="margin-left: 25px;" (click)="marcarComoLeido(notificacion.id); $event.stopPropagation()" *ngIf="!notificacion.leido">Marcar como leído</button>
               </div>
             </li>
           </ul>
+          <div *ngIf="notificaciones.length === 0" class="no-notifications-container">
+            <div class="icon-container">
+              <i class="fas fa-bell"></i>
+            </div>
+            <p>Aún no has recibido ninguna notificación</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div> -->
+</div>
+ -->
