@@ -16,4 +16,7 @@ export class RecomendacionesService {
   obtenerRecomendaciones(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}`);
   }
+  obtenerRecomendacionesPorProfesorId(profesorId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/profesor/${profesorId}`);
+  }
 }

@@ -4,7 +4,7 @@
 
   <div class="details">
     <div class="recentOrders" style="">
-      
+
       <h2>Disponibilidad</h2>
       <h2>Elige la hora y empieza a reservar tu clase</h2>
       <full-calendar [options]="calendarOptions"></full-calendar>
@@ -24,8 +24,23 @@
                 <p class="cardName cardDescription">{{ profesor.descripcion }}</p>
               </div>
               <div class="card-footer">
-                <div class="d-flex justify-content-center">
-                  <!-- <a href="resenas" class="btn btn-custom mr-2">Iniciar sesión</a> -->
+                <div class="d-flex justify-content-center flex-column">
+                  <h3>Recomendaciones</h3>
+                  <div class="recomendaciones-container">
+                    <div *ngFor="let recomendacion of recomendaciones" class="recomendacion-card">
+                      <div class="recomendacion-header">
+                        <div class="estrellas">
+                          <ng-container *ngFor="let star of [].constructor(recomendacion.estrellas)">
+                            <i class="fas fa-star"></i>
+                          </ng-container>
+                        </div>
+                      </div>
+                      <div class="recomendacion-body">
+                        <p class="comentario">{{ recomendacion.comentario }}</p>
+                        <p class="alumno">{{ recomendacion.Alumno.nombre }}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
