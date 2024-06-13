@@ -2,11 +2,18 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { io } from 'socket.io-client';
 import { Buffer } from 'buffer';
 import { ActivatedRoute } from '@angular/router';
+import { CursoService } from '../../students/services/courses.service';
 
 interface Archivo {
   nombre: string;
   archivo: Buffer;
 }
+interface Alumno {
+  id: string;
+  nombre: string;
+  apellido: string;
+}
+
 
 @Component({
   selector: 'app-message',
@@ -17,6 +24,7 @@ export class MessageComponent implements OnInit {
   socket: any;
   mensajes: any[] = [];
   nuevoMensaje: string = '';
+  alumnos: Alumno[] = [];
   mediaRecorder: MediaRecorder | undefined;
   audioChunks: Blob[] = [];
   grabando: boolean = false;
@@ -25,7 +33,7 @@ export class MessageComponent implements OnInit {
   remite_id: number | null = null;
   destinatario_id: number | null = null;
 
-  constructor(private route: ActivatedRoute, private cdr: ChangeDetectorRef) {}
+  constructor(private route: ActivatedRoute, private cursoService: CursoService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     // Obtener el ID del profesor logueado desde el almacenamiento de sesión
@@ -41,6 +49,7 @@ export class MessageComponent implements OnInit {
     this.route.params.subscribe((params) => {
       this.destinatario_id = params['alumnoId'];
       console.log('ID del destinatario:', this.destinatario_id);
+      this.obtenerAlumno();
     });
 
     this.socket = io('http://localhost:4000');
@@ -189,6 +198,19 @@ export class MessageComponent implements OnInit {
         this.remite_id
       );
       this.socket.emit('cargar-mensajes-anteriores-alumnos', this.remite_id);
+    }
+  }
+  obtenerAlumno(): void {
+    if (this.destinatario_id) {
+      const destinatarioIdString = this.destinatario_id.toString();
+      this.cursoService.obtenerAlumnoPorId(destinatarioIdString).subscribe(
+        (data) => {
+          this.alumnos = [data]; // Asignar el resultado al array alumnos
+        },
+        (error) => {
+          console.error('Error al obtener alumno:', error);
+        }
+      );
     }
   }
 }
