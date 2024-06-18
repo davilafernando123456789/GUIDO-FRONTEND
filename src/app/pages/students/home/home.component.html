@@ -1,5 +1,6 @@
 <app-navbar-student></app-navbar-student>
-<div class="main">
+<div class="main" [class.active]="menuActive">
+<!-- <div class="main"> -->
   <app-topbar></app-topbar>
   <div class="details">
     <div class="recentOrders">
@@ -24,7 +25,7 @@
           <ng-container *ngIf="usuarioLogueado?.rol === 1">
             <h2>Explora a tus Tutores</h2>
             <div class="container">
-              
+
               <h2>Seleccionar Tema</h2>
               <div class="tags">
                 <span class="tag" (click)="filtrarPorEspecialidad('Matemática')">Matemática</span>
@@ -52,9 +53,9 @@
                     </div> -->
                     <div class="star-rating">
                       <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
-                            [class.filled]="i < profesor.estrellas">&#9733;</span>
+                        [class.filled]="i < profesor.estrellas">&#9733;</span>
                     </div>
-                    
+
                   </div>
                 </div>
               </div>
@@ -69,4 +70,3 @@
       </div>
     </div>
   </div>
-</div>

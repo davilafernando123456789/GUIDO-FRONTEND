@@ -89,6 +89,7 @@ export class StudentComponent {
               rol: response.rol,
             };
             sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
+            sessionStorage.setItem('firstTimeLogin', 'false');
             this.router.navigate(['/home']);
           });
         },

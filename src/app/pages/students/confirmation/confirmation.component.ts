@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { CursoService } from '../services/courses.service';
 import { PayPalConfigExtended } from '../../../models/paypal-config.model';
@@ -10,7 +12,10 @@ import Swal from 'sweetalert2';
   templateUrl: './confirmation.component.html',
   styleUrls: ['./confirmation.component.css'],
 })
-export class ConfirmationComponent implements OnInit {
+export class ConfirmationComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   showPayPalButtons = false;
   horarioId: string | null = null;
   profesorId: string | null = null;
@@ -26,10 +31,10 @@ export class ConfirmationComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cursoService: CursoService,
-    private router: Router
+    private router: Router,
+    private menuService: MenuService
   ) {}
-  ngOnInit() {
-    this.initConfig();
+  ngOnInit() : void {
     this.horarioId = this.route.snapshot.paramMap.get('horarioId');
     this.profesorId = this.route.snapshot.paramMap.get('profesorId');
 
@@ -41,6 +46,13 @@ export class ConfirmationComponent implements OnInit {
         'No se encontraron los parámetros horarioId y profesorId en la ruta'
       );
     }
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   obtenerDetallesHorario() {
@@ -63,9 +75,6 @@ export class ConfirmationComponent implements OnInit {
     }
   }
 
-  private initConfig(): void {
-    // PayPal config initialization if needed
-  }
 
   registrarInscripcion() {
     const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
@@ -144,7 +153,6 @@ export class ConfirmationComponent implements OnInit {
     });
   }
 }
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';
@@ -345,34 +353,33 @@ export class ConfirmationComponent implements OnInit {
 //   this.showPayPalButtons = true;
 // }
 
+// registrarInscripcion() {
+//   // Obtener el ID del alumno logueado desde sessionStorage
+//   const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
+//   const alumnoId = usuario.id;
 
- // registrarInscripcion() {
-  //   // Obtener el ID del alumno logueado desde sessionStorage
-  //   const usuario = JSON.parse(sessionStorage.getItem('usuario') || '{}');
-  //   const alumnoId = usuario.id;
+//   if (!alumnoId) {
+//     console.error('No se pudo obtener el ID del alumno logueado');
+//     return;
+//   }
+//   const inscripcion = {
+//     Alumnos_id: alumnoId,
+//     Profesores_id: this.profesorId,
+//     Horario_id: this.horarioId,
+//   };
 
-  //   if (!alumnoId) {
-  //     console.error('No se pudo obtener el ID del alumno logueado');
-  //     return;
-  //   }
-  //   const inscripcion = {
-  //     Alumnos_id: alumnoId,
-  //     Profesores_id: this.profesorId,
-  //     Horario_id: this.horarioId,
-  //   };
+//   this.cursoService.registrarInscripcion(inscripcion).subscribe(
+//     () => {
+//       console.log('Inscripción registrada correctamente');
+//       this.router.navigate(['/home']);
+//     },
+//     (error) => {
+//       console.error('Error al registrar la inscripción:', error);
+//       alert(
+//         'Error al registrar la inscripción. Por favor, inténtalo de nuevo.'
+//       );
+//     }
+//   );
 
-  //   this.cursoService.registrarInscripcion(inscripcion).subscribe(
-  //     () => {
-  //       console.log('Inscripción registrada correctamente');
-  //       this.router.navigate(['/home']);
-  //     },
-  //     (error) => {
-  //       console.error('Error al registrar la inscripción:', error);
-  //       alert(
-  //         'Error al registrar la inscripción. Por favor, inténtalo de nuevo.'
-  //       );
-  //     }
-  //   );
-
-  // }
+// }
 //PARA EL METODO DE PAGO

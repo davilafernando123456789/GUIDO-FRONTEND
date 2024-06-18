@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { NotificacionesService } from 'src/app/services/notificaciones.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
@@ -8,7 +10,10 @@ import * as moment from 'moment';
   templateUrl: './notificaciones.component.html',
   styleUrls: ['./notificaciones.component.css']
 })
-export class NotificacionesComponent implements OnInit {
+export class NotificacionesComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   notificaciones: any[] = [];
   todasNotificaciones: any[] = []; // Todas las notificaciones obtenidas del servicio
   usuarioId: number | null = null; // ID del usuario actualmente logueado
@@ -18,6 +23,7 @@ export class NotificacionesComponent implements OnInit {
 
   constructor(
     private notificacionesService: NotificacionesService,
+    private menuService: MenuService,
     private router: Router
   ) {}
 
@@ -32,6 +38,13 @@ export class NotificacionesComponent implements OnInit {
     } else {
       console.error('No se encontró información de usuario en la sesión.');
     }
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   obtenerNotificaciones(): void {

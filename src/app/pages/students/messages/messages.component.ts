@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { io } from 'socket.io-client';
 import { Buffer } from 'buffer';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +17,10 @@ interface Archivo {
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css'],
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesorId: string | null = null;
   profesor: any;
   socket: any;
@@ -35,10 +40,18 @@ export class MessagesComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private cursoService: CursoService,
+    private menuService: MenuService,
     private cdr: ChangeDetectorRef // Importa ChangeDetectorRef
   ) {}
 
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
+
   ngOnInit(): void {
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
       const usuario = JSON.parse(usuarioString);
@@ -188,7 +201,7 @@ export class MessagesComponent implements OnInit {
             sent: false,
           };
           this.mensajes.push(mensajeMostrar);
-          this.cdr.detectChanges(); 
+          this.cdr.detectChanges();
 
           // Llamar a cargarMensajesAnteriores después de enviar un mensaje
           this.cargarMensajesAnteriores();
@@ -252,7 +265,6 @@ export class MessagesComponent implements OnInit {
     }
   }
 }
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { io } from 'socket.io-client';

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -6,7 +8,10 @@ import { AdminService } from '../admin.service';
   templateUrl: './schedules.component.html',
   styleUrls: ['./schedules.component.css'],
 })
-export class SchedulesComponent implements OnInit {
+export class SchedulesComponent implements  OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   horarios: any[] = [];
   selectedHorario: any | null = null;
   editingHorario: any | null = null;
@@ -16,10 +21,17 @@ export class SchedulesComponent implements OnInit {
   searchTerm: string = '';
   reverse: boolean = false;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private menuService: MenuService) {}
 
   ngOnInit(): void {
     this.getHorarios();
+  this.menuSubscription = this.menuService.menuActive$.subscribe(active => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   getHorarios(): void {

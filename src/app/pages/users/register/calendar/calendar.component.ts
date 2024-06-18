@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CursoService } from '../../../students/services/courses.service';
 import { CalendarOptions, DateSelectArg, EventApi } from '@fullcalendar/core';
@@ -27,7 +29,10 @@ interface EventoSeleccionado {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css'],
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesorId: number | null = null;
   selectedEvents: EventoSeleccionado[] = [];
   fechaInicio: string | null = null;
@@ -55,14 +60,15 @@ export class CalendarComponent implements OnInit {
       hour: 'numeric',
       minute: '2-digit',
       omitZeroMinute: false,
-      hour12: false
-    }
+      hour12: false,
+    },
   };
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private menuService: MenuService
   ) {}
 
   ngOnInit(): void {
@@ -73,6 +79,13 @@ export class CalendarComponent implements OnInit {
     } else {
       console.log('Invalid usuario');
     }
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   handleDateSelect(selectInfo: DateSelectArg): void {
@@ -110,14 +123,16 @@ export class CalendarComponent implements OnInit {
 
       // Cambiar el color del espacio seleccionado y mostrar el intervalo de horas
       this.highlightSelectedSlot(selectInfo, '#fffb00', '#FFFFFF'); // Color oscuro con texto blanco
-
     } else {
       // Si el evento ya está seleccionado, lo eliminamos de la lista y lo descoloreamos
       const deselectedEvent = this.selectedEvents[eventIndex];
       this.selectedEvents.splice(eventIndex, 1);
       const events = calendarApi.getEvents();
       for (let event of events) {
-        if (event.start?.toISOString() === startStr && event.end?.toISOString() === endStr) {
+        if (
+          event.start?.toISOString() === startStr &&
+          event.end?.toISOString() === endStr
+        ) {
           event.remove(); // Elimina el evento seleccionado
           console.log('Evento eliminado:', { startStr, endStr });
           break;
@@ -126,11 +141,18 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  highlightSelectedSlot(selectInfo: DateSelectArg, bgColor: string, textColor: string): void {
+  highlightSelectedSlot(
+    selectInfo: DateSelectArg,
+    bgColor: string,
+    textColor: string
+  ): void {
     const { start, end } = selectInfo;
     const calendarApi = selectInfo.view.calendar;
     const events = calendarApi.getEvents();
-    const matchingEvents = events.filter(event => event.start && event.end && event.start <= start && event.end >= end);
+    const matchingEvents = events.filter(
+      (event) =>
+        event.start && event.end && event.start <= start && event.end >= end
+    );
 
     const startStr = new Date(start).toLocaleTimeString([], {
       hour: '2-digit',
@@ -143,7 +165,7 @@ export class CalendarComponent implements OnInit {
     const title = `${startStr} - ${endStr}`;
 
     if (matchingEvents.length > 0) {
-      matchingEvents.forEach(event => {
+      matchingEvents.forEach((event) => {
         console.log('Evento encontrado para destacar:', event);
         event.setProp('backgroundColor', bgColor);
         event.setProp('textColor', textColor);
@@ -492,7 +514,6 @@ export class CalendarComponent implements OnInit {
 //   }
 // }
 
-
 // import { Component, OnInit } from '@angular/core';
 // import { ActivatedRoute, Router } from '@angular/router';
 // import { CursoService } from '../../../students/services/courses.service';
@@ -686,8 +707,6 @@ export class CalendarComponent implements OnInit {
 //     }
 //   }
 // }
-
-
 
 //   if (horariosRegistrados) {
 //     alert('Horarios registrados exitosamente');

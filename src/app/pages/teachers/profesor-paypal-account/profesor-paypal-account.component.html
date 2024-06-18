@@ -22,33 +22,34 @@
     </div>
 </div>
     </div> -->
-    <app-navbar-student></app-navbar-student>
-    <div class="main">
-        <app-topbar></app-topbar>
-        <div class="container">
-            <div class="details">
-                <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>{{ isEditMode ? 'Editar' : 'Crear' }} cuenta de PayPal del tutor</h2>
-                    </div>
-                    <div class="description">
-                        <p>
-                            Nuestra plataforma Guido está integrada con PayPal para facilitar los pagos y transacciones. 
-                            Por favor, asegúrese de que el correo electrónico ingresado corresponde a una cuenta válida de PayPal.
-                            Esto garantizará que los pagos se procesen de manera rápida y segura.
-                        </p>
-                    </div>
-                    <div class="c">
-                        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="paypal-form">
-                            <div class="form-group">
-                                <label for="paypal_email">Email de PayPal</label>
-                                <input type="email" id="paypal_email" formControlName="paypal_email" class="form-control" />
-                            </div>
-                            <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
-                        </form>
-                    </div>
+<app-navbar-student></app-navbar-student>
+<div class="main" [class.active]="menuActive">
+    <!-- <div class="main"> -->
+    <app-topbar></app-topbar>
+    <div class="container">
+        <div class="details">
+            <div class="recentCustomers">
+                <div class="cardHeader">
+                    <h2>{{ isEditMode ? 'Editar' : 'Crear' }} cuenta de PayPal del tutor</h2>
+                </div>
+                <div class="description">
+                    <p>
+                        Nuestra plataforma Guido está integrada con PayPal para facilitar los pagos y transacciones.
+                        Por favor, asegúrese de que el correo electrónico ingresado corresponde a una cuenta válida de
+                        PayPal.
+                        Esto garantizará que los pagos se procesen de manera rápida y segura.
+                    </p>
+                </div>
+                <div class="c">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="paypal-form">
+                        <div class="form-group">
+                            <label for="paypal_email">Email de PayPal</label>
+                            <input type="email" id="paypal_email" formControlName="paypal_email" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Actualizar' : 'Crear' }}</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    
+</div>

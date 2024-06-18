@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { CursoService } from '../services/courses.service';
 import { RecomendacionesService } from 'src/app/services/recomendaciones.service';
@@ -19,7 +21,10 @@ interface ExtendedProps {
   templateUrl: './teacher-profile.component.html',
   styleUrls: ['./teacher-profile.component.css'],
 })
-export class TeacherProfileComponent implements OnInit {
+export class TeacherProfileComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesorId: string | null = null;
   profesor: any;
   horarios: any[] = [];
@@ -47,7 +52,8 @@ export class TeacherProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private cursoService: CursoService,
     private recomendacionesService: RecomendacionesService,
-    private router: Router
+    private router: Router,
+    private menuService: MenuService
   ) {}
 
   ngOnInit(): void {
@@ -59,6 +65,13 @@ export class TeacherProfileComponent implements OnInit {
       console.error('ID de profesor no encontrado en la URL');
     }
     this.getUserData();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   getUserData() {
@@ -131,18 +144,22 @@ export class TeacherProfileComponent implements OnInit {
     );
   }
   obtenerRecomendacionesPorProfesor(): void {
-    this.recomendacionesService.obtenerRecomendacionesPorProfesorId(this.profesorId!).subscribe(
-      (data) => {
-        console.log('Datos recibidos:', data);  // Log de los datos recibidos
-        this.recomendaciones = data;
-        console.log('Recomendaciones asignadas:', this.recomendaciones);  // Log de las recomendaciones asignadas
-      },
-      (error) => {
-        console.error('Error al obtener las recomendaciones del profesor:', error);
-      }
-    );
+    this.recomendacionesService
+      .obtenerRecomendacionesPorProfesorId(this.profesorId!)
+      .subscribe(
+        (data) => {
+          console.log('Datos recibidos:', data); // Log de los datos recibidos
+          this.recomendaciones = data;
+          console.log('Recomendaciones asignadas:', this.recomendaciones); // Log de las recomendaciones asignadas
+        },
+        (error) => {
+          console.error(
+            'Error al obtener las recomendaciones del profesor:',
+            error
+          );
+        }
+      );
   }
-  
 
   navigateToRegistration($event: EventClickArg): void {
     const eventInfo = $event.event;
@@ -156,7 +173,6 @@ export class TeacherProfileComponent implements OnInit {
     this.router.navigate(['/confirmation', horarioId, profesorId]);
   }
 }
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';

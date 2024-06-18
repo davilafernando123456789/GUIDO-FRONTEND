@@ -140,6 +140,7 @@ export class TeacherComponent {
             rol: response.rol,
             sala: response.usuario.sala,
           };
+          sessionStorage.setItem('firstTimeLogin', 'false');
           sessionStorage.setItem('usuario', JSON.stringify(usuarioLogueado));
           // Redirige a la vista de suscripción
           this.router.navigate(['/suscripcion']);

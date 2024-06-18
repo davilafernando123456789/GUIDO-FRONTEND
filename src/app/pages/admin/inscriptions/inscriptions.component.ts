@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { AdminService } from '../admin.service';
 declare var $: any;
 
@@ -7,7 +9,10 @@ declare var $: any;
   templateUrl: './inscriptions.component.html',
   styleUrls: ['./inscriptions.component.css'],
 })
-export class InscriptionsComponent implements OnInit {
+export class InscriptionsComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   inscripciones: any[] = [];
   selectedInscripcion: any | null = null;
   editingInscripcion: any | null = null;
@@ -17,12 +22,17 @@ export class InscriptionsComponent implements OnInit {
   searchTerm: string = '';
   reverse: boolean = false;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private menuService: MenuService) {}
 
   ngOnInit(): void {
+    this.menuSubscription = this.menuService.menuActive$.subscribe(active => {
+      this.menuActive = active;
+    });
     this.getInscripciones();
   }
-
+ ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
   getInscripciones(): void {
     this.adminService.obtenerInscripciones().subscribe(
       (response) => {

@@ -1,4 +1,12 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { CursoService } from '../../../students/services/courses.service';
 import { Router } from '@angular/router';
 
@@ -9,7 +17,10 @@ import Swal from 'sweetalert2';
   templateUrl: './suscripcion.component.html',
   styleUrls: ['./suscripcion.component.css'],
 })
-export class SuscripcionComponent implements OnInit {
+export class SuscripcionComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   @ViewChild('paymentForm') paymentFormElement: ElementRef | undefined;
   usuarioLogueado: UsuarioData | null = null;
   showPayPalButtons = false;
@@ -26,11 +37,19 @@ export class SuscripcionComponent implements OnInit {
 
   constructor(
     private cursoService: CursoService,
-    private router: Router
+    private router: Router,
+    private menuService: MenuService
   ) {}
 
   ngOnInit(): void {
     this.getUserData();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   getUserData() {
@@ -54,7 +73,10 @@ export class SuscripcionComponent implements OnInit {
     this.suscripcionTipo = tipo;
     setTimeout(() => {
       if (this.paymentFormElement) {
-        this.paymentFormElement.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        this.paymentFormElement.nativeElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
       }
     }, 0);
   }
@@ -64,7 +86,11 @@ export class SuscripcionComponent implements OnInit {
       this.initPayPalConfig();
       this.suscribirse(this.suscripcionTipo);
     } else {
-      Swal.fire('Error', 'Por favor, llena todos los campos de la tarjeta', 'error');
+      Swal.fire(
+        'Error',
+        'Por favor, llena todos los campos de la tarjeta',
+        'error'
+      );
     }
   }
 
@@ -77,22 +103,28 @@ export class SuscripcionComponent implements OnInit {
         payment_id: this.paymentData.id,
         payment_status: this.paymentData.status,
         payment_amount: this.paymentData.purchase_units[0].amount.value,
-        payment_currency: this.paymentData.purchase_units[0].amount.currency_code,
+        payment_currency:
+          this.paymentData.purchase_units[0].amount.currency_code,
       };
 
-      this.cursoService
-        .guardarSuscripcion(suscripcionData)
-        .subscribe(
-          () => {
-            Swal.fire('Éxito', 'Suscripción realizada con éxito', 'success').then(() => {
+      this.cursoService.guardarSuscripcion(suscripcionData).subscribe(
+        () => {
+          Swal.fire('Éxito', 'Suscripción realizada con éxito', 'success').then(
+            () => {
               this.router.navigate(['/home']);
-            });
-          },
-          (error) => {
-            console.error('Error al suscribirse:', error);
-            Swal.fire('Error', error.message || 'No se pudo realizar la suscripción. Inténtalo más tarde.', 'error');
-          }
-        );
+            }
+          );
+        },
+        (error) => {
+          console.error('Error al suscribirse:', error);
+          Swal.fire(
+            'Error',
+            error.message ||
+              'No se pudo realizar la suscripción. Inténtalo más tarde.',
+            'error'
+          );
+        }
+      );
     } else {
       console.error('Pago no aprobado o usuario no logueado');
       Swal.fire('Error', 'Debes realizar el pago primero', 'error');
@@ -123,7 +155,6 @@ interface UsuarioData {
   foto: string;
   id: string;
 }
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { CursoService } from '../../../students/services/courses.service';
@@ -221,73 +252,73 @@ interface UsuarioData {
 //   id: string;
 // }
 
-  //private initPayPalConfig(): void {
-    // this.payPalConfig = {
-    //   currency: 'USD',
-    //   clientId: environment.payPalClientId,
-    //   createOrderOnClient: (data) =>
-    //     <ICreateOrderRequest>{
-    //       intent: 'CAPTURE',
-    //       purchase_units: [
-    //         {
-    //           amount: {
-    //             currency_code: 'USD',
-    //             value: '9.99',
-    //             breakdown: {
-    //               item_total: {
-    //                 currency_code: 'USD',
-    //                 value: '9.99',
-    //               },
-    //             },
-    //           },
-    //           items: [
-    //             {
-    //               name: 'Inscripción al curso',
-    //               quantity: '1',
-    //               category: 'DIGITAL_GOODS',
-    //               unit_amount: {
-    //                 currency_code: 'USD',
-    //                 value: '9.99',
-    //               },
-    //             },
-    //           ],
-    //         },
-    //       ],
-    //     },
-    //   advanced: {
-    //     commit: 'true',
-    //   },
-    //   style: {
-    //     label: 'paypal',
-    //     layout: 'vertical',
-    //   },
-    //   onApprove: (data, actions) => {
-    //     console.log('onApprove', data, actions);
-    //     this.pagoAprobado = true;
-    //     this.paymentData = data; // Guardar los datos del pago
-    //   },
-    //   onClientAuthorization: (data) => {
-    //     console.log('onClientAuthorization', data);
-     //   this.pagoAprobado = true;
-    //     this.paymentData = data; // Guardar los datos del pago
-    //   },
-    //   onCancel: (data, actions) => {
-    //     console.log('OnCancel', data, actions);
-    //     this.pagoAprobado = false;
-    //     this.paymentData = null;
-    //   },
-    //   onError: (err) => {
-    //     console.log('OnError', err);
-    //     this.pagoAprobado = false;
-    //     this.paymentData = null;
-    //   },
-    //   onClick: (data, actions) => {
-    //     console.log('onClick', data, actions);
-    //   },
-    // };
+//private initPayPalConfig(): void {
+// this.payPalConfig = {
+//   currency: 'USD',
+//   clientId: environment.payPalClientId,
+//   createOrderOnClient: (data) =>
+//     <ICreateOrderRequest>{
+//       intent: 'CAPTURE',
+//       purchase_units: [
+//         {
+//           amount: {
+//             currency_code: 'USD',
+//             value: '9.99',
+//             breakdown: {
+//               item_total: {
+//                 currency_code: 'USD',
+//                 value: '9.99',
+//               },
+//             },
+//           },
+//           items: [
+//             {
+//               name: 'Inscripción al curso',
+//               quantity: '1',
+//               category: 'DIGITAL_GOODS',
+//               unit_amount: {
+//                 currency_code: 'USD',
+//                 value: '9.99',
+//               },
+//             },
+//           ],
+//         },
+//       ],
+//     },
+//   advanced: {
+//     commit: 'true',
+//   },
+//   style: {
+//     label: 'paypal',
+//     layout: 'vertical',
+//   },
+//   onApprove: (data, actions) => {
+//     console.log('onApprove', data, actions);
+//     this.pagoAprobado = true;
+//     this.paymentData = data; // Guardar los datos del pago
+//   },
+//   onClientAuthorization: (data) => {
+//     console.log('onClientAuthorization', data);
+//   this.pagoAprobado = true;
+//     this.paymentData = data; // Guardar los datos del pago
+//   },
+//   onCancel: (data, actions) => {
+//     console.log('OnCancel', data, actions);
+//     this.pagoAprobado = false;
+//     this.paymentData = null;
+//   },
+//   onError: (err) => {
+//     console.log('OnError', err);
+//     this.pagoAprobado = false;
+//     this.paymentData = null;
+//   },
+//   onClick: (data, actions) => {
+//     console.log('onClick', data, actions);
+//   },
+// };
 
-   // this.showPayPalButtons = true;
- // }
+// this.showPayPalButtons = true;
+// }
 //}
 // import { Component, OnInit } from '@angular/core';
 // import { CursoService } from '../../../students/services/courses.service';

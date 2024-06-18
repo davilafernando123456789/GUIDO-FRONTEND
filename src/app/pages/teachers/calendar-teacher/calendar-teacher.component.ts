@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -11,7 +13,10 @@ import { CursoService } from '../../students/services/courses.service';
   templateUrl: './calendar-teacher.component.html',
   styleUrls: ['./calendar-teacher.component.css'],
 })
-export class CalendarTeacherComponent implements OnInit {
+export class CalendarTeacherComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesorId: string | null = null;
   horarios: any[] = [];
   calendarOptions: CalendarOptions = {
@@ -29,12 +34,23 @@ export class CalendarTeacherComponent implements OnInit {
     eventClick: this.handleEventClick.bind(this),
   };
 
-  constructor(private cursoService: CursoService, private router: Router) {}
+  constructor(
+    private cursoService: CursoService,
+    private router: Router,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.getProfesorIdFromSession();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
   }
-  
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
+
   getProfesorIdFromSession(): void {
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
@@ -46,14 +62,16 @@ export class CalendarTeacherComponent implements OnInit {
       console.error('ID de profesorId no encontrado en la sesión');
     }
   }
-  
+
   obtenerHorariosProfsor(): void {
     this.cursoService.obtenerProfesoresPorUsuarioId(this.profesorId!).subscribe(
       (inscripciones: any[]) => {
         console.log('Inscripciones obtenidas:', inscripciones);
-        const horarioIds = inscripciones.map(inscripcion => inscripcion.Horario_id);
+        const horarioIds = inscripciones.map(
+          (inscripcion) => inscripcion.Horario_id
+        );
         console.log('IDs de horarios obtenidos:', horarioIds);
-        
+
         this.cursoService.obtenerHorariosPorIds(horarioIds).subscribe(
           (horarios: any[]) => {
             console.log('Horarios obtenidos:', horarios);
@@ -75,13 +93,12 @@ export class CalendarTeacherComponent implements OnInit {
       }
     );
   }
-  
+
   handleEventClick(arg: EventClickArg) {
     this.navigateToRegistration(arg);
   }
-  
+
   navigateToRegistration($event: EventClickArg): void {
     this.router.navigate(['/meetings']);
   }
-
 }

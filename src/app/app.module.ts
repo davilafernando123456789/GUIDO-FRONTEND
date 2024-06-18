@@ -8,11 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/users/login/login.component';
 import { CreateUserComponent } from './pages/users/create-user/create-user.component';
-import { ListarProductosComponent } from './pages/productos/listar-productos/listar-productos.component';
-import { CrearProductosComponent } from './pages/productos/crear-productos/crear-productos.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
-import { VerProductoComponent } from './pages/productos/ver-producto/ver-producto.component';
-import { EditarProductosComponent } from './pages/productos/editar-productos/editar-productos.component';
 import { StudentComponent } from './pages/users/register/student/student.component';
 import { TeacherComponent } from './pages/users/register/teacher/teacher.component';
 import { HomeComponent } from './pages/students/home/home.component';
@@ -35,7 +31,6 @@ import { ConfirmationComponent } from './pages/students/confirmation/confirmatio
 import { NgxPayPalModule } from 'ngx-paypal';
 import { ConversationsComponent } from './pages/teachers/conversations/conversations.component';
 import { MessageComponent } from './pages/teachers/message/message.component';
-import { NavbarTeacherComponent } from './pages/teachers/navbar-teacher/navbar-teacher.component';
 import { ProfileComponent } from './pages/teachers/profile/profile.component';
 import { StudentProfileComponent } from './pages/students/student-profile/student-profile.component';
 import { CalendarTeacherComponent } from './pages/teachers/calendar-teacher/calendar-teacher.component';
@@ -56,16 +51,13 @@ import { NotificacionesComponent } from './pages/notificaciones/notificaciones.c
 import { CreditCardDirective } from './services/credit-card.directive';
 import { ExpiryDateDirective } from './services/expiry-date.directive';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     CreateUserComponent,
-    ListarProductosComponent,
-    CrearProductosComponent,
     NavbarComponent,
-    VerProductoComponent,
-    EditarProductosComponent,
     StudentComponent,
     TeacherComponent,
     HomeComponent,
@@ -83,7 +75,6 @@ import { ExpiryDateDirective } from './services/expiry-date.directive';
     ConfirmationComponent,
     ConversationsComponent,
     MessageComponent,
-    NavbarTeacherComponent,
     ProfileComponent,
     StudentProfileComponent,
     CalendarTeacherComponent,

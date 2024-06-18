@@ -1,19 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CursoService } from '../services/courses.service';
 import { Router } from '@angular/router';
 
+import { MenuService } from 'src/app/services/menu.service';
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
   styleUrls: ['./conversation.component.css'],
 })
-export class ConversationComponent implements OnInit {
+export class ConversationComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesores: any[] = [];
 
-  constructor(private cursoService: CursoService, private router: Router) {}
+  constructor(private cursoService: CursoService, private router: Router, private menuService: MenuService) {}
 
   ngOnInit(): void {
     this.fetchProfesores();
+    this.menuSubscription = this.menuService.menuActive$.subscribe(active => {
+      this.menuActive = active;
+    });
   }
   fetchProfesores(): void {
     // Obtiene el ID del usuario logueado desde el almacenamiento de sesión
@@ -76,6 +84,9 @@ export class ConversationComponent implements OnInit {
 
   iniciarConversacion(profesorId: number): void {
     this.router.navigate(['/messages', profesorId]);
+  }
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 }
 

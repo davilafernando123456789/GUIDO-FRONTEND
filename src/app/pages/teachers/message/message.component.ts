@@ -1,4 +1,6 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { io } from 'socket.io-client';
 import { Buffer } from 'buffer';
 import { ActivatedRoute } from '@angular/router';
@@ -14,13 +16,15 @@ interface Alumno {
   apellido: string;
 }
 
-
 @Component({
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.css'],
 })
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   socket: any;
   mensajes: any[] = [];
   nuevoMensaje: string = '';
@@ -33,7 +37,16 @@ export class MessageComponent implements OnInit {
   remite_id: number | null = null;
   destinatario_id: number | null = null;
 
-  constructor(private route: ActivatedRoute, private cursoService: CursoService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private route: ActivatedRoute,
+    private cursoService: CursoService,
+    private cdr: ChangeDetectorRef,
+    private menuService: MenuService
+  ) {}
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
 
   ngOnInit(): void {
     // Obtener el ID del profesor logueado desde el almacenamiento de sesión
@@ -50,6 +63,10 @@ export class MessageComponent implements OnInit {
       this.destinatario_id = params['alumnoId'];
       console.log('ID del destinatario:', this.destinatario_id);
       this.obtenerAlumno();
+    });
+
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
     });
 
     this.socket = io('http://localhost:4000');
@@ -214,9 +231,6 @@ export class MessageComponent implements OnInit {
     }
   }
 }
-
-
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { io } from 'socket.io-client';

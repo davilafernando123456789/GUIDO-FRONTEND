@@ -1,14 +1,17 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
+
 import { AdminService } from '../admin.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
 
   profesoresPorMes: { mes: string, total: number }[] = [];
   alumnosPorMes: { mes: string, total: number }[] = [];
@@ -18,9 +21,12 @@ export class DashboardComponent implements OnInit {
   ultimosProfesoresInscritos: number = 0;
   ultimosAlumnosInscritos: number = 0;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService, private menuService: MenuService) {}
 
   ngOnInit(): void {
+    this.menuSubscription = this.menuService.menuActive$.subscribe(active => {
+      this.menuActive = active;
+    });
     this.getTotalProfesores();
     this.getTotalInscripciones();
     this.getTotalAlumnos();
@@ -29,7 +35,9 @@ export class DashboardComponent implements OnInit {
     this.getProfesoresInscritosPorMes();
     this.getAlumnosInscritosPorMes();
   }
-
+ ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
   getTotalProfesores(): void {
     this.adminService.obtenerProfesores().subscribe(
       (response) => {

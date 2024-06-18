@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { CursoService } from '../services/courses.service';
 import { Router } from '@angular/router';
 import { RecomendacionesService } from 'src/app/services/recomendaciones.service';
@@ -8,26 +10,45 @@ import { RecomendacionesService } from 'src/app/services/recomendaciones.service
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesores: any[] = [];
   mostrarCantidad: number = 10;
   cargandoMas: boolean = false;
   filtroEspecialidad: string = '';
   usuarioLogueado: any | null = null;
 
-  constructor(private router: Router, private cursoService: CursoService, private recomendacionesService: RecomendacionesService) {}
+  constructor(
+    private router: Router,
+    private cursoService: CursoService,
+    private recomendacionesService: RecomendacionesService,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.getUserData();
     this.obtenerProfesores();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   obtenerProfesores(): void {
     this.cursoService.obtenerProfesores().subscribe(
       (data) => {
-        this.profesores = data.filter((profesor) =>
-          profesor.especialidad.toLowerCase().includes(this.filtroEspecialidad.toLowerCase())
-        ).slice(0, this.mostrarCantidad);
+        this.profesores = data
+          .filter((profesor) =>
+            profesor.especialidad
+              .toLowerCase()
+              .includes(this.filtroEspecialidad.toLowerCase())
+          )
+          .slice(0, this.mostrarCantidad);
         this.obtenerRecomendaciones();
       },
       (error) => {
@@ -40,9 +61,16 @@ export class HomeComponent implements OnInit {
     this.recomendacionesService.obtenerRecomendaciones().subscribe(
       (data) => {
         this.profesores.forEach((profesor) => {
-          const recomendaciones = data.filter((recomendacion) => recomendacion.Profesores_id === profesor.id);
-          const totalEstrellas = recomendaciones.reduce((acc, recomendacion) => acc + recomendacion.estrellas, 0);
-          const promedioEstrellas = recomendaciones.length ? totalEstrellas / recomendaciones.length : 0;
+          const recomendaciones = data.filter(
+            (recomendacion) => recomendacion.Profesores_id === profesor.id
+          );
+          const totalEstrellas = recomendaciones.reduce(
+            (acc, recomendacion) => acc + recomendacion.estrellas,
+            0
+          );
+          const promedioEstrellas = recomendaciones.length
+            ? totalEstrellas / recomendaciones.length
+            : 0;
           profesor.estrellas = promedioEstrellas;
         });
       },
@@ -113,7 +141,7 @@ export class HomeComponent implements OnInit {
 //   obtenerProfesores(): void {
 //     this.cursoService.obtenerProfesores().subscribe(
 //       (data) => {
-//         this.profesores = data.filter(profesor => 
+//         this.profesores = data.filter(profesor =>
 //           profesor.especialidad.toLowerCase().includes(this.filtroEspecialidad.toLowerCase())
 //         ).slice(0, this.mostrarCantidad);
 //       },
@@ -139,7 +167,7 @@ export class HomeComponent implements OnInit {
 //   buscarPorEspecialidad(): void {
 //     this.obtenerProfesores();
 //   }
-  
+
 //   irAPerfil(id: string): void {
 //     this.router.navigate(['/teacherProfile', id]);
 //   }
@@ -157,7 +185,6 @@ export class HomeComponent implements OnInit {
 //     }
 //   }
 // }
-
 
 // import { Component, OnInit } from '@angular/core';
 // import { CursoService } from '../services/courses.service';
@@ -183,7 +210,7 @@ export class HomeComponent implements OnInit {
 //   obtenerProfesores(): void {
 //     this.cursoService.obtenerProfesores().subscribe(
 //       (data) => {
-//         this.profesores = data.filter(profesor => 
+//         this.profesores = data.filter(profesor =>
 //           profesor.especialidad.toLowerCase().includes(this.filtroEspecialidad.toLowerCase())
 //         ).slice(0, this.mostrarCantidad);
 //       },
@@ -213,7 +240,6 @@ export class HomeComponent implements OnInit {
 //     this.router.navigate(['/teacherProfile', id]);
 //   }
 // }
-
 
 // this.obtenerCursos();
 // cursos: any[] = []; // Inicialización en el lugar

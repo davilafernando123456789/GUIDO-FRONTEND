@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -6,7 +8,9 @@ import { AdminService } from '../admin.service';
   templateUrl: './messenger.component.html',
   styleUrls: ['./messenger.component.css']
 })
-export class MessengerComponent implements OnInit {
+export class MessengerComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
   mensajes: any[] = [];
   editingMensaje: any | null = null;
   selectedMensaje: any | null = null;
@@ -17,10 +21,18 @@ export class MessengerComponent implements OnInit {
   searchTerm2: string = '';
   reverse: boolean = false;
 
-  constructor(private adminService: AdminService) { }
+  constructor(private adminService: AdminService, private menuService: MenuService) { }
 
   ngOnInit(): void {
+   
     this.getMensajes();
+    this.menuSubscription = this.menuService.menuActive$.subscribe(active => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   getMensajes(): void {

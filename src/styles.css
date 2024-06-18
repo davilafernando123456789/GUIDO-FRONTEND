@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+/* .main {
+    min-height: 100vh; 
+    display: flex;
+    flex-direction: column;
+  } */
+  
+  /* .main {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--white);
+    transition: 0.5s;
+  }
+  .main.active {
+    width: calc(100% - 80px);
+    left: 80px;
+  } */
+  /* .main {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: var(--white);
+    transition: 0.5s;
+   
+  }
+   */
+   /* =============== Main ================ */
+/* =============== Main ================ */
+.main {
+    position: absolute;
+    width: calc(100% - 300px);
+    left: 300px;
+    min-height: 100vh;
+    background: var(--white);
+    transition: 0.5s;
+    box-shadow: 
+      inset 0 0 12px rgba(58, 55, 55, 0.5), /* Sombra interna */
+      0 0 12px  rgba(58, 55, 55, 0.5); /* Sombra externa */
+  }
+  
+  .main.active {
+    width: calc(100% - 80px);
+    left: 80px;
+  }
+  
