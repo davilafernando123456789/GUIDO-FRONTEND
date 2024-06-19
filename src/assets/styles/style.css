@@ -49,6 +49,7 @@ body {
   border-left: 10px solid var(--blue);
   transition: 0.5s;
   overflow: hidden;
+  z-index: 10009  !Important;
 } 
  /* =============== Navigation ================ */
 /* 
@@ -460,7 +461,7 @@ body {
     position: fixed !important; /* Fijo para superponerse */
     height: 100% !important; /* Asegúrate de que ocupe toda la altura */
     top: 0 !important;
-    z-index: 1000 !important; /* Asegúrate de que se superponga */
+    z-index: 10010 !important;
   }
   .navigation.active {
     left: 0 !important;
@@ -524,7 +525,7 @@ body {
     position: fixed !important; /* Fijo para superponerse */
     height: 100% !important; /* Asegúrate de que ocupe toda la altura */
     top: 0 !important;
-    z-index: 1004 !important; /* Asegúrate de que se superponga */
+    z-index: 10010 !important;
   }
   .navigation.active {
     left: 0 !important;

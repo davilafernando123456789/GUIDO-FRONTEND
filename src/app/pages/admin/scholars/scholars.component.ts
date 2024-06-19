@@ -93,11 +93,11 @@ export class ScholarsComponent implements OnInit, OnDestroy {
       () => {
         // Actualizar la lista de alumno después de la eliminación
         this.alumnos = this.alumnos.filter((alumno) => alumno.id !== id);
-        alert('El profesor ha sido eliminado exitosamente.');
+        alert('El alumno ha sido eliminado exitosamente.');
       },
       (error) => {
-        console.error('Error al eliminar el profesor:', error);
-        alert('Error al eliminar el profesor');
+        console.error('Error al eliminar el alumno:', error);
+        alert('Error al eliminar el alumno');
       }
     );
   }
@@ -111,7 +111,7 @@ export class ScholarsComponent implements OnInit, OnDestroy {
         this.alumnos = response;
       },
       (error) => {
-        console.error('Error al buscar los profesores:', error);
+        console.error('Error al buscar los alumno:', error);
       }
     );
   }

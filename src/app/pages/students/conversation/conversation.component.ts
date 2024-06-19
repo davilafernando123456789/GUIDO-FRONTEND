@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CursoService } from '../services/courses.service';
 import { Router } from '@angular/router';
-
 import { MenuService } from 'src/app/services/menu.service';
+
 @Component({
   selector: 'app-conversation',
   templateUrl: './conversation.component.html',
