@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
+
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -6,7 +9,10 @@ import { AdminService } from '../admin.service';
   templateUrl: './masters.component.html',
   styleUrls: ['./masters.component.css'],
 })
-export class MastersComponent {
+export class MastersComponent  implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesores: any[] = [];
   currentPage = 1; // Página actual
   itemsPerPage = 5; // Cambia esto según la cantidad de elementos por página que desees
@@ -15,12 +21,17 @@ export class MastersComponent {
   reverse: boolean = false;
   editingProfesor: any | null = null;
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService , private menuService: MenuService) {}
 
   ngOnInit(): void {
+    this.menuSubscription = this.menuService.menuActive$.subscribe(active => {
+      this.menuActive = active;
+    });
     this.getProfesores();
   }
-
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
   getProfesores(): void {
     this.adminService.obtenerProfesores().subscribe(
       (response) => {

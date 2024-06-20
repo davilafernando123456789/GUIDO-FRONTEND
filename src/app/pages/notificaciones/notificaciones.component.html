@@ -1,4 +1,38 @@
 <app-navbar-student></app-navbar-student>
+<div class="main" [class.active]="menuActive">
+<!-- <div class="main"> -->
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentOrders">
+      <div class="cardHeader">
+        <div class="notificaciones">
+          <h2>Notificaciones</h2>
+          <ul>
+            <li *ngFor="let notificacion of notificaciones" [class.leido]="notificacion.leido" (click)="handleNotificacionClick(notificacion)">
+              <div class="notificacion-content">
+                <div class="notificacion-text">
+                  <p>{{ notificacion.descripcion }}</p>
+                  <span>{{ formatFecha(notificacion.createdAt) }}</span>
+                </div>
+                <button style="margin-left: 25px;" (click)="marcarComoLeido(notificacion.id); $event.stopPropagation()" *ngIf="!notificacion.leido">Marcar como leído</button>
+              </div>
+            </li>
+          </ul>
+          <button *ngIf="mostrarBotonVerMas" (click)="mostrarMasNotificaciones()">Ver más</button>
+          <div *ngIf="notificaciones.length === 0" class="no-notifications-container">
+            <div class="icon-container">
+              <i class="fas fa-bell"></i>
+            </div>
+            <p>Aún no has recibido ninguna notificación</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <app-navbar-student></app-navbar-student>
 <div class="main">
   <app-topbar></app-topbar>
   <div class="details">
@@ -28,27 +62,4 @@
     </div>
   </div>
 </div>
-
-<!-- 
-
-<app-navbar-student></app-navbar-student>
-<div class="main">
-  <app-topbar></app-topbar>
-  <div class="details">
-    <div class="recentOrders">
-      <div class="cardHeader">
-        <div class="notificaciones">
-          <h2>Notificaciones</h2>
-          <ul>
-            <li *ngFor="let notificacion of notificaciones" [class.leido]="notificacion.leido" (click)="handleNotificacionClick(notificacion)">
-              <div class="notificacion-content">
-                <p>{{ notificacion.descripcion }} </p>
-                <button style="margin-left: 15px;" (click)="marcarComoLeido(notificacion.id); $event.stopPropagation()" *ngIf="!notificacion.leido"> Marcar como leído</button>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
+ -->

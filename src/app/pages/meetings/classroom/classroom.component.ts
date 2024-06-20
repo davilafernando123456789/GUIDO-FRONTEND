@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { Router } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { CursoService } from '../../students/services/courses.service';
 import { mergeMap } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
-
 
 interface ClassroomMeetingResponse {
   sala: string;
@@ -20,18 +21,32 @@ interface MeetingSchedule {
 @Component({
   selector: 'app-classroom',
   templateUrl: './classroom.component.html',
-  styleUrls: ['./classroom.component.css']
+  styleUrls: ['./classroom.component.css'],
 })
-export class ClassroomComponent implements OnInit {
+export class ClassroomComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   userId: string | null = null;
   reuniones: MeetingSchedule[] = [];
 
-  constructor(private cursoService: CursoService, private router: Router) {}
+  constructor(
+    private cursoService: CursoService,
+    private router: Router,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.getUserIdFromSession();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
   }
-  
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
+
   getUserIdFromSession(): void {
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
@@ -51,51 +66,64 @@ export class ClassroomComponent implements OnInit {
   }
   obtenerReunionesAlumno(): void {
     // Primero, obtenemos las inscripciones del alumno
-    this.cursoService.obtenerInscripcionesPorAlumnoId(this.userId!).pipe(
-      mergeMap((inscripciones: any[]) => {
-        // Para cada inscripción, creamos un observable para obtener la información del horario asociado
-        const observables = inscripciones.map(inscripcion => {
-          // Utilizamos el Horario_id de la inscripción para obtener la información del horario
-          return this.cursoService.obtenerHorariosPorId(inscripcion.Horario_id).pipe(
-            mergeMap((horario: any) => {
-              // Utilizamos el Profesores_id de la inscripción para obtener la información del profesor
-              return this.cursoService.obtenerProfesorPorId(inscripcion.Profesores_id).pipe(
-                map((response: ClassroomMeetingResponse) => {
-                  // Creamos un objeto de reunión con la información obtenida
-                  const sala = response.sala;
-                  console.log('Sala de reunión obtenida:', sala);
-                  const reunion: MeetingSchedule = {
-                    fecha: horario.fecha,
-                    horaInicio: horario.hora_inicio,
-                    horaFin: horario.hora_fin,
-                    sala: sala
-                  };
-                  return reunion;
+    this.cursoService
+      .obtenerInscripcionesPorAlumnoId(this.userId!)
+      .pipe(
+        mergeMap((inscripciones: any[]) => {
+          // Para cada inscripción, creamos un observable para obtener la información del horario asociado
+          const observables = inscripciones.map((inscripcion) => {
+            // Utilizamos el Horario_id de la inscripción para obtener la información del horario
+            return this.cursoService
+              .obtenerHorariosPorId(inscripcion.Horario_id)
+              .pipe(
+                mergeMap((horario: any) => {
+                  // Utilizamos el Profesores_id de la inscripción para obtener la información del profesor
+                  return this.cursoService
+                    .obtenerProfesorPorId(inscripcion.Profesores_id)
+                    .pipe(
+                      map((response: ClassroomMeetingResponse) => {
+                        // Creamos un objeto de reunión con la información obtenida
+                        const sala = response.sala;
+                        console.log('Sala de reunión obtenida:', sala);
+                        const reunion: MeetingSchedule = {
+                          fecha: horario.fecha,
+                          horaInicio: horario.hora_inicio,
+                          horaFin: horario.hora_fin,
+                          sala: sala,
+                        };
+                        return reunion;
+                      })
+                    );
                 })
               );
-            })
-          );
-        });
-        // Combinamos todos los observables en uno solo para manejarlos de manera concurrente
-        return forkJoin(observables);
-      })
-    ).subscribe((reuniones: MeetingSchedule[]) => {
-      // Una vez que se completan todas las solicitudes, asignamos las reuniones al arreglo del componente
-      this.reuniones = reuniones;
-    }, (error) => {
-      // Manejamos cualquier error que ocurra durante el proceso
-      console.error('Error al obtener las reuniones:', error);
-    });
+          });
+          // Combinamos todos los observables en uno solo para manejarlos de manera concurrente
+          return forkJoin(observables);
+        })
+      )
+      .subscribe(
+        (reuniones: MeetingSchedule[]) => {
+          // Una vez que se completan todas las solicitudes, asignamos las reuniones al arreglo del componente
+          this.reuniones = reuniones;
+        },
+        (error) => {
+          // Manejamos cualquier error que ocurra durante el proceso
+          console.error('Error al obtener las reuniones:', error);
+        }
+      );
   }
-  
+
   obtenerReunionesProfesor(): void {
     // Primero, obtenemos las inscripciones del profesor logueado
-    this.cursoService.obtenerProfesoresPorUsuarioId(this.userId!)
+    this.cursoService
+      .obtenerProfesoresPorUsuarioId(this.userId!)
       .pipe(
         mergeMap((inscripciones: any[]) => {
           console.log('Inscripciones obtenidas:', inscripciones);
           // Obtenemos los IDs de los horarios asociados a las inscripciones del profesor
-          const horariosIds = inscripciones.map(inscripcion => inscripcion.Horario_id);
+          const horariosIds = inscripciones.map(
+            (inscripcion) => inscripcion.Horario_id
+          );
           console.log('IDs de horarios extraídos:', horariosIds);
           // Luego, obtenemos los detalles de los horarios utilizando los IDs
           return this.cursoService.obtenerHorariosPorIds(horariosIds);
@@ -103,7 +131,7 @@ export class ClassroomComponent implements OnInit {
         mergeMap((horarios: any[]) => {
           console.log('Horarios obtenidos:', horarios);
           // Para cada horario, creamos un observable para obtener la información del profesor asociado
-          const observables = horarios.map(horario => {
+          const observables = horarios.map((horario) => {
             // Llamamos al servicio para obtener la información del profesor asociado al horario
             return this.cursoService.obtenerProfesorPorId(this.userId!).pipe(
               map((response: ClassroomMeetingResponse) => {
@@ -113,7 +141,7 @@ export class ClassroomComponent implements OnInit {
                   fecha: horario.fecha,
                   horaInicio: horario.hora_inicio,
                   horaFin: horario.hora_fin,
-                  sala: response.sala
+                  sala: response.sala,
                 };
                 return reunion;
               })
@@ -136,10 +164,6 @@ export class ClassroomComponent implements OnInit {
         }
       );
   }
-  
-  
-
-
 
   ingresarReunion(url: string) {
     if (url) {

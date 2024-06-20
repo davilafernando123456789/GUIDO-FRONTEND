@@ -34,12 +34,15 @@ export class LoginComponent {
 
             if (response.rol === 1) {
               console.log('Redirigiendo al componente del alumno');
+              sessionStorage.setItem('firstTimeLogin', 'false');
               this.router.navigate(['/home'], navigationExtras);
             } else if (response.rol === 2) {
               console.log('Redirigiendo al componente del profesor');
+              sessionStorage.setItem('firstTimeLogin', 'false');
               this.router.navigate(['/home'], navigationExtras);
             } else if (response.rol === 3) {
               console.log('Redirigiendo al componente del admin');
+              sessionStorage.setItem('firstTimeLogin', 'false');
               this.router.navigate(['/dashboard'], navigationExtras);
             } else {
               console.log('Credenciales incorrectas');

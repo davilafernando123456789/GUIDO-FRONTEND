@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { CursoService } from '../services/courses.service';
 import { Router } from '@angular/router';
@@ -9,7 +11,10 @@ import Swal from 'sweetalert2';
   templateUrl: './student-profile.component.html',
   styleUrls: ['./student-profile.component.css'],
 })
-export class StudentProfileComponent implements OnInit {
+export class StudentProfileComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   alumno: any;
   alumnoId!: string;
   editMode = false;
@@ -17,11 +22,19 @@ export class StudentProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private cursoService: CursoService,
-    private router: Router
+    private router: Router,
+    private menuService: MenuService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.getAlumnoIdFromSession();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   getAlumnoIdFromSession() {

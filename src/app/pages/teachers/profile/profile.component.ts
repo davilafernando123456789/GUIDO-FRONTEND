@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CursoService } from '../../students/services/courses.service';
@@ -14,19 +16,22 @@ import Swal from 'sweetalert2';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesorId: string | null = null;
   profesor: any;
   horarios: any[] = [];
-  editMode = false; 
-  selectedFile: File | null = null; // Nueva propiedad para almacenar el archivo seleccionado
+  editMode = false;
+  selectedFile: File | null = null;
 
   calendarOptions: CalendarOptions = {
-    initialView: 'timeGridWeek', // Cambiar a la vista semanal de timeGrid
+    initialView: 'timeGridWeek',
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'timeGridWeek,timeGridDay', // Agregar botones para cambiar entre vista semanal y diaria
+      right: 'timeGridWeek,timeGridDay',
     },
     slotMinTime: '08:00:00', // Hora de inicio personalizada
     slotMaxTime: '22:00:00', // Hora de finalización personalizada
@@ -40,7 +45,8 @@ export class ProfileComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private cursoService: CursoService,
-    private router: Router
+    private router: Router,
+    private menuService: MenuService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +58,13 @@ export class ProfileComponent implements OnInit {
     } else {
       console.error('ID de profesor no encontrado en la sesión');
     }
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   obtenerProfesor(): void {
@@ -76,46 +89,50 @@ export class ProfileComponent implements OnInit {
     if (this.selectedFile) {
       const formData = new FormData();
       formData.append('image', this.selectedFile);
-      this.http.post<any>('http://localhost:4000/api/imagen/upload-image', formData).subscribe(
-        (response) => {
-          this.profesor.foto = response.imageUrl;
-          this.actualizarProfesor();
-        },
-        (error) => {
-          console.error('Error al subir la imagen:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'Error al subir la imagen',
-            text: 'Por favor, seleccione una imagen en el formato adecuado.',
-          });
-        }
-      );
+      this.http
+        .post<any>('http://localhost:4000/api/imagen/upload-image', formData)
+        .subscribe(
+          (response) => {
+            this.profesor.foto = response.imageUrl;
+            this.actualizarProfesor();
+          },
+          (error) => {
+            console.error('Error al subir la imagen:', error);
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al subir la imagen',
+              text: 'Por favor, seleccione una imagen en el formato adecuado.',
+            });
+          }
+        );
     } else {
       this.actualizarProfesor();
     }
   }
 
   actualizarProfesor() {
-    this.cursoService.actualizarProfesor(this.profesorId!, this.profesor).subscribe(
-      () => {
-        Swal.fire({
-          icon: 'success',
-          title: 'Perfil actualizado correctamente',
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        this.editMode = false; // Salir del modo de edición
-      },
-      (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error al actualizar perfil',
-          showConfirmButton: false,
-          timer: 3000,
-        });
-        console.error(error);
-      }
-    );
+    this.cursoService
+      .actualizarProfesor(this.profesorId!, this.profesor)
+      .subscribe(
+        () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Perfil actualizado correctamente',
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          this.editMode = false; // Salir del modo de edición
+        },
+        (error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar perfil',
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          console.error(error);
+        }
+      );
   }
 
   handleEventClick(arg: EventClickArg) {
@@ -143,7 +160,6 @@ export class ProfileComponent implements OnInit {
   }
 }
 
-
 // import { Component, OnInit } from '@angular/core';
 // import { ActivatedRoute } from '@angular/router';
 // import { CursoService } from '../../students/services/courses.service';
@@ -169,7 +185,7 @@ export class ProfileComponent implements OnInit {
 //   profesorId: string | null = null;
 //   profesor: any;
 //   horarios: any[] = [];
-//   editMode = false; 
+//   editMode = false;
 //   calendarOptions: CalendarOptions = {
 //     initialView: 'timeGridWeek', // Cambiar a la vista semanal de timeGrid
 //     headerToolbar: {
@@ -201,7 +217,6 @@ export class ProfileComponent implements OnInit {
 //       console.error('ID de profesor no encontrado en la sesión');
 //     }
 //   }
-
 
 //   obtenerProfesor(): void {
 //     this.cursoService.obtenerProfesorPorId(this.profesorId!).subscribe(

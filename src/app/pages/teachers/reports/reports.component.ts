@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { ReportService } from 'src/app/services/report.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -8,7 +10,10 @@ import Swal from 'sweetalert2';
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css'],
 })
-export class ReportsComponent implements OnInit {
+export class ReportsComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   alumnos: any[] = [];
   report = {
     Profesor_id: null as number | null,
@@ -22,10 +27,21 @@ export class ReportsComponent implements OnInit {
     recomendaciones: '',
   };
 
-  constructor(private reportService: ReportService, private router: Router) {}
+  constructor(
+    private reportService: ReportService,
+    private router: Router,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.fetchAlumnos();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   fetchAlumnos(): void {
@@ -36,17 +52,23 @@ export class ReportsComponent implements OnInit {
 
       this.reportService.obtenerInscripcionesPorProfesorId(usuarioId).subscribe(
         (inscripciones: any[]) => {
-          console.log('Respuesta de obtenerInscripcionesPorProfesorId:', inscripciones);
+          console.log(
+            'Respuesta de obtenerInscripcionesPorProfesorId:',
+            inscripciones
+          );
           const alumnosRegistrados: Set<number> = new Set<number>();
 
-          inscripciones.forEach(inscripcion => {
+          inscripciones.forEach((inscripcion) => {
             const alumnoIdObj = inscripcion as any;
             let alumnoIdString: string;
 
             if (alumnoIdObj.hasOwnProperty('Alumnos_id')) {
               alumnoIdString = alumnoIdObj.Alumnos_id.toString();
             } else {
-              console.error('El objeto inscripcion no tiene la propiedad "Alumnos_id":', inscripcion);
+              console.error(
+                'El objeto inscripcion no tiene la propiedad "Alumnos_id":',
+                inscripcion
+              );
               return;
             }
 
@@ -66,7 +88,10 @@ export class ReportsComponent implements OnInit {
           });
         },
         (error) => {
-          console.error('Error al obtener inscripciones por profesor ID:', error);
+          console.error(
+            'Error al obtener inscripciones por profesor ID:',
+            error
+          );
         }
       );
     } else {
@@ -81,7 +106,10 @@ export class ReportsComponent implements OnInit {
       this.report.Profesor_id = usuario.id;
       console.log('Profesor ID:', this.report.Profesor_id);
 
-      console.log('Lista de alumnos antes de buscar Apoderado_id:', this.alumnos);
+      console.log(
+        'Lista de alumnos antes de buscar Apoderado_id:',
+        this.alumnos
+      );
       console.log('Alumno seleccionado ID:', this.report.Alumno_id);
 
       const apoderadoId = this.getApoderadoId(Number(this.report.Alumno_id));
@@ -110,7 +138,9 @@ export class ReportsComponent implements OnInit {
           }
         );
       } else {
-        console.error('No se pudo encontrar el apoderado correspondiente al alumno.');
+        console.error(
+          'No se pudo encontrar el apoderado correspondiente al alumno.'
+        );
         Swal.fire({
           icon: 'error',
           title: 'Error',

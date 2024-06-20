@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { io } from 'socket.io-client';
 import { Buffer } from 'buffer';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +17,10 @@ interface Archivo {
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css'],
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   profesorId: string | null = null;
   profesor: any;
   socket: any;
@@ -34,10 +39,19 @@ export class MessagesComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private cursoService: CursoService
+    private cursoService: CursoService,
+    private menuService: MenuService,
+    private cdr: ChangeDetectorRef // Importa ChangeDetectorRef
   ) {}
 
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
+  }
+
   ngOnInit(): void {
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
       const usuario = JSON.parse(usuarioString);
@@ -54,7 +68,7 @@ export class MessagesComponent implements OnInit {
       this.profesorId = params['profesorId'];
       if (this.profesorId) {
         console.error('ID de profesor encontrado');
-        this.obtenerProfesor(); 
+        this.obtenerProfesor();
       } else {
         console.error('ID de profesor no encontrado en la URL');
       }
@@ -68,7 +82,10 @@ export class MessagesComponent implements OnInit {
     });
 
     this.socket.on('mensaje', (mensaje: any) => {
-      if (mensaje.destinatario_id === this.destinatario_id) {
+      if (
+        mensaje.destinatario_id === this.destinatario_id ||
+        mensaje.remite_id === this.destinatario_id
+      ) {
         const mensajeMostrar: any = {
           contenido: mensaje.contenido,
           remite_id: mensaje.remite_id,
@@ -85,13 +102,21 @@ export class MessagesComponent implements OnInit {
         }
 
         this.mensajes.push(mensajeMostrar);
+        this.cdr.detectChanges(); // Asegura que Angular detecta los cambios
+
+        // Llamar a cargarMensajesAnteriores cuando se recibe un mensaje nuevo
+        this.cargarMensajesAnteriores();
       }
     });
 
-    this.socket.on('cargar-mensajes-anteriores', (mensajesAnteriores: any[]) => {
-      console.log('Mensajes anteriores recibidos:', mensajesAnteriores);
-      this.mensajes = mensajesAnteriores;
-    });
+    this.socket.on(
+      'cargar-mensajes-anteriores',
+      (mensajesAnteriores: any[]) => {
+        console.log('Mensajes anteriores recibidos:', mensajesAnteriores);
+        this.mensajes = mensajesAnteriores;
+        this.cdr.detectChanges(); // Asegura que Angular detecta los cambios
+      }
+    );
 
     this.socket.on('disconnect', () => {
       console.log('Desconectado del servidor');
@@ -162,10 +187,23 @@ export class MessagesComponent implements OnInit {
           this.audioParaEnviar = null;
           this.archivoParaEnviar = null;
 
-          const fileInput = document.querySelector<HTMLInputElement>('#fileInput');
+          const fileInput =
+            document.querySelector<HTMLInputElement>('#fileInput');
           if (fileInput) {
             fileInput.value = '';
           }
+
+          // Agregar el mensaje al arreglo de mensajes localmente con el estilo correcto
+          const mensajeMostrar = {
+            ...mensaje,
+            remite_id: this.remite_id,
+            destinatario_id: this.destinatario_id,
+            sent: false,
+          };
+          this.mensajes.push(mensajeMostrar);
+          this.cdr.detectChanges();
+
+          // Llamar a cargarMensajesAnteriores después de enviar un mensaje
           this.cargarMensajesAnteriores();
         }
       } else {
@@ -200,36 +238,40 @@ export class MessagesComponent implements OnInit {
 
   verificarSuscripcion(callback: () => void): void {
     if (this.usuarioId && this.rol) {
-      this.cursoService.verificarSuscripcion(this.usuarioId.toString(), this.rol).subscribe(
-        (suscripcionActiva) => {
-          if (suscripcionActiva) {
-            callback();
-          } else {
-            this.router.navigate(['/suscripcion']);
+      this.cursoService
+        .verificarSuscripcion(this.usuarioId.toString(), this.rol)
+        .subscribe(
+          (suscripcionActiva) => {
+            if (suscripcionActiva) {
+              callback();
+            } else {
+              this.router.navigate(['/suscripcion']);
+            }
+          },
+          (error) => {
+            console.error('Error al verificar suscripción:', error);
+            Swal.fire(
+              'Error',
+              'No se pudo verificar la suscripción. Inténtalo más tarde.',
+              'error'
+            );
           }
-        },
-        (error) => {
-          console.error('Error al verificar suscripción:', error);
-          Swal.fire(
-            'Error',
-            'No se pudo verificar la suscripción. Inténtalo más tarde.',
-            'error'
-          );
-        }
-      );
+        );
     } else {
-      console.error('No se ha encontrado información de usuario para verificar la suscripción.');
+      console.error(
+        'No se ha encontrado información de usuario para verificar la suscripción.'
+      );
       this.router.navigate(['/suscripcion']);
     }
   }
 }
 
-
 // import { Component, OnInit } from '@angular/core';
 // import { io } from 'socket.io-client';
 // import { Buffer } from 'buffer';
-// import { ActivatedRoute } from '@angular/router';
+// import { ActivatedRoute, Router } from '@angular/router';
 // import { CursoService } from '../services/courses.service';
+// import Swal from 'sweetalert2';
 
 // interface Archivo {
 //   nombre: string;
@@ -254,8 +296,12 @@ export class MessagesComponent implements OnInit {
 //   archivoParaEnviar: Archivo | null = null;
 //   remite_id: number | null = null;
 //   destinatario_id: number | null = null;
+//   usuarioId: number | null = null;
+//   rol: string | null = null;
+
 //   constructor(
 //     private route: ActivatedRoute,
+//     private router: Router,
 //     private cursoService: CursoService
 //   ) {}
 
@@ -264,6 +310,8 @@ export class MessagesComponent implements OnInit {
 //     if (usuarioString) {
 //       const usuario = JSON.parse(usuarioString);
 //       this.remite_id = usuario.id;
+//       this.usuarioId = usuario.id;
+//       this.rol = usuario.rol; // Asumiendo que el rol está disponible en el objeto usuario
 //     } else {
 //       console.error('No se encontró información de usuario en la sesión.');
 //     }
@@ -274,7 +322,7 @@ export class MessagesComponent implements OnInit {
 //       this.profesorId = params['profesorId'];
 //       if (this.profesorId) {
 //         console.error('ID de profesor encontrado');
-//         this.obtenerProfesor(); 
+//         this.obtenerProfesor();
 //       } else {
 //         console.error('ID de profesor no encontrado en la URL');
 //       }
@@ -284,25 +332,21 @@ export class MessagesComponent implements OnInit {
 //     this.socket = io('http://localhost:4000');
 //     this.socket.on('connect', () => {
 //       console.log('Conectado al servidor');
-//       this.cargarMensajesAnteriores();
+//       this.verificarSuscripcion(() => this.cargarMensajesAnteriores());
 //     });
 
 //     this.socket.on('mensaje', (mensaje: any) => {
-//       // Verificar si el mensaje es para el destinatario actual
 //       if (mensaje.destinatario_id === this.destinatario_id) {
-//         // Filtrar solo los datos relevantes para mostrar en el mensaje
 //         const mensajeMostrar: any = {
 //           contenido: mensaje.contenido,
 //           remite_id: mensaje.remite_id,
 //         };
 
-//         // Verificar si hay un audio_url antes de agregarlo
 //         if (mensaje.audio_url !== null && mensaje.audio_url !== undefined) {
 //           mensajeMostrar.audio_url = mensaje.audio_url;
 //           console.log('Audio URL recibido:', mensaje.audio_url);
 //         }
 
-//         // Verificar si hay un archivo_url antes de agregarlo
 //         if (mensaje.archivo_url !== null && mensaje.archivo_url !== undefined) {
 //           mensajeMostrar.archivo_url = mensaje.archivo_url;
 //           console.log('Archivo URL recibido:', mensaje.archivo_url);
@@ -312,13 +356,10 @@ export class MessagesComponent implements OnInit {
 //       }
 //     });
 
-//     this.socket.on(
-//       'cargar-mensajes-anteriores',
-//       (mensajesAnteriores: any[]) => {
-//         console.log('Mensajes anteriores recibidos:', mensajesAnteriores);
-//         this.mensajes = mensajesAnteriores;
-//       }
-//     );
+//     this.socket.on('cargar-mensajes-anteriores', (mensajesAnteriores: any[]) => {
+//       console.log('Mensajes anteriores recibidos:', mensajesAnteriores);
+//       this.mensajes = mensajesAnteriores;
+//     });
 
 //     this.socket.on('disconnect', () => {
 //       console.log('Desconectado del servidor');
@@ -366,93 +407,87 @@ export class MessagesComponent implements OnInit {
 //   }
 
 //   enviarMensaje(): void {
-//     if (this.remite_id && this.destinatario_id) {
-//       const mensajeTexto = this.nuevoMensaje.trim();
+//     this.verificarSuscripcion(() => {
+//       if (this.remite_id && this.destinatario_id) {
+//         const mensajeTexto = this.nuevoMensaje.trim();
 
-//       if (
-//         mensajeTexto !== '' ||
-//         this.audioParaEnviar ||
-//         this.archivoParaEnviar
-//       ) {
-//         const mensaje = {
-//           contenido: mensajeTexto,
-//           remite_id: this.remite_id,
-//           destinatario_id: this.destinatario_id,
-//           sent: false,
-//           audio_url: this.audioParaEnviar ? this.audioParaEnviar : null,
-//           archivo_url: this.archivoParaEnviar ? this.archivoParaEnviar : null,
-//         };
+//         if (
+//           mensajeTexto !== '' ||
+//           this.audioParaEnviar ||
+//           this.archivoParaEnviar
+//         ) {
+//           const mensaje = {
+//             contenido: mensajeTexto,
+//             remite_id: this.remite_id,
+//             destinatario_id: this.destinatario_id,
+//             sent: false,
+//             audio_url: this.audioParaEnviar ? this.audioParaEnviar : null,
+//             archivo_url: this.archivoParaEnviar ? this.archivoParaEnviar : null,
+//           };
 
-//         this.socket.emit('mensaje', mensaje);
-//         this.nuevoMensaje = '';
-//         this.audioParaEnviar = null;
-//         this.archivoParaEnviar = null;
+//           this.socket.emit('mensaje', mensaje);
+//           this.nuevoMensaje = '';
+//           this.audioParaEnviar = null;
+//           this.archivoParaEnviar = null;
 
-//         // Limpiar el campo de archivo seleccionado
-//         const fileInput =
-//           document.querySelector<HTMLInputElement>('#fileInput');
-//         if (fileInput) {
-//           fileInput.value = ''; // Limpiar el valor del campo de archivo
+//           const fileInput = document.querySelector<HTMLInputElement>('#fileInput');
+//           if (fileInput) {
+//             fileInput.value = '';
+//           }
+//           this.cargarMensajesAnteriores();
 //         }
-//         this.cargarMensajesAnteriores();
+//       } else {
+//         console.error('No se ha establecido el remitente o destinatario.');
 //       }
-//     } else {
-//       console.error('No se ha establecido el remitente o destinatario.');
-//     }
+//     });
 //   }
+
 //   cargarMensajesAnteriores(): void {
-//     if (this.destinatario_id && this.socket) {
-//       console.log(
-//         'Solicitando mensajes anteriores para el destinatario:',
-//         this.destinatario_id
-//       );
-//       this.socket.emit('cargar-mensajes-anteriores', this.destinatario_id);
-//     }
+//     this.verificarSuscripcion(() => {
+//       if (this.destinatario_id && this.socket) {
+//         console.log(
+//           'Solicitando mensajes anteriores para el destinatario:',
+//           this.destinatario_id
+//         );
+//         this.socket.emit('cargar-mensajes-anteriores', this.destinatario_id);
+//       }
+//     });
 //   }
 
 //   obtenerProfesor(): void {
 //     this.cursoService.obtenerProfesorPorId(this.profesorId!).subscribe(
 //       (data) => {
 //         this.profesor = data;
-//         console.log('Profesor obtenido:', this.profesor); // Agregar este console.log
+//         console.log('Profesor obtenido:', this.profesor);
 //       },
 //       (error) => {
 //         console.error('Error al obtener el profesor:', error);
 //       }
 //     );
 //   }
-  
-//   handleEventClick(arg: EventClickArg) {
-//     console.log('Usuario ID:', this.usuarioId);
-//     console.log('Rol:', this.rol);
-//     this.cursoService.verificarSuscripcion(this.usuarioId, this.rol).subscribe(
-//       (suscripcionActiva) => {
-//         console.log('Suscripción activa:', suscripcionActiva); // Imprimir el valor de suscripcionActiva
-//         if (suscripcionActiva) {
-//           this.navigateToRegistration(arg);
-//         } else {
-//           this.router.navigate(['/suscripcion']);
+
+//   verificarSuscripcion(callback: () => void): void {
+//     if (this.usuarioId && this.rol) {
+//       this.cursoService.verificarSuscripcion(this.usuarioId.toString(), this.rol).subscribe(
+//         (suscripcionActiva) => {
+//           if (suscripcionActiva) {
+//             callback();
+//           } else {
+//             this.router.navigate(['/suscripcion']);
+//           }
+//         },
+//         (error) => {
+//           console.error('Error al verificar suscripción:', error);
+//           Swal.fire(
+//             'Error',
+//             'No se pudo verificar la suscripción. Inténtalo más tarde.',
+//             'error'
+//           );
 //         }
-//       },
-//       (error) => {
-//         console.error('Error al verificar suscripción:', error);
-//         Swal.fire(
-//           'Error',
-//           'No se pudo verificar la suscripción. Inténtalo más tarde.',
-//           'error'
-//         );
-//       }
-//     );
-//   }
-//   navigateToRegistration($event: EventClickArg): void {
-//     const eventInfo = $event.event;
-//     const extendedProps = eventInfo.extendedProps as ExtendedProps;
-//     const horarioId = extendedProps.horarioId;
-//     const profesorId = extendedProps.profesorId;
-
-//     console.log('Horario ID:', horarioId);
-//     console.log('Profesor ID:', profesorId);
-
-//     this.router.navigate(['/confirmation', horarioId, profesorId]);
+//       );
+//     } else {
+//       console.error('No se ha encontrado información de usuario para verificar la suscripción.');
+//       this.router.navigate(['/suscripcion']);
+//     }
 //   }
 // }

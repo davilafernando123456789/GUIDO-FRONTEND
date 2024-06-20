@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { MenuService } from 'src/app/services/menu.service';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -6,7 +8,10 @@ import { AdminService } from '../admin.service';
   templateUrl: './scholars.component.html',
   styleUrls: ['./scholars.component.css'],
 })
-export class ScholarsComponent implements OnInit {
+export class ScholarsComponent implements OnInit, OnDestroy {
+  menuActive = false;
+  menuSubscription: Subscription | undefined;
+
   alumnos: any[] = [];
   selectedAlumno: any | null = null;
   currentPage = 1; // Página actual
@@ -16,10 +21,20 @@ export class ScholarsComponent implements OnInit {
   reverse: boolean = false;
   editingAlumno: any | null = null;
 
-  constructor(private adminService: AdminService) {}
+  constructor(
+    private adminService: AdminService,
+    private menuService: MenuService
+  ) {}
 
   ngOnInit(): void {
     this.getAlumnos();
+    this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+      this.menuActive = active;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.menuSubscription?.unsubscribe();
   }
 
   getAlumnos(): void {
@@ -77,14 +92,12 @@ export class ScholarsComponent implements OnInit {
     this.adminService.eliminarAlumno(id.toString()).subscribe(
       () => {
         // Actualizar la lista de alumno después de la eliminación
-        this.alumnos = this.alumnos.filter(
-          (alumno) => alumno.id !== id
-        );
-        alert('El profesor ha sido eliminado exitosamente.');
+        this.alumnos = this.alumnos.filter((alumno) => alumno.id !== id);
+        alert('El alumno ha sido eliminado exitosamente.');
       },
       (error) => {
-        console.error('Error al eliminar el profesor:', error);
-        alert('Error al eliminar el profesor');
+        console.error('Error al eliminar el alumno:', error);
+        alert('Error al eliminar el alumno');
       }
     );
   }
@@ -98,7 +111,7 @@ export class ScholarsComponent implements OnInit {
         this.alumnos = response;
       },
       (error) => {
-        console.error('Error al buscar los profesores:', error);
+        console.error('Error al buscar los alumno:', error);
       }
     );
   }

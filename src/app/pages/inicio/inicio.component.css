@@ -4,7 +4,9 @@
   margin-right: 5%; /* Espacio entre los elementos */
   vertical-align: top; /* Alineación superior */
 }
-
+.checked {
+  color: orange; /* Puedes cambiar el color a lo que prefieras */
+}
 
 /*!
  * Bootstrap v4.2.1 (https://getbootstrap.com/)

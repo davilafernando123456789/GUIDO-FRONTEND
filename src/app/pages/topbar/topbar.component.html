@@ -1,15 +1,12 @@
+<!-- componente-topbar -->
 <div class="topbar">
-    <div class="toggle">
+    <div class="toggle" (click)="toggleMenu()">
         <i class="nav-icon fas fa-bars"></i>
     </div>
-
     <div class="search search-container">
         <label class="search-label">
-            <!-- <input type="text" class="search-input" placeholder="     Ingrese su búsqueda...">
-            <i class="nav-icon1 fas fa-search"></i> -->
         </label>
     </div>
-
     <div class="topbar-personalizado profile-navbar">
         <ng-container *ngIf="usuarioLogueado">
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
