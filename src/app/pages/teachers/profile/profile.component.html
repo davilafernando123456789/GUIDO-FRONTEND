@@ -5,15 +5,19 @@
   <div class="container">
     <div class="details">
       <div class="recentOrders">
-        <div class="card cardHeader" [style.background-image]="'url(' + profesor.foto + ')'">
-          <h2>Mi Perfil </h2>
+        <div class="card-header bg-info">
+          <div class="profile-photo" [style.background-image]="'url(' + profesor.foto + ')'"></div>
+          <div class="profile-info-text">
+            <p class="profile-name">{{ profesor.nombre }}</p>
+            <p class="profile-specialty">{{ profesor.especialidad }}</p>
+          </div>
           <button (click)="editMode = true" class="btn btn-primary">
             <i class="fas fa-edit"></i> Editar Perfil
           </button>
         </div>
-        <br>
         <div *ngIf="profesor">
           <div class="profile-info">
+            <br>
             <div class="edit-profile" *ngIf="editMode">
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -47,6 +51,10 @@
                 <textarea [(ngModel)]="profesor.descripcion" class="form-control" id="descripcion"
                   placeholder="Describe las áreas o temas en los que te destacas dentro del curso que has seleccionado"></textarea>
               </div>
+              <div class="mb-3">
+                <label for="foto" class="form-label">Foto de perfil</label>
+                <input type="file" (change)="onFileSelected($event)" class="form-control" id="foto">
+              </div>
               <div class="profile-actions text-center">
                 <button (click)="guardarCambios()" class="btn btn-primary">
                   <i class="fas fa-save"></i> Guardar
@@ -57,13 +65,10 @@
               </div>
             </div>
             <div *ngIf="!editMode">
-              <p><i class="fas fa-envelope"></i> <strong>Email:</strong> {{ profesor.email }}</p>
-              <p><i class="fas fa-graduation-cap"></i> <strong>Especialidad:</strong> {{ profesor.especialidad }}</p>
-              <p><i class="fas fa-align-left"></i> <strong>Descripción:</strong> {{ profesor.descripcion }}</p>
-              <div class="profile-actions">
-
-              </div>
+              <p class="sobre-mi"><strong>Sobre mí</strong></p>
+              <p class="descripcion">{{ profesor.descripcion }}</p>
             </div>
+            
           </div>
         </div>
       </div>
@@ -80,4 +85,3 @@
       </div>
     </div>
   </div>
-</div>

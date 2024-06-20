@@ -1,6 +1,14 @@
 
 /*estilos personales*/
-
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #1C1678;
+  margin-right: 20px;
+}
 .nav-icon {
     font-size: 25px; /* Ajusta el tamaño del icono según sea necesario */
     color: #1C1678;
