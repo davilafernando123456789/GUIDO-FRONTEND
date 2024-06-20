@@ -37,9 +37,9 @@
     min-height: 100vh;
     background: var(--white);
     transition: 0.5s;
-    box-shadow: 
-      inset 0 0 12px rgba(58, 55, 55, 0.5), /* Sombra interna */
-      0 0 12px  rgba(58, 55, 55, 0.5); /* Sombra externa */
+    /* box-shadow: 
+      inset 0 0 12px rgba(58, 55, 55, 0.5),
+      0 0 12px  rgba(58, 55, 55, 0.5);  */
   }
   
   .main.active {
