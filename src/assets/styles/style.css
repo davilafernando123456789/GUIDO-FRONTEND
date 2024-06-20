@@ -471,6 +471,7 @@ body {
     position: relative !important; /* Fijo para no moverse */
     transition: none !important; /* No aplicar transición */
     padding-top: 60px !important; /* Añadir espacio para el topbar fijo */
+    box-shadow: none !important;
   }
   .topbar {
     width: 100% !important;
@@ -504,6 +505,9 @@ body {
   }
   .status.inProgress {
     white-space: nowrap !important;
+  }
+  .main {
+    box-shadow: none !important;
   }
 }
 
@@ -543,7 +547,8 @@ body {
     left: 0 !important;
     position: relative !important; /* Fijo para no moverse */
     transition: none !important; /* No aplicar transición */
-    padding-top: 60px !important; /* Añadir espacio para el topbar fijo */
+    padding-top: 60px !important;
+    box-shadow: none !important;
   }
   .topbar {
     width: 100% !important;
