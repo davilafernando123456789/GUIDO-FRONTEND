@@ -50,6 +50,7 @@ import { ReportsComponent } from './pages/teachers/reports/reports.component';
 import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 import { CreditCardDirective } from './services/credit-card.directive';
 import { ExpiryDateDirective } from './services/expiry-date.directive';
+import './sweetalert2-config'; // Importa la configuración global
 
 
 @NgModule({

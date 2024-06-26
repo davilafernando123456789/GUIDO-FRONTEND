@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { MenuService } from 'src/app/services/menu.service';
 import { ReportService } from 'src/app/services/report.service';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import { swalWithCustomOptions } from 'src/app/sweetalert2-config'; // Importa la instancia personalizada
 
 @Component({
   selector: 'app-reports',
@@ -121,7 +121,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
         this.reportService.createReport(this.report).subscribe(
           (response) => {
             console.log('Reporte creado exitosamente:', response);
-            Swal.fire({
+            swalWithCustomOptions.fire({
               icon: 'success',
               title: 'Éxito',
               text: 'Reporte enviado',
@@ -130,7 +130,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
           },
           (error) => {
             console.error('Error al crear el reporte:', error);
-            Swal.fire({
+            swalWithCustomOptions.fire({
               icon: 'error',
               title: 'Error',
               text: 'Hubo un problema al enviar el reporte. Inténtalo nuevamente.',
@@ -141,7 +141,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
         console.error(
           'No se pudo encontrar el apoderado correspondiente al alumno.'
         );
-        Swal.fire({
+        swalWithCustomOptions.fire({
           icon: 'error',
           title: 'Error',
           text: 'No se pudo encontrar el apoderado correspondiente al alumno.',
@@ -149,7 +149,7 @@ export class ReportsComponent implements OnInit, OnDestroy {
       }
     } else {
       console.error('No se encontró información de usuario en la sesión.');
-      Swal.fire({
+      swalWithCustomOptions.fire({
         icon: 'error',
         title: 'Error',
         text: 'No se encontró información de usuario en la sesión.',
@@ -171,16 +171,23 @@ export class ReportsComponent implements OnInit, OnDestroy {
   }
 }
 
-// import { Component, OnInit } from '@angular/core';
+
+// import { Component, OnInit, OnDestroy } from '@angular/core';
+// import { Subscription } from 'rxjs';
+// import { MenuService } from 'src/app/services/menu.service';
 // import { ReportService } from 'src/app/services/report.service';
 // import { Router } from '@angular/router';
+// import Swal from 'sweetalert2';
 
 // @Component({
 //   selector: 'app-reports',
 //   templateUrl: './reports.component.html',
 //   styleUrls: ['./reports.component.css'],
 // })
-// export class ReportsComponent implements OnInit {
+// export class ReportsComponent implements OnInit, OnDestroy {
+//   menuActive = false;
+//   menuSubscription: Subscription | undefined;
+
 //   alumnos: any[] = [];
 //   report = {
 //     Profesor_id: null as number | null,
@@ -194,10 +201,21 @@ export class ReportsComponent implements OnInit, OnDestroy {
 //     recomendaciones: '',
 //   };
 
-//   constructor(private reportService: ReportService, private router: Router) {}
+//   constructor(
+//     private reportService: ReportService,
+//     private router: Router,
+//     private menuService: MenuService
+//   ) {}
 
 //   ngOnInit(): void {
 //     this.fetchAlumnos();
+//     this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
+//       this.menuActive = active;
+//     });
+//   }
+
+//   ngOnDestroy(): void {
+//     this.menuSubscription?.unsubscribe();
 //   }
 
 //   fetchAlumnos(): void {
@@ -208,17 +226,23 @@ export class ReportsComponent implements OnInit, OnDestroy {
 
 //       this.reportService.obtenerInscripcionesPorProfesorId(usuarioId).subscribe(
 //         (inscripciones: any[]) => {
-//           console.log('Respuesta de obtenerInscripcionesPorProfesorId:', inscripciones);
+//           console.log(
+//             'Respuesta de obtenerInscripcionesPorProfesorId:',
+//             inscripciones
+//           );
 //           const alumnosRegistrados: Set<number> = new Set<number>();
 
-//           inscripciones.forEach(inscripcion => {
+//           inscripciones.forEach((inscripcion) => {
 //             const alumnoIdObj = inscripcion as any;
 //             let alumnoIdString: string;
 
 //             if (alumnoIdObj.hasOwnProperty('Alumnos_id')) {
 //               alumnoIdString = alumnoIdObj.Alumnos_id.toString();
 //             } else {
-//               console.error('El objeto inscripcion no tiene la propiedad "Alumnos_id":', inscripcion);
+//               console.error(
+//                 'El objeto inscripcion no tiene la propiedad "Alumnos_id":',
+//                 inscripcion
+//               );
 //               return;
 //             }
 
@@ -238,7 +262,10 @@ export class ReportsComponent implements OnInit, OnDestroy {
 //           });
 //         },
 //         (error) => {
-//           console.error('Error al obtener inscripciones por profesor ID:', error);
+//           console.error(
+//             'Error al obtener inscripciones por profesor ID:',
+//             error
+//           );
 //         }
 //       );
 //     } else {
@@ -253,7 +280,10 @@ export class ReportsComponent implements OnInit, OnDestroy {
 //       this.report.Profesor_id = usuario.id;
 //       console.log('Profesor ID:', this.report.Profesor_id);
 
-//       console.log('Lista de alumnos antes de buscar Apoderado_id:', this.alumnos);
+//       console.log(
+//         'Lista de alumnos antes de buscar Apoderado_id:',
+//         this.alumnos
+//       );
 //       console.log('Alumno seleccionado ID:', this.report.Alumno_id);
 
 //       const apoderadoId = this.getApoderadoId(Number(this.report.Alumno_id));
@@ -265,17 +295,39 @@ export class ReportsComponent implements OnInit, OnDestroy {
 //         this.reportService.createReport(this.report).subscribe(
 //           (response) => {
 //             console.log('Reporte creado exitosamente:', response);
-//             this.router.navigate(['/reportes']); // Redirige a la página de conversaciones
+//             Swal.fire({
+//               icon: 'success',
+//               title: 'Éxito',
+//               text: 'Reporte enviado',
+//             });
+//             this.router.navigate(['/reportes']); // Redirige a la página de reportes
 //           },
 //           (error) => {
 //             console.error('Error al crear el reporte:', error);
+//             Swal.fire({
+//               icon: 'error',
+//               title: 'Error',
+//               text: 'Hubo un problema al enviar el reporte. Inténtalo nuevamente.',
+//             });
 //           }
 //         );
 //       } else {
-//         console.error('No se pudo encontrar el apoderado correspondiente al alumno.');
+//         console.error(
+//           'No se pudo encontrar el apoderado correspondiente al alumno.'
+//         );
+//         Swal.fire({
+//           icon: 'error',
+//           title: 'Error',
+//           text: 'No se pudo encontrar el apoderado correspondiente al alumno.',
+//         });
 //       }
 //     } else {
 //       console.error('No se encontró información de usuario en la sesión.');
+//       Swal.fire({
+//         icon: 'error',
+//         title: 'Error',
+//         text: 'No se encontró información de usuario en la sesión.',
+//       });
 //     }
 //   }
 
