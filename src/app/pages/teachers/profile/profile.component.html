@@ -1,19 +1,23 @@
 <app-navbar-student></app-navbar-student>
 <div class="main" [class.active]="menuActive">
-<!-- <div class="main"> -->
+  <!-- <div class="main"> -->
   <app-topbar></app-topbar>
   <div class="container">
     <div class="details">
       <div class="recentOrders">
-        <div class="card cardHeader" [style.background-image]="'url(' + profesor.foto + ')'">
-          <h2>Mi Perfil </h2>
+        <div class="card-header bg-info">
+          <div class="profile-photo" [style.background-image]="'url(' + profesor.foto + ')'"></div>
+          <div class="profile-info-text">
+            <p class="profile-name">{{ profesor.nombre }}</p>
+            <p class="profile-specialty">{{ profesor.especialidad }}</p>
+          </div>
           <button (click)="editMode = true" class="btn btn-primary">
             <i class="fas fa-edit"></i> Editar Perfil
           </button>
         </div>
-        <br>
         <div *ngIf="profesor">
           <div class="profile-info">
+            <br>
             <div class="edit-profile" *ngIf="editMode">
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre</label>
@@ -35,7 +39,8 @@
               </div> -->
               <div class="form-group col-md-6">
                 <label for="especialidadProfesor">Especialidad</label>
-                <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesor.especialidad" name="especialidadProfesor">
+                <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesor.especialidad"
+                  name="especialidadProfesor">
                   <option value="">Seleccionar especialidad</option>
                   <option value="Matemática">Matemática</option>
                   <option value="Comunicación">Comunicación</option>
@@ -136,7 +141,11 @@
               <div class="profile-actions">
 
               </div>
+              <p class="sobre-mi"><strong>Sobre mí</strong></p>
+              <p class="descripcion">{{ profesor.descripcion }}</p>
+
             </div>
+            
           </div>
         </div>
       </div>
@@ -148,10 +157,8 @@
 
 
           <h2>Mi Disponibilidad</h2>
-          
           <full-calendar [options]="calendarOptions"></full-calendar>
 
       </div>
     </div>
-  </div>
-</div> -->
+  </div>-->

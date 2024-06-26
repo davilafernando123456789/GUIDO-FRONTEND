@@ -1,6 +1,14 @@
 
 /*estilos personales*/
-
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #1C1678;
+  margin-right: 20px;
+}
 .nav-icon {
     font-size: 25px; /* Ajusta el tamaño del icono según sea necesario */
     color: #1C1678;
@@ -32,7 +40,7 @@
     height: 40px; /* Ajuste de altura para que coincida con el input */
     margin-left: -40px; /* Espacio negativo para superponer el botón al input */
     z-index: 1; /* Asegurar que el botón esté por encima del input */
-    border: 3px solid #1C1678;
+    border: 2px solid #1C1678;
 
   }
   
@@ -170,17 +178,18 @@ h1 {
 .tag {
   background-color: #1C1678;
   padding: 10px 20px;
-  border-radius: 15px;
+  border-radius: 10px;
   color: #fff;
   text-transform: lowercase;
   text-align: center;
   cursor: pointer;
-  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
-  transition: transform 0.2s, box-shadow 0.2s;
+  /* box-shadow: 0 2px 0 rgba(255, 255, 255, 0.8); */
+  /* transition: transform 0.2s, box-shadow 0.2s; */
 }
 
 .tag:hover {
-  box-shadow: 0 6px 0 rgba(255, 255, 255, 0.8), 0 6px 0 rgba(255, 255, 255, 0.8) inset;
+  background-color: #14113e;;
+  /* box-shadow: 0 6px 0 rgba(255, 255, 255, 0.8), 0 6px 0 rgba(255, 255, 255, 0.8) inset; */
   transform: translateY(-3px);
 }
 

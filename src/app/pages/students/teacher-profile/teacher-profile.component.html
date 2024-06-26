@@ -17,7 +17,8 @@
           <div class="card">
             <div class="card-content">
               <div class="card-img-container">
-                <img [src]="profesor.foto" class="card-img-top">
+                <div class="profile-photo" [style.background-image]="'url(' + profesor.foto + ')'"></div>
+                <!-- <img [src]="profesor.foto" class="card-img-top"> -->
               </div>
               <div class="card-body">
                 <h5 class="card-title cardName">{{ profesor.nombre }}</h5>

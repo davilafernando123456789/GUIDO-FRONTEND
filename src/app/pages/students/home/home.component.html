@@ -41,7 +41,8 @@
               <div class="card col-md-3" *ngFor="let profesor of profesores">
                 <div class="card-content" (click)="irAPerfil(profesor.id)">
                   <div class="card-img-container">
-                    <img [src]="profesor.foto" class="card-img-top">
+                    <div class="profile-photo" [style.background-image]="'url(' + profesor.foto + ')'"></div>
+                    <!-- <img [src]="profesor.foto" class="card-img-top"> -->
                   </div>
                   <div class="card-body">
                     <h5 class="card-title cardName">{{ profesor.nombre }}</h5>

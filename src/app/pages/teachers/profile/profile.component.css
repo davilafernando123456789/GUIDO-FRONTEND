@@ -1,17 +1,120 @@
 
+.container {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
-/*estilos personalizados*/
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+.profile-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 700px;
+  text-align: center;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #17a2b8;
+  color: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #1C1678;
+  margin-right: 20px;
+}
+
+.profile-info-text {
+  flex: 1;
+  text-align: left;
+}
 
 .profile-name {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-weight: bold;
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
-.profile-name i {
-  margin-right: 0.5rem;
+.profile-specialty {
+  font-size: 1rem;
+  margin: 0;
 }
+
+button {
+  background-color: #1C1678;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #14105a;
+}
+
+button.save-btn {
+  background-color: #28a745;
+}
+
+button.save-btn:hover {
+  background-color: #218838;
+}
+
+button.cancel-btn {
+  background-color: #dc3545;
+}
+
+button.cancel-btn:hover {
+  background-color: #c82333;
+}
+
+.profile-actions button {
+  margin: 10px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.sobre-mi {
+  color: #1C1678;
+  font-weight: bold;
+  margin-bottom: 0.5rem; /* Ajusta el espacio según sea necesario */
+}
+
+.descripcion {
+  color: #1C1678;
+  font-weight: normal; /* o 300 para más delgado */
+  margin-top: 0;
+}
+
+/*# sourceMappingURL=bootstrap.min.css.map */
+
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
 
 .profile-info {
   font-size: 1.2rem;
@@ -35,13 +138,7 @@
   justify-content: space-between; /* Para distribuir los elementos horizontalmente */
 }
 
-.profile-name {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  text-align: center; /* Para centrar el texto */
-  color: #1c1678; /* Establecer el color */
-}
+
 
 .profile-info {
   font-size: 1.2rem;
