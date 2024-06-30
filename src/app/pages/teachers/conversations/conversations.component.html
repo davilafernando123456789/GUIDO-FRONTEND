@@ -1,28 +1,29 @@
 <app-navbar-student></app-navbar-student>
 <div class="main" [class.active]="menuActive">
-<!-- <div class="main"> -->
- <app-topbar></app-topbar>
-<div class="details">
-  <div class="recentCustomers">
-    <div class="cardHeader">
-    <h2>Mensajes</h2>
-    </div>
-    <div class="cardHeader" *ngIf="alumnos.length > 0">
+  <!-- <div class="main"> -->
+  <app-topbar></app-topbar>
+  <div class="details">
+    <div class="recentCustomers">
+  
+        <h2 class="title-calendar">Mensajes</h2>
 
-      <table  *ngIf="alumnos.length > 0">
+      <div class="cardHeader" *ngIf="alumnos.length > 0">
+
+        <table *ngIf="alumnos.length > 0">
 
           <tr *ngFor="let alumno of alumnos">
-            <td width="60px" >
+            <td width="60px">
               <div class="imgBx">
-                <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png" alt="" (click)="iniciarConversacion(alumno.id)">
+                <img src="https://www.pngall.com/wp-content/uploads/5/User-Profile-PNG-High-Quality-Image.png" alt=""
+                  (click)="iniciarConversacion(alumno.id)">
               </div>
             <td>
-              <td>
-                <h4 (click)="iniciarConversacion(alumno.id)">{{ alumno.nombre }} {{ alumno.apellido }}</h4>
-              </td>
+            <td>
+              <h4 (click)="iniciarConversacion(alumno.id)">{{ alumno.nombre }} {{ alumno.apellido }}</h4>
+            </td>
           </tr>
         </table>
-      </div>  
+      </div>
       <div *ngIf="alumnos.length === 0">
         <div class="no-messages-container ">
           <div class="icon-container">
@@ -33,5 +34,3 @@
       </div>
     </div>
   </div>
-  
-

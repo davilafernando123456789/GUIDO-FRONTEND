@@ -44,7 +44,7 @@ button.bg-info:hover {
 
 /* Perfil del usuario */
 .profile-name {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: center;
@@ -87,6 +87,7 @@ button {
   border: none;
   padding: 10px 20px;
   margin-right: 10px;
+  font-size: 0.8rem;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -113,6 +114,7 @@ input[type="date"] {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  font-size: 1rem;
   box-sizing: border-box;
 }
 

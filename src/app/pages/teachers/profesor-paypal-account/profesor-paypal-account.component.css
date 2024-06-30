@@ -47,3 +47,17 @@
 .paypal-form .btn:hover {
     background-color: #1C1678;
 }
+.title-calendar {
+    color: #1C1678 !important;
+    font-size: 1.5rem !important;
+    text-align: center;
+    font-family: 'Poppins', sans-serif !important;
+    font-weight: bold !important; /* Añadir negrita */
+  }
+.c{
+    display: flex; /* Utiliza Flexbox */
+    align-items: center; /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    height: 100%; /* Asegúrate de que el contenedor tenga una altura definida */
+    text-align: center; 
+}

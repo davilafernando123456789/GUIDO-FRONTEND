@@ -20,16 +20,16 @@
             <br>
             <div class="edit-profile" *ngIf="editMode">
               <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
+                <label for="nombre" class="form-label paragraph">Nombre</label>
                 <input [(ngModel)]="profesor.nombre" type="text" class="form-control" id="nombre" placeholder="Nombre">
               </div>
               <div class="mb-3">
-                <label for="apellido" class="form-label">Apellido</label>
+                <label for="apellido" class="form-label paragraph">Apellido</label>
                 <input [(ngModel)]="profesor.apellido" type="text" class="form-control" id="apellido"
                   placeholder="Apellido">
               </div>
               <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
+                <label for="email" class="form-label paragraph">Email</label>
                 <input [(ngModel)]="profesor.email" type="email" class="form-control" id="email" placeholder="Email">
               </div>
               <!-- <div class="mb-3">
@@ -38,7 +38,7 @@
                   placeholder="Especialidad">
               </div> -->
               <div class="form-group col-md-6">
-                <label for="especialidadProfesor">Especialidad</label>
+                <label for="especialidadProfesor" class="paragraph">Especialidad</label>
                 <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesor.especialidad"
                   name="especialidadProfesor">
                   <option value="">Seleccionar especialidad</option>
@@ -48,12 +48,12 @@
                 </select>
               </div>
               <div class="mb-3">
-                <label for="descripcion" class="form-label">Descripción</label>
+                <label for="descripcion" class="form-label paragraph">Descripción</label>
                 <textarea [(ngModel)]="profesor.descripcion" class="form-control" id="descripcion"
                   placeholder="Describe las áreas o temas en los que te destacas dentro del curso que has seleccionado"></textarea>
               </div>
               <div class="mb-3">
-                <label for="foto" class="form-label">Foto de perfil</label>
+                <label for="foto" class="form-label paragraph">Foto de perfil</label>
                 <input type="file" (change)="onFileSelected($event)" class="form-control" id="foto">
               </div>
               <div class="profile-actions text-center">
@@ -66,9 +66,9 @@
               </div>
             </div>
             <div *ngIf="!editMode">
-              <p><i class="fas fa-envelope"></i> <strong>Email:</strong> {{ profesor.email }}</p>
-              <p><i class="fas fa-graduation-cap"></i> <strong>Especialidad:</strong> {{ profesor.especialidad }}</p>
-              <p><i class="fas fa-align-left"></i> <strong>Descripción:</strong> {{ profesor.descripcion }}</p>
+              <p class="paragraph"><i class="fas fa-envelope"></i> <strong>Email:</strong> {{ profesor.email }}</p>
+              <p class="paragraph"><i class="fas fa-graduation-cap"></i> <strong>Especialidad:</strong> {{ profesor.especialidad }}</p>
+              <p class="paragraph"><i class="fas fa-align-left"></i> <strong>Descripción:</strong> {{ profesor.descripcion }}</p>
               <div class="profile-actions">
               </div>
             </div>
@@ -78,7 +78,7 @@
     </div>
     <div class="details">
       <div class="recentOrders">
-        <h2>Mi Disponibilidad</h2>
+        <h2 class="title-calendar">Mi Disponibilidad</h2>
         <full-calendar [options]="calendarOptions"></full-calendar>
       </div>
     </div>

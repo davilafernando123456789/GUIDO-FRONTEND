@@ -5,10 +5,10 @@
   <div class="details">
     <div class="recentCustomers">
       <div class="container">
-        <h2 style="  color: #1C1678;">Reservar tutoría</h2>
+        <h2 class="title-calendar">Reservar tutoría</h2>
         <div class="row">
           <div class="card col-md-12">
-            <h3  style="  color: #1C1678;">Detalles del Horario</h3>
+            <h3  style="font-family: 'Poppins', sans-serif; font-size: 1.2em; color: #1C1678; font-weight: bold;">Detalles del Horario</h3>
             <div class="card-body"  style="  color: #1C1678;">
               <p class="card-text">Fecha: {{ horario.fecha }}</p>
               <p class="card-text">Hora de inicio: {{ horario.hora_inicio }}</p>
@@ -16,7 +16,7 @@
             </div>
           </div>
           <div class="card col-md-12">
-            <h3  style="  color: #1C1678;">Detalles del Profesor</h3>
+            <h3  style="  font-family: 'Poppins', sans-serif; font-size: 1.2em; color: #1C1678; font-weight: bold;">Detalles del Profesor</h3>
             <div class="card-body"  style="  color: #1C1678;">
               <p class="card-text">Nombre: {{ profesor.nombre }}</p>
               <p class="card-text">Especialidad: {{ profesor.especialidad }}</p>
@@ -25,7 +25,7 @@
           </div>
           <div class="card col-md-12 payment-form-container">
             <div class="card-body">
-              <h3 class="text-center">Pago con tarjeta Visa</h3>
+              <h3 class="text-center" style="font-family: 'Poppins', sans-serif; font-size: 1.5em; color: #1C1678; font-weight: bold;">Pago con tarjeta Visa</h3>
               <form (ngSubmit)="registrarInscripcion()">
                 <div class="row">
                   <div class="col-md-6">
@@ -59,8 +59,8 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="montoPagar !== null" class="mt-3 text-center">
-                  <h4>Total a pagar: S/{{ montoPagar }}</h4>
+                <div *ngIf="montoPagar !== null" class="mt-3 text-center" >
+                  <h4 style="font-family: 'Poppins', sans-serif; font-size: 1.5em; color: #1C1678; font-weight: bold;">Total a pagar: S/{{ montoPagar }}</h4>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-3">Pagar</button>
               </form>
@@ -73,7 +73,7 @@
 </div>
 
 
-  <!-- <app-navbar-student></app-navbar-student>
+<!-- <app-navbar-student></app-navbar-student>
 <div class="main">
   <app-topbar></app-topbar>
   <div class="details">

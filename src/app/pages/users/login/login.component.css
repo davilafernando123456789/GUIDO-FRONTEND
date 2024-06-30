@@ -134,3 +134,12 @@ footer {
     padding: 0.5rem;
   }
 }
+/* Eliminar ícono de validación en Chrome, Safari y Edge */
+input:invalid, input:required {
+  box-shadow: none !important;
+}
+
+/* Eliminar ícono de validación en Firefox */
+input:-moz-ui-invalid {
+  box-shadow: none !important;
+}

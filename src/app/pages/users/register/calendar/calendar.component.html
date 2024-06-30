@@ -7,7 +7,7 @@
         <div class="container mt-4">
             <div class="card border rounded">
                 <div class="card-body">
-                    <h2 class="card-title text-center" style="color: #333; font-size: 24px; margin-bottom: 20px;">
+                    <h2 class="card-title text-center title-calendar" style="color: #333; font-size: 24px; margin-bottom: 20px;">
                         Registre su horario disponible</h2>
                     <div style="margin: 20px;">
                         <full-calendar [options]="calendarOptions"
@@ -16,13 +16,13 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="fechaInicio">Fecha de inicio:</label>
+                                <label for="fechaInicio" class="paragraph">Fecha de inicio:</label>
                                 <input type="date" class="form-control" id="fechaInicio" [(ngModel)]="fechaInicio">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="fechaFin">Fecha de fin:</label>
+                                <label for="fechaFin"  class="paragraph">Fecha de fin:</label>
                                 <input type="date" class="form-control" id="fechaFin" [(ngModel)]="fechaFin">
                             </div>
                         </div>

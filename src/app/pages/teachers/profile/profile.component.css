@@ -155,7 +155,7 @@ button.cancel-btn:hover {
   .container {
     margin-top: 5px;
   }
-  
+
   /* Estilos para el formulario de perfil del alumno */
   form {
     background-color: #C1EDED;
@@ -170,6 +170,7 @@ button.cancel-btn:hover {
     border: none;
     padding: 10px 20px;
     margin-right: 10px;
+    font-size: 0.8;
     border-radius: 5px;
     cursor: pointer;
   }
@@ -186,6 +187,7 @@ button.cancel-btn:hover {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
+    font-size: 1rem;;
     border-radius: 5px;
   }
   
@@ -199,6 +201,7 @@ button.cancel-btn:hover {
   .edit-mode input[type="email"],
   .edit-mode input[type="date"] {
     background-color: #FFFFFF;
+    font-size: 1rem;
   }
   
   .edit-mode button {
@@ -267,4 +270,16 @@ button.cancel-btn:hover {
 .form-control[type="file"]::-ms-browse:focus {
   outline: none;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.25);
+}
+.paragraph{
+ color: #1C1678;
+  font-size: 1.1rem;
+
+}
+.title-calendar {
+  color: #1C1678 !important;
+  font-size: 1.5rem !important;
+  text-align: center;
+  font-family: 'Poppins', sans-serif !important;
+  font-weight: bold !important; /* Añadir negrita */
 }
