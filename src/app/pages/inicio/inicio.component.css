@@ -8,62 +8,6 @@
   color: orange; /* Puedes cambiar el color a lo que prefieras */
 }
 
-/*!
- * Bootstrap v4.2.1 (https://getbootstrap.com/)
- * Copyright 2011-2018 The Bootstrap Authors
- * Copyright 2011-2018 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
- /* Colores Hexadecimales */
-
-
-/* Colores RGB */
-/* Estilos generales */
-/* .ftco-section {
-  padding: 7em 0;
-}
-
-.testimony-section {
-  position: relative;
-}
-
-.testimony-section .overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  content: '';
-  opacity: 0.8;
-  background: #232931;
-}
-
-.testimony-section .owl-carousel {
-  margin: 0;
-}
-
-.testimony-section .user-img {
-  width: 80px;
-  height: 80px;
-  border-radius: 100%;
-  background-size: cover;
-  background-position: center center;
-}
-
-.testimony-section .text {
-  width: 100%;
-}
-
-.testimony-section .text p {
-  font-style: italic;
-  font-size: 1.2rem;
-}
-
-.testimony-section .icon span {
-  font-size: 2rem;
-  color: #ffc107;
-}
-
 /* Estilos para el carrusel */
 .owl-carousel .owl-nav button.owl-next,
 .owl-carousel .owl-nav button.owl-prev {
