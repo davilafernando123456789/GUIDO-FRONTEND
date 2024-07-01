@@ -24,7 +24,7 @@ interface Alumno {
 export class MessageComponent implements OnInit, OnDestroy {
   menuActive = false;
   menuSubscription: Subscription | undefined;
-
+  private intervalId: number | undefined;
   socket: any;
   mensajes: any[] = [];
   nuevoMensaje: string = '';
@@ -45,10 +45,21 @@ export class MessageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
-    this.menuSubscription?.unsubscribe();
+    if (this.menuSubscription) {
+      this.menuSubscription.unsubscribe();
+    }
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+  setAutomaticMessageLoading(): void {
+    this.intervalId = window.setInterval(() => {
+      this.cargarMensajesAnteriores();
+    }, 3500); // Cargar mensajes cada 5000 milisegundos (5 segundos)
   }
 
   ngOnInit(): void {
+    this.setAutomaticMessageLoading();
     // Obtener el ID del profesor logueado desde el almacenamiento de sesión
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {

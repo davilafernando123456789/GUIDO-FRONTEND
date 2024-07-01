@@ -14,11 +14,7 @@
       <div class="col-md-8 col-lg-6 col-xl-6 offset-xl-1">
         <div class="card shadow" style="box-shadow: 0 2px 4px 0 #1C1678;">
           <div class="card-body p-5">
-            <!-- <div class="text-center mb-4">
-              <a href="login">
-                <img src="assets/images/tesis/log_inicio.png" width="170" height="50" alt="Nombre de tu empresa">
-              </a>
-            </div> -->
+
 
             <!-- Formulario dividido en cuatro secciones -->
             
@@ -103,12 +99,12 @@
                   <label class="form-label" for="pais_institucion">País de institución</label>
                   <input type="text" class="form-control" id="pais_institucion" name="pais_institucion" placeholder="País de institución" [(ngModel)]="educativos.pais_institucion" required>
                 </div>
-                <div class="col-md-6 mb-3">
+                <!-- <div class="col-md-6 mb-3">
                   <label class="form-label" for="fecha_obtencion">Fecha obtención</label>
                   <input type="date" class="form-control" id="fecha_obtencion" name="fecha_obtencion" [(ngModel)]="educativos.fecha_obtencion" required>
-                </div>
+                </div> -->
                 <div class="col-md-6 mb-3">
-                  <label class="form-label" for="nivel_educacion">Nivel de educación</label>
+                  <label class="form-label" for="nivel_educacion">Ciclo de estudios</label>
                   <input type="text" class="form-control" id="nivel_educacion" name="nivel_educacion" placeholder="Nivel de educación" [(ngModel)]="educativos.nivel_educacion" required>
                 </div>
               </div>
@@ -171,6 +167,194 @@
                 </div>
               </div>
               <div class="text-center mt-3">
+
+            <button type="button" class="btn btn-primary mr-2" (click)="previousStep()">Anterior</button>
+            <button type="submit" class="btn btn-primary" (click)="nextStep()">Registrar</button>
+               
+              </div>
+              <p *ngIf="errorMessage" class="text-danger mt-2 text-center"> {{ errorMessage }}</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="text-center py-3 bg-primary">
+    <div class="text-white">Guido © 2024. Todos los derechos reservados.</div>
+  </footer>
+</section>
+
+<!-- 
+
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100 match-height">
+      <div class="col-md-6 col-lg-5">
+        <div class="text-center mb-4" style="margin-top: 30px;">
+          <h4 class="fw-bold text-primary">¡Conéctate y transforma el futuro con Guido!</h4>
+          <div class="alert text-center mb-2" role="alert">
+            <strong>Únete ahora</strong> y comparte tu conocimiento para inspirar y guiar a estudiantes de secundaria.
+            </div>
+        </div>
+        <img src="assets/images/tesis/profesor.png" class="img-fluid" alt="Sample image">
+      </div>
+      
+      <div class="col-md-8 col-lg-6 col-xl-6 offset-xl-1">
+        <div class="card shadow" style="box-shadow: 0 2px 4px 0 #1C1678;">
+          <div class="card-body p-5">
+
+
+            <!-- Formulario dividido en cuatro secciones -->
+            
+            <!-- Sección 1: Datos del Profesor 
+            <form *ngIf="step === 1">
+              <h3 class="text-center mt-4 mb-4 text-primary">
+                <i class="fas fa-user-shield"></i> ¡Comienza tu viaje como mentor!
+              </h3>
+              <p class="text-center mb-4">Cuéntanos un poco sobre ti y tu formación para inspirar a las futuras generaciones</p>
+
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="nombreProfesor">Nombre</label>
+                  <input type="text" class="form-control" id="nombreProfesor" name="nombreProfesor" placeholder="Nombre" [(ngModel)]="profesores.nombre" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="apellidoProfesor">Apellido</label>
+                  <input type="text" class="form-control" id="apellidoProfesor" name="apellidoProfesor" placeholder="Apellido" [(ngModel)]="profesores.apellido" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="dniProfesor">DNI</label>
+                  <input type="number" class="form-control" id="dniProfesor" name="dniProfesor" placeholder="DNI" [(ngModel)]="profesores.dni" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="emailProfesor">Email</label>
+                  <input type="email" class="form-control" id="emailProfesor" name="emailProfesor" placeholder="Email" [(ngModel)]="profesores.email" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="fecha_nacProfesor">Fecha de nacimiento</label>
+                  <input type="date" class="form-control" id="fecha_nacProfesor" name="fecha_nacProfesor" [(ngModel)]="profesores.fecha_nac" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="generoProfesor">Género</label>
+                  <select class="form-control" id="generoProfesor" name="generoProfesor" [(ngModel)]="profesores.genero" required>
+                    <option value="" disabled selected>Seleccione el género</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="telefonoProfesor">Teléfono</label>
+                  <input type="number" class="form-control" id="telefonoProfesor" name="telefonoProfesor" placeholder="Teléfono" [(ngModel)]="profesores.telefono" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="calle">Dirección</label>
+                  <input type="text" class="form-control" id="calle" name="calle" placeholder="Dirección" [(ngModel)]="direccion.calle" required>
+                </div>
+              
+              </div>
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+              </div>
+              <div class="login-link text-center mt-3">
+                <a href="/login">Ya tengo una cuenta, iniciar sesión</a>
+              </div>
+            </form>
+            
+            <!-- Sección 2: Antecedentes educativos 
+            <form *ngIf="step === 2">
+              <h3 class="text-center mt-4 mb-4 text-primary">
+                <i class="fas fa-graduation-cap"></i> Tu Historia Académica
+              </h3>
+              <p class="text-center mb-4">Comparte tus logros académicos y las instituciones donde te formaste o te estás formando</p>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="nombreAntecedentes">Carrera</label>
+                  <input type="text" class="form-control" id="nombreAntecedentes" name="nombreAntecedentes" placeholder="Carrera" [(ngModel)]="educativos.nombre" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="institucion">Institución</label>
+                  <input type="text" class="form-control" id="institucion" name="institucion" placeholder="Institución" [(ngModel)]="educativos.institucion" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="pais_institucion">País de institución</label>
+                  <input type="text" class="form-control" id="pais_institucion" name="pais_institucion" placeholder="País de institución" [(ngModel)]="educativos.pais_institucion" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="fecha_obtencion">Fecha obtención</label>
+                  <input type="date" class="form-control" id="fecha_obtencion" name="fecha_obtencion" [(ngModel)]="educativos.fecha_obtencion" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="nivel_educacion">Nivel de educación</label>
+                  <input type="text" class="form-control" id="nivel_educacion" name="nivel_educacion" placeholder="Nivel de educación" [(ngModel)]="educativos.nivel_educacion" required>
+                </div>
+              </div>
+             
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary mr-2" (click)="previousStep()">Anterior</button>
+                <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+              </div>
+            </form>
+
+            <!-- Sección 3: Perfil
+            <form *ngIf="step === 3">
+              <h3 class="text-center mt-4 mb-4 text-primary">
+                <i class="fas fa-user-tag"></i> Tu Perfil Profesional
+              </h3>
+              <p class="text-center mb-4">Describe tus especialidades y experiencia para ayudar a los estudiantes a conocer mejor tu perfil</p>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="especialidadProfesor">Especialidad</label>
+                  <select class="form-control" id="especialidadProfesor" [(ngModel)]="profesores.especialidad" name="especialidadProfesor">
+                    <option value="">Seleccionar especialidad</option>
+                    <option *ngFor="let especialidad of especialidades" [value]="especialidad">{{ especialidad }}</option>
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="fotoProfesor">Foto</label>
+                  <input type="file" class="form-control" id="fotoProfesor" name="fotoProfesor" (change)="onFileSelected($event)" required>
+                </div>
+                <div class="col-md-12 mb-3">
+                  <label class="form-label" for="descripcionProfesor">Descripción de tu perfil</label>
+                  <textarea class="form-control" id="descripcionProfesor" placeholder="Describe las áreas o temas en los que te destacas dentro del curso que has seleccionado" name="descripcionProfesor" [(ngModel)]="profesores.descripcion" required></textarea>
+                </div>
+               
+              </div>
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-primary mr-2" (click)="previousStep()">Anterior</button>
+                <button type="button" class="btn btn-primary" (click)="nextStep()">Siguiente</button>
+              </div>
+            </form>
+            
+            <!-- Sección 4: Antecedentes educativos y Datos de cuenta 
+            <form *ngIf="step === 4">
+             
+
+              <h3 class="text-center mt-4 mb-4 text-primary">
+                <i class="fas fa-lock-open"></i> Datos de Cuenta
+              </h3>
+              <p class="text-center mb-4">Elige un nombre de usuario y contraseña para acceder a nuestra plataforma educativa</p>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label" for="usuario">Usuario</label>
+                  <input type="text" class="form-control" id="usuario" name="usuario" placeholder="Usuario" [(ngModel)]="profesores.usuario" required>
+                </div>
+                <div class="col-md-6 mb-3 position-relative">
+                  <label class="form-label" for="password">Contraseña</label>
+                  <input [type]="passwordFieldType" id="password" class="form-control password-input" placeholder="Contraseña" [(ngModel)]="profesores.password" name="password" required>
+                  <span class="password-toggle" (click)="togglePasswordVisibility()" unselectable="on">
+                    <i class="fas" [ngClass]="{'fa-eye': passwordFieldType === 'password', 'fa-eye-slash': passwordFieldType === 'text'}"></i>
+                  </span>
+                </div>
+              </div>
+              <div class="text-center mt-3">
                 <button type="button" class="btn btn-primary mr-2" (click)="previousStep()">Anterior</button>
                 <button type="submit" class="btn btn-primary">Registrar</button>
               </div>
@@ -184,4 +368,4 @@
   <footer class="text-center py-3 bg-primary">
     <div class="text-white">Guido © 2024. Todos los derechos reservados.</div>
   </footer>
-</section>
+</section> -->

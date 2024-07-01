@@ -148,6 +148,8 @@
                 <button type="button" class="btn btn-primary" style="margin-right: 15px;" (click)="previousStep()">Anterior</button>
                 <button type="submit" class="btn btn-primary">Registrar</button>
               </div>
+             
+              <p *ngIf="errorMessage" class="text-danger mt-2 text-center"> {{ errorMessage }}</p>
             </form>
           </div>
         </div>

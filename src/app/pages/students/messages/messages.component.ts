@@ -18,6 +18,8 @@ interface Archivo {
   styleUrls: ['./messages.component.css'],
 })
 export class MessagesComponent implements OnInit, OnDestroy {
+  private intervalId: number | undefined;
+
   menuActive = false;
   menuSubscription: Subscription | undefined;
 
@@ -45,17 +47,28 @@ export class MessagesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnDestroy(): void {
-    this.menuSubscription?.unsubscribe();
+    if (this.menuSubscription) {
+      this.menuSubscription.unsubscribe();
+    }
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
+  setAutomaticMessageLoading(): void {
+    this.intervalId = window.setInterval(() => {
+      this.cargarMensajesAnteriores();
+    }, 3500); // Cargar mensajes cada 5000 milisegundos (5 segundos)
+  }
   ngOnInit(): void {
+    this.setAutomaticMessageLoading();
     this.menuSubscription = this.menuService.menuActive$.subscribe((active) => {
       this.menuActive = active;
     });
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
       const usuario = JSON.parse(usuarioString);
-      this.remite_id = usuario.id;
+      this.destinatario_id = usuario.id;
       this.usuarioId = usuario.id;
       this.rol = usuario.rol; // Asumiendo que el rol está disponible en el objeto usuario
     } else {
@@ -64,7 +77,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
     // Obtener el ID del profesor seleccionado desde la ruta
     this.route.params.subscribe((params) => {
-      this.destinatario_id = params['profesorId'];
+      this.remite_id = params['profesorId'];
       this.profesorId = params['profesorId'];
       if (this.profesorId) {
         console.error('ID de profesor encontrado');
@@ -78,7 +91,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.socket = io('http://localhost:4000');
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
-      this.verificarSuscripcion(() => this.cargarMensajesAnteriores());
+      this.cargarMensajesAnteriores();
     });
 
     this.socket.on('mensaje', (mensaje: any) => {
@@ -89,6 +102,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
         const mensajeMostrar: any = {
           contenido: mensaje.contenido,
           remite_id: mensaje.remite_id,
+          destinatario_id: mensaje.destinatario_id,
         };
 
         if (mensaje.audio_url !== null && mensaje.audio_url !== undefined) {
@@ -164,7 +178,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   enviarMensaje(): void {
-    this.verificarSuscripcion(() => {
+ 
       if (this.remite_id && this.destinatario_id) {
         const mensajeTexto = this.nuevoMensaje.trim();
 
@@ -209,11 +223,11 @@ export class MessagesComponent implements OnInit, OnDestroy {
       } else {
         console.error('No se ha establecido el remitente o destinatario.');
       }
-    });
+ 
   }
 
   cargarMensajesAnteriores(): void {
-    this.verificarSuscripcion(() => {
+   
       if (this.destinatario_id && this.socket) {
         console.log(
           'Solicitando mensajes anteriores para el destinatario:',
@@ -221,7 +235,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
         );
         this.socket.emit('cargar-mensajes-anteriores', this.destinatario_id);
       }
-    });
+  
   }
 
   obtenerProfesor(): void {

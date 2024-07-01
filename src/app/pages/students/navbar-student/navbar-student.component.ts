@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { swalWithCustomOptions } from 'src/app/sweetalert2-config';
+
+
 
 interface UserData {
   usuario: string;
@@ -80,8 +83,26 @@ export class NavbarStudentComponent implements OnInit {
   }
 
   cerrarSesion() {
-    sessionStorage.removeItem('usuario');
-    this.usuarioLogueado = null;
-    this.router.navigate(['/']);
+    swalWithCustomOptions.fire({
+      title: '¿Estás seguro?',
+      text: "Se cerrará tu sesión y volverás a la página de inicio.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Cerrar sesión',
+      cancelButtonText: 'Cancelar',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        sessionStorage.removeItem('usuario');
+        this.usuarioLogueado = null;
+        this.router.navigate(['/']);
+        swalWithCustomOptions.fire(
+          'Sesión cerrada',
+          'Tu sesión ha sido cerrada exitosamente.',
+          'success'
+        );
+      }
+    });
   }
+  
 }
