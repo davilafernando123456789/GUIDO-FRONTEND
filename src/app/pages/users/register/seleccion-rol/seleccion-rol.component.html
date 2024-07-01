@@ -1,0 +1,39 @@
+<section class="d-flex flex-column min-vh-100">
+    <div class="container my-auto">
+      <h2 class="text-center mb-4 custom-header">¿Cómo quieres unirte a Guido?</h2>
+      
+      <div class="row justify-content-center">
+        <div class="col-md-5 mb-3">
+          <div class="card h-100 shadow">
+            <div class="card-body text-center">
+                <h3 class="card-title" style="color: #1C1678;"><strong>Soy Estudiante</strong></h3>
+                <div class="image-container mb-3">
+                <img src="assets/images/tesis/Estudiante.png" alt="Estudiante" class="img-fluid" style="max-width: 200px;">
+              </div>
+              <p class="card-text">Quiero aprender y mejorar mis habilidades académicas.</p>
+              <button class="btn btn-primary btn-lg mt-3" style="height: calc(2.875rem + 2px); font-size: 1rem;" (click)="selectRole('estudiante')">Registrarme</button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-5 mb-3">
+          <div class="card h-100 shadow">
+            <div class="card-body text-center">
+                <h3 class="card-title" style="color: #1C1678;"><strong>Soy Tutor</strong></h3>
+                <div class="image-container mb-3">
+                <img src="assets/images/tesis/Profesor1.png" alt="Tutor" class="img-fluid" style="max-width: 200px;">
+              </div>
+              <p class="card-text">Quiero compartir mi conocimiento y enseñar a otros.</p>
+              <button class="btn btn-primary btn-lg mt-3" style="height: calc(2.875rem + 2px); font-size: 1rem;" (click)="selectRole('tutor')">Registrarme</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <footer class="bg-primary text-white text-center py-3 mt-auto">
+      <div>Guido © 2024. Todos los derechos reservados.</div>
+    </footer>
+  </section>
+  
+  
