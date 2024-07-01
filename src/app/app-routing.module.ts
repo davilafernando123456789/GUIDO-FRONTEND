@@ -32,6 +32,7 @@ import { SuscripcionComponent } from './pages/users/register/suscripcion/suscrip
 import { ProfesorPaypalAccountComponent } from './pages/teachers/profesor-paypal-account/profesor-paypal-account.component';
 import { NotificacionesComponent } from './pages/notificaciones/notificaciones.component';
 import { RecomendacionesComponent } from './pages/recomendaciones/recomendaciones.component'; 
+import { SeleccionRolComponent } from './pages/users/register/seleccion-rol/seleccion-rol.component';
 
 const routesInicio: Routes = [
   { path: '', component: InicioComponent },
@@ -69,6 +70,8 @@ const routesInicio: Routes = [
   { path: 'paymentAccount', component: ProfesorPaypalAccountComponent, data: { message: 'ProfesorPaypalAccountComponent alumno route' } },
   { path: 'confirmation/:horarioId/:profesorId', component: ConfirmationComponent, data: { message: 'Edit Product route' } },
   { path: 'calendarRegister', component: CalendarComponent, data: { message: 'Edit Product route' } },
+  { path: 'seleccion-rol', component: SeleccionRolComponent },
+
   { path: '**', redirectTo: '', pathMatch: 'full' }
 
 
