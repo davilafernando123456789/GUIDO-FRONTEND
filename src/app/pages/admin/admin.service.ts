@@ -6,11 +6,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AdminService {
-  private apiUrlHorarios = 'http://localhost:4000/api/horarios';
-  private apiUrlProfesores = 'http://localhost:4000/api/profesores';
-  private apiUrlInscripciones = 'http://localhost:4000/api/inscripciones';
-  private apiUrlAlumnos = 'http://localhost:4000/api/alumnos';
-  private apiUrlMensajes = 'http://localhost:4000/api/mensajes';
+  private apiUrlHorarios = 'http://3.84.155.125:4000/api/horarios';
+  private apiUrlProfesores = 'http://3.84.155.125:4000/api/profesores';
+  private apiUrlInscripciones = 'http://3.84.155.125:4000/api/inscripciones';
+  private apiUrlAlumnos = 'http://3.84.155.125:4000/api/alumnos';
+  private apiUrlMensajes = 'http://3.84.155.125:4000/api/mensajes';
   constructor(private http: HttpClient) {}
 
   //PROFESORES
@@ -162,7 +162,7 @@ export class AdminService {
     return this.http.post<any>(this.apiUrlHorarios, horario);
   }
   registrarInscripcion(inscripcion: any): Observable<any> {
-    const url = 'http://localhost:4000/api/inscripciones';
+    const url = 'http://3.84.155.125:4000/api/inscripciones';
     return this.http.post(url, inscripcion);
   }
   // Método para obtener un alumno por su ID

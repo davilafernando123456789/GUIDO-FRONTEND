@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 })
 export class CalendarStudentService {
 
-  private apiUrl = 'http://localhost:4000/api/horarios';
+  private apiUrl = 'http://3.84.155.125:4000/api/horarios';
 
   constructor(private http: HttpClient) { }
 

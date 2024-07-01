@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class NotificacionesService {
-  private apiUrl = 'http://localhost:4000/api/notificaciones';
+  private apiUrl = 'http://3.84.155.125:4000/api/notificaciones';
+  // private apiUrl = 'http://localhost:4000/api/notificaciones';
 
   constructor(private http: HttpClient) {}
 

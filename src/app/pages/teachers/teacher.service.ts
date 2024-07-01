@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class TeacherService {
-  private apiUrlHorarios = 'http://localhost:4000/api/horarios';
-  private apiUrlProfesores = 'http://localhost:4000/api/profesores';
-  private apiUrlAlumnos = 'http://localhost:4000/api/alumnos';
-  private apiUrlInscripciones = 'http://localhost:4000/api/inscripciones'; // Nueva URL para filtrar por inscripciones
+  private apiUrlHorarios = 'http://3.84.155.125:4000/api/horarios';
+  private apiUrlProfesores = 'http://3.84.155.125:4000/api/profesores';
+  private apiUrlAlumnos = 'http://3.84.155.125:4000/api/alumnos';
+  private apiUrlInscripciones = 'http://3.84.155.125:4000/api/inscripciones'; // Nueva URL para filtrar por inscripciones
 
   constructor(private http: HttpClient) {}
 
@@ -58,7 +58,7 @@ export class TeacherService {
     return this.http.post<any>(this.apiUrlHorarios, horario);
   }
   registrarInscripcion(inscripcion: any): Observable<any> {
-    const url = 'http://localhost:4000/api/inscripciones';
+    const url = 'http://3.84.155.125:4000/api/inscripciones';
     return this.http.post(url, inscripcion);
   }
 }

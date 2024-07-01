@@ -7,7 +7,8 @@ import { Producto } from '../models/producto';
   providedIn: 'root'
 })
 export class ProductoService {
-  url = 'http://localhost:4000/api/productos/';
+  url = 'http://3.84.155.125:4000/api/productos/';
+  // url = 'http://localhost:4000/api/productos/';
 
   constructor(private http: HttpClient) { 
 

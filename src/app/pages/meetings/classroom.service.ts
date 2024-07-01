@@ -10,7 +10,7 @@ interface ClassroomMeetingResponse {
   providedIn: 'root'
 })
 export class ClassroomService {
-  private apiUrl = 'http://localhost:4000/api/meetings'; // URL de tu API
+  private apiUrl = 'http://3.84.155.125:4000/api/meetings'; // URL de tu API
 
   constructor(private http: HttpClient) { }
 
