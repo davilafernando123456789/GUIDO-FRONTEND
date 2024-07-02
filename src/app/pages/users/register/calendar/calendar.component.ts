@@ -157,10 +157,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const startStr = new Date(start).toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
+      hour12: false, // Formato de 24 horas
     });
     const endStr = new Date(end).toLocaleTimeString([], {
       hour: '2-digit',
       minute: '2-digit',
+      hour12: false, // Formato de 24 horas
     });
     const title = `${startStr} - ${endStr}`;
 
@@ -229,10 +231,12 @@ export class CalendarComponent implements OnInit, OnDestroy {
           const horaInicioFormateada = diaInicio.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: false, // Formato de 24 horas
           });
           const horaFinFormateada = diaFin.toLocaleTimeString([], {
             hour: '2-digit',
             minute: '2-digit',
+            hour12: false, // Formato de 24 horas
           });
 
           const payload = {

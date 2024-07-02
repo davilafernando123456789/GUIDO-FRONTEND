@@ -80,7 +80,7 @@ export class MessageComponent implements OnInit, OnDestroy {
       this.menuActive = active;
     });
 
-    this.socket = io('http://localhost:4000');
+    this.socket = io('http://3.84.155.125:4000');
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
       this.cargarMensajesAnteriores();
@@ -288,7 +288,7 @@ export class MessageComponent implements OnInit, OnDestroy {
 //       console.log('ID del remite_id:', this.remite_id);
 //     });
 
-//     this.socket = io('http://localhost:4000');
+//     this.socket = io('http://3.84.155.125:4000');
 //     this.socket.on('connect', () => {
 //       console.log('Conectado al servidor');
 //       this.cargarMensajesAnteriores();

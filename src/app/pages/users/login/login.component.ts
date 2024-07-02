@@ -112,7 +112,7 @@ export class LoginComponent {
 
 //     const data = { usuario: this.usuario, password: this.password };
 //     this.http
-//       .post<any>('http://localhost:4000/api/usuarios/auth', data)
+//       .post<any>('http://3.84.155.125:4000/api/usuarios/auth', data)
 //       .subscribe(
 //         (response) => {
 //           console.log('Respuesta del servidor:', response);

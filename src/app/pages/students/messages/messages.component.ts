@@ -88,7 +88,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
       console.log('ID del destinatario:', this.destinatario_id);
     });
 
-    this.socket = io('http://localhost:4000');
+    this.socket = io('http://3.84.155.125:4000');
     this.socket.on('connect', () => {
       console.log('Conectado al servidor');
       this.cargarMensajesAnteriores();
@@ -343,7 +343,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 //       console.log('ID del destinatario:', this.destinatario_id);
 //     });
 
-//     this.socket = io('http://localhost:4000');
+//     this.socket = io('http://3.84.155.125:4000');
 //     this.socket.on('connect', () => {
 //       console.log('Conectado al servidor');
 //       this.verificarSuscripcion(() => this.cargarMensajesAnteriores());
