@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const formData = new FormData();
       formData.append('image', this.selectedFile);
       this.http
-        .post<any>('http://localhost:4000/api/imagen/upload-image', formData)
+        .post<any>('http://3.84.155.125:4000/api/imagen/upload-image', formData)
         .subscribe(
           (response) => {
             this.profesor.foto = response.imageUrl;
