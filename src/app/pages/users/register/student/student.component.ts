@@ -88,7 +88,7 @@ export class StudentComponent {
       }
     };
 
-    this.http.post<any>('http://localhost:4000/api/alumnos', data).subscribe({
+    this.http.post<any>('http://3.84.155.125:4000/api/alumnos', data).subscribe({
       next: (response) => {
         console.log('Respuesta del servidor:', response);
         const usuarioLogueado = {
@@ -202,7 +202,7 @@ export class StudentComponent {
 //       }
 //     };
 
-//     this.http.post<any>('http://localhost:4000/api/alumnos', data)
+//     this.http.post<any>('http://3.84.155.125:4000/api/alumnos', data)
 //       .subscribe(
 //         response => {
 //           console.log('Respuesta del servidor:', response);

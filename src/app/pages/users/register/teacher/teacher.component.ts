@@ -82,7 +82,7 @@ export class TeacherComponent {
   uploadImageAndSaveData() {
     const formData = new FormData();
     formData.append('image', this.selectedFile!);
-    this.http.post<any>('http://localhost:4000/api/imagen/upload-image', formData)
+    this.http.post<any>('http://3.84.155.125:4000/api/imagen/upload-image', formData)
       .subscribe({
         next: (response) => {
           this.profesores.foto = response.imageUrl;
@@ -113,7 +113,7 @@ export class TeacherComponent {
       educativos: this.educativos,
       direccion: this.direccion,
     };
-    this.http.post<any>('http://localhost:4000/api/profesores', data).subscribe({
+    this.http.post<any>('http://3.84.155.125:4000/api/profesores', data).subscribe({
       next: (response) => {
         const usuarioLogueado = {
           id: response.usuario.id,
@@ -191,7 +191,7 @@ export class TeacherComponent {
 //       const formData = new FormData();
 //       formData.append('image', this.selectedFile);
 //       this.http
-//         .post<any>('http://localhost:4000/api/imagen/upload-image', formData)
+//         .post<any>('http://3.84.155.125:4000/api/imagen/upload-image', formData)
 //         .subscribe(
 //           (response) => {
 //             this.profesores.foto = response.imageUrl;
@@ -234,7 +234,7 @@ export class TeacherComponent {
 //       educativos: this.educativos,
 //       direccion: this.direccion,
 //     };
-//     this.http.post<any>('http://localhost:4000/api/profesores', data).subscribe(
+//     this.http.post<any>('http://3.84.155.125:4000/api/profesores', data).subscribe(
 //       (response) => {
 //         console.log('Respuesta del servidor:', response);
 //         Swal.fire({
